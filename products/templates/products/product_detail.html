@@ -1,0 +1,101 @@
+{% extends "base.html" %} {% load static %} 
+
+{% block extra_title %}| Product{% endblock %}
+
+{% block page_header %}
+<div class="container header-container">
+  <div class="row mt-5 mb-5">
+        <div class="col"></div>
+  </div>
+</div>
+{% endblock %} 
+
+{% block content %}
+<main>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="d-none d-lg-block col-lg-4 col-xl-3 pt-5 bg-blush side-menu-col">
+                {% include 'includes/side-menu.html' %}
+            </div>
+            <div class="col-12 col-lg-8 col-xl-9 text-center mt-4 pt-5 head-row mb-5">
+                <div class="row">
+                    <div class="col-10 offset-1 mt-4">
+                        <h5 class="headline mb-2">{{ product.product_family }}</h5>
+                        <h6 class="headline-footer text-gray mb-5"><strong>{{ product.product_family.brand_name }}</strong></h6>
+                        <p class="text-right mr-2">
+                            <a href="{% url 'products' %}" class="cart-continues">Keep Shopping</a>  
+                        </p>
+                    </div> 
+                </div>
+                <div class="row">
+                    <div class="col-10 offset-1 col-md-3 col-lg-4 offset-lg-1">
+                        <div id="detail-image" class="image-container my-5">
+                            {% if product.image %}
+                                <a href="{{ MEDIA_URL }}{{ product.image }}" target="_blank">
+                                    <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}{{ product.image }}" alt="{{ product.name }}">
+                                </a>
+                            {% else %}
+                                <a href="">
+                                    <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-10 offset-1 col-md-7 col-lg-6 offset-lg-1 mt-md-5">
+                        <form class="form" action="{% url 'add_to_cart' product.id %}" method="POST">
+                        {% csrf_token %}
+                            <div class="row">
+                                <div id="product-selector" class="col-10 offset-1">
+                                     <select id="prod-detail-select" class="mdb-select md-form">
+                                        <option value="{{ product.size }}-{{ product.pack }}-{{ product.price }}" data-id="{{ product.id }}" selected>{% if product.size %}{{ product.get_size_display }} - {% endif %}{% if product.pack %}Case of {{ product.pack }} - {% endif %}${{ product.price }}</option>
+                                        {% for item in family_products %}
+                                            {% if item.size != product.size or item.pack != product.pack %}
+                                                <option value="{{ item.size }}-{{ item.pack }}-{{ item.price }}" data-id="{{ item.id }}">{% if item.size %}{{ item.get_size_display }} - {% endif %}{% if item.pack %}Case of {{ item.pack }} - {% endif %}${{ item.price }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                    <label for="prod-detail-select" class="mdb-main-label mb-3"><strong>Price</strong></label>
+                                </div>
+                                <div class="col-10 offset-1 prod-detail-qty">
+                                    <label for="id_qty_{{ product.id }}"><strong>Quantity  </strong>
+                                    </label>
+                                    <div class="def-number-input number-input safari_only mb-5 ml-md-5">
+                                        <button id="decrement-qty_{{ product.id }}" data-item_id="{{ product.id }}" 
+                                        onclick="this.parentNode.querySelector('input[type=number]').stepDown(); return false;" class="minus decrement-qty"></button>
+                                        <input class="quantity qty_input" name="quantity" value="1" min="1" max="99" type="number" data_item_id="{{ product.id }}" id="id_qty_{{ product.id }}">
+                                        <button id="increment-qty_{{ product.id }}" data-item_id="{{ product.id }}" onclick="this.parentNode.querySelector('input[type=number]').stepUp(); return false;" class="plus increment-qty"></button>
+                                    </div>
+                                </div>
+                                <div class="col-10 offset-1 text-center">
+                                    <button type="submit" class="btn btn-large btn-ltblue white-text">Add to Cart</button>
+                                </div>                   
+                            {% if request.user.is_superuser %}
+                                <small class="col-12 mt-3 text-center ml-3">
+                                    <a href="{% url 'edit_product' product.id %}">Edit</a> | 
+                                    <a class="text-danger" href="{% url 'delete_product' product.id %}">Delete</a>
+                                </small>
+                            {% endif %}
+                            <input type="hidden" id="redirect-url" name="redirect_url" value="{{ request.path }}">
+                            <input type="hidden" id="selected-product-id" name="product_id" value="{{ product.id }}">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 mt-2 offset-3">
+                        <div class="product-details-container mt-md-5 text-left">
+                            <p>{{ product.description | linebreaks }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 mt-3 mb-5"></div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block postloadjs %}
+{{ block.super }}
+{% include 'products/includes/product_detail_script.html' %}
+{% endblock %}

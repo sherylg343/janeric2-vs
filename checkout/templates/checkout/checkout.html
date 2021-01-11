@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+{% load static %}
+{% load cart_tools %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
+    <link rel="stylesheet" href="{% static 'css/addons-pro/steppers.min.css' %}">
+{% endblock %}
+
+{% block extra_js %}
+    <script type="text/javascript" src="{% static 'js/addons-pro/steppers.min.js' %}"></script>
+    <script src="{% static 'checkout/js/checkout.js' %}"></script> 
+{% endblock %}
+
+{% block extra_title %}| Checkout{% endblock %}
+
+{% block page_header %}
+<div class="container header-container">
+  <div class="row mt-5 mb-5">
+    <div class="col"></div>
+  </div>
+</div>
+{% endblock %} 
+
+{% block content %}
+<main>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="d-none d-lg-block col-lg-4 col-xl-3 pt-5 bg-blush side-menu-col">
+                {% include 'includes/side-menu.html' %}
+            </div>
+            <div class="col-12 col-lg-8 col-xl-9 text-center mt-4 head-row pt-5 mb-5">
+                <div class="row">
+                    <div class="col-12">
+                        <h5 id="checkout" class="headline ml-4 mb-3">Checkout</h5>
+                        <p class="text-right mr-2">
+                            <a href="{% url 'view_cart' %}" class="cart-continues">Return to Cart</a>  
+                        </p>
+                    </div> 
+                </div>
+                <div class="row cover-row">
+                    <div class="col-10 offset-1 col-lg-6 offset-lg-0 order-lg-last mb-0 bg-blush">
+                        <p class="text-gray text-left">Order Summary ({{ product_count }})</p>
+                        <div class="row">
+                            <div class="col-7 offset-2">
+                                <p class="mb-1 mt-0 small text-gray">Item</p>
+                            </div>
+                            <div class="col-3 text-right">
+                                <p class="mb-1 mt-0 small text-gray">Subtotal</p>
+                            </div>
+                        </div>
+                        {% for item in cart_items %}
+                            <div class="row">
+                                <div class="col-2 mb-1">
+                                    <a href="{% url 'product_detail' item.product.id %}">
+                                        {% if item.product.image %}
+                                            <img class="w-100" src="{{ MEDIA_URL }}{{ item.product.image }}" alt="{{ product.name }}">
+                                        {% else %}
+                                            <img class="w-100" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                                        {% endif %}
+                                    </a>
+                                </div>
+                                <div class="col-7 mb-4">
+                                    <p class="my-0">{{ item.product.name }}</p>
+                                    <p class="my-0 small">Size: {% if item.product.size %}{{ item.size }}{% else %}N/A{% endif %}</p>
+                                    <p class="my-0 small text-muted">Qty: {{ item.quantity }}</p>
+                                </div>
+                                <div class="col-3 text-right">
+                                    <p class="my-0 small text-muted">${{ item.product.price | calc_subtotal:item.quantity }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <hr class="my-0">
+                        <div class="row text-right">
+                            <div class="col-7 offset-2">
+                                <p class="my-0">Order Total:</p>
+                                <p class="my-0">Shipping:</p>
+                                <p class="my-0">Grand Total:</p>
+                            </div>
+                            <div class="col-3">
+                                <p class="my-0">${{ total | floatformat:2 }}</p>
+                                <p class="my-0 text-right">${{ shipping | floatformat:2 }}</p>
+                                <p class="my-0"><strong>${{ grand_total | floatformat:2 }}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <ul class="checkout-subhead list-unstyled text-left mt-3 ml-3 d-inline-flex">
+                           <li class="pr-2">
+                               Checkout
+                            </li> 
+                           <li class="pr-2"> > </li>
+                           <li class="pr-2">
+                               <a href="#contact">Contact</a>
+                            </li>
+                           <li class="pr-2"> > </li>
+                           <li class="pr-2">
+                               <a href="#contact">Shipping</a>
+                            </li>    
+                           <li class="pr-2"> > </li>
+                            <li>
+                                 <a href="#pymt">Payment</a>
+                            </li>
+                        </ul>
+                        <form action="{% url 'checkout' %}" method="POST" id="payment-form">
+                            {% csrf_token %}
+                                <ul class="stepper linear">
+                                    <li id="contact" class="step active">
+                                        <div data-step-label="Contact" class="step-title waves-effect waves-light"></div>
+                                        <div class="step-new-content">
+                                            <div class="row">
+                                                <div class="md-form col-12 ml-auto">
+                                                <fieldset class="rounded px-3 mb-5">
+                                                    {{ order_form.email | as_crispy_field }}
+                                                    {% if not user.is_authenticated %}
+                                                    <legend class="fieldset-label small text-left px-2 w-auto">
+                                                        Already have an account or want to create one? 
+                                                        <a class="text-info" href="{% url 'account_login' %}">Log in</a> or
+                                                        <a class="text-info" href="{% url 'account_signup' %}">Register</a>
+                                                    {% endif %}
+                                                    </legend>
+                                                 </fieldset>
+                                                </div>
+                                            </div>
+                                            <div class="step-actions">
+                                                <button class="waves-effect waves-dark btn btn-sm next-step white-text bg-ltblue">CONTINUE</button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li id="shipping" class="step">
+                                        <div data-step-label="Shipping" class="step-title waves-effect waves-dark"></div>
+                                        <div class="step-new-content">
+                                            <div class="row">
+                                                <div class="md-form col-12 ml-auto">
+                                                <fieldset class="rounded px-3 mb-5">
+                                                    {{ order_form.ship_full_name | as_crispy_field }}
+                                                    {{ order_form.ship_comp_name | as_crispy_field }}
+                                                    {{ order_form.ship_street_address1 | as_crispy_field }}
+                                                    {{ order_form.ship_street_address2 | as_crispy_field }}
+                                                    {{ order_form.ship_city | as_crispy_field }}
+                                                    {{ order_form.ship_state | as_crispy_field }}
+                                                    {{ order_form.ship_zipcode | as_crispy_field }}
+                                                    {{ order_form.ship_phone_number | as_crispy_field }}
+                                                    
+                                                    {% if user.is_authenticated %}
+                                                        <p class="small text-left mb-0">Save my information for a quicker checkout next time
+                                                        </p>
+                                                        <div class="form-check text-left mt-0">
+                                                            <input class="form-check-input" type="checkbox" id="id-save-info" name="save-info">
+                                                            <label class="form-check-label small text-dkblue" for="id-save-info">Remember Me</label>
+                                                        </div>
+                                                    {% endif %}
+                                                </fieldset>
+                                                </div>
+                                            </div>
+                                            <div class="step-actions">
+                                                <button id="step2-btn" class="float-right waves-effect waves-dark btn btn-sm bg-ltblue white-text next-step">CONTINUE</button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li id="pymt" class="step">
+                                        <div data-step-label="Payment"  class="step-title waves-effect waves-dark"></div>
+                                        <div class="step-new-content">
+                                            <div class="row">
+                                                <div class="md-form col-12 ml-auto">
+                                                    <div class="form-check text-left mt-0">
+                                                        <input class="form-check-input" type="checkbox" id="id-same-as-ship" name="same-as-ship">
+                                                        <label class="form-check-label small text-dkblue mb-4" for="id-same-as-ship">Same as shipping address</label>
+                                                    </div>
+                                                <fieldset class="rounded px-3 mb-5">
+                                                    {{ order_form.bill_full_name | as_crispy_field }}
+                                                    {{ order_form.bill_street_address1 | as_crispy_field }}
+                                                    {{ order_form.bill_street_address2 | as_crispy_field }}
+                                                    {{ order_form.bill_city | as_crispy_field }}
+                                                    {{ order_form.bill_state | as_crispy_field }}
+                                                    {{ order_form.bill_zipcode | as_crispy_field }}
+                                                    {{ order_form.bill_phone_number | as_crispy_field }}
+                                                </fieldset>
+                                                <fieldset class="px-3">
+                                                    <legend class="fieldset-label small text-left px-2 w-auto">Payment Information</legend>
+                                                    <small class="text-muted">Credit and Debit Cards Accepted</small>
+                                                    <!-- A Stripe card element will go here -->
+                                                    <div class="mb-3" id="card-element"></div>
+                                                    <!-- Used to display form errors -->
+                                                    <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
+                                                    <!-- Pass the client secret to the view so we can get the payment intent id -->
+                                                    <input type="hidden" value="{{ client_secret }}" name="client_secret">
+                                                </fieldset>
+                                                </div>
+                                            </div>
+                                            <div class="step-actions">
+                                                <div class="submit-button text-right mt-5 mb-2">                 
+                                                    <input type="submit" id="submit-button" value="PAY NOW" class="btn btn-large bg-ltblue white-text">   
+                                                    <p class="small text-danger my-0">
+                                                        <span class="icon">
+                                                            <i class="fas fa-exclamation-circle"></i>
+                                                        </span>
+                                                        <span>Your card will be charged <strong>${{ grand_total|floatformat:2 }}</strong></span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>                                              
+                                    </li>
+                                </ul>
+                        </form> 
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </div>
+    <div id="loading-overlay">
+        <h1 class="text-light logo-font loading-spinner">
+            <span class="icon">
+                <i class="fas fa-3x fa-sync-alt fa-spin"></i>
+            </span>
+        </h1>
+    </div> 
+</main>
+{% endblock%}
+
+{% block postloadjs %}
+    {{ block.super }}
+    {{ stripe_public_key|json_script:"id_stripe_public_key" }}
+    {{ client_secret|json_script:"id_client_secret" }}
+    <script src="{% static 'checkout/js/stripe_elements.js' %}"></script>
+{% endblock %}

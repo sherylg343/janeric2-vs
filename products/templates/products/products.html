@@ -1,0 +1,95 @@
+{% extends "base.html" %} {% load static %} 
+
+{% block extra_title %}| Products{% endblock %}
+
+{% block page_header %}
+<div class="container header-container">
+  <div class="row mt-5 mb-5">
+    <div class="col"></div>
+  </div>
+</div>
+{% endblock %} 
+
+{% block content %}
+<main>
+    <div id="products-top-section" class="container-fluid">
+        <div class="row">
+            <div class="d-none d-lg-block col-lg-4 col-xl-3 bg-blush side-menu-col pt-5">
+                {% include 'includes/side-menu.html' %}
+            </div>
+            <div class="col-12 col-lg-8 col-xl-9 text-center mt-4 head-row pt-5 mb-5">
+                <div class="fixed-action-btn smooth-scroll" style="bottom: 45px; right: 24px;">
+                    <a href="#products-top-section" class="btn-floating btn-large btn-mdblue">
+                        <i class="fas fa-arrow-up"></i>
+                    </a>
+                </div> 
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <h5 class="headline pb-4">Products</h5>
+                        {% for c in current_categories %}
+                        <a class="category-badge text-decoration-none" href="{% url 'products' %}?category={{ c.name }}">
+                            <span class="p-1 mt-2 badge-span">{{ c.name }}</span>
+                        </a>
+                        {% endfor %}
+                    </div> 
+                    <div class="product-container mt-5 col-10 offset-1">
+                        <div class="row">
+                            {% for product in products %}
+                                <div class="col-12 col-md-6 col-lg-6 col-xl-4">  
+                                    <div class="card h-100 pt-3 pb-4 mb-4">
+                                        {% if product.image %}
+                                        <a href="{% url 'product_detail' product.id %}">   
+                                            <img
+                                            class="card-img-top img-fluid"
+                                            src="{{ MEDIA_URL }}{{ product.image }}"
+                                            alt="{{ product.name }}"
+                                            />
+                                        </a>    
+                                        {% else %}
+                                        <a href="#">
+                                            <img
+                                                class="card-img-top"
+                                                src="{{ MEDIA_URL }}noimage.png"
+                                                alt="{{ product.name }}"
+                                            />
+                                        </a>
+                                        {% endif %}
+                                        <div class="card-body">
+                                            <h6 class="font-weight-bold card-title pb-3">{{ product.product_family.name }}</h6>
+                                            {% if product.size %}
+                                                <p class="mb-0">Size: {{ product.get_size_display }}</p>
+                                            {% endif %}
+                                            {% if product.pack %}
+                                            <p class="mb-0">Case of {{ product.pack }}</p>
+                                            {% endif %}
+                                            <p class="mb-0">Price: $ {{ product.price }}</p>
+                                        </div>
+                                        <div class="card-footer text-center">
+                                            <a href="{% url 'product_detail' product.id %}" class="btn bg-ltblue white-text">View</a>
+                                        </div>
+                                        {% if request.user.is_superuser %}
+                                            <small class="ml-3">
+                                                <a href="{% url 'edit_product' product.id %}">Edit</a> | 
+                                                <a class="text-danger" href="{% url 'delete_product' product.id %}">Delete</a>
+                                            </small>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% if forloop.counter|divisibleby:1 %}
+                                    <div class="col-12 d-md-none mb-5"></div>
+                                {% endif %}
+                                {% if forloop.counter|divisibleby:2 %}
+                                    <div class="col-12 d-none d-md-block d-xl-none mb-5"></div>
+                                {% endif %}
+                                {% if forloop.counter|divisibleby:3 %}
+                                    <div class="col-12 d-none d-xl-block mb-5"></div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_title %}| About Us{% endblock %}
+    
+{% block page_header %}
+<div class="container header-container">
+  <div class="row mt-5 mb-5">
+    <div class="col"></div>
+  </div>
+</div>
+{% endblock %} 
+
+
+{% block content %}
+<main>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="d-none d-lg-block col-lg-4 col-xl-3 pt-5 bg-blush side-menu-col">
+                {% include 'includes/side-menu.html' %}
+            </div>
+            <div class="col-12 col-lg-8 col-xl-9 text-center mt-4 head-row pt-5 mb-5">
+                <div class="row">
+                    <div class="col-12">
+                        <h5 class="headline mb-3">About Us</h5>
+                        <p class="text-right mr-2">
+                            <a href="{% url 'products' %}" class="cart-continues">Keep Shopping</a>  
+                        </p>
+                    </div> 
+                </div>
+                <div class="row">
+                    <div class="col-8 offset-2 pb-4 pt-3">
+                        <img
+                        class="img-fluid"
+                        src="{{ MEDIA_URL }}family.jpg"
+                        alt="McCann-Parsells Family"
+                        />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-10 offset-1 pb-3 text-left">
+                        <p class="pb-3">
+                            Founded in passion for helping those on the front lines, and keeping the ones we love safe, Janeric, LLC. was formed in August 2020. We are family owned; currently operating out of our home in Petaluma, California. Products are warehoused in both Texas and New Jersey. 
+                        </p>
+                        <p>
+                            <i>Other endeavors: </i>
+                        </p>
+                        <p>
+                            Eric Parsells, co-founder and president of Janeric, LLC. established Exertools in 1990. The company manufactures and distributes products to the fitness, therapeutic and rehabilitation markets. After determining that physical therapists did not want to spend time throwing a medicine ball back and forth with a patient, the Plyoback rebounder was born. The Plyoback has not only become a market leader in the field of plyometric exercise but has also revolutionized the use of medicine balls. Along with the success of the Plyoback, Exertools introduced the DynaDisc in 1993.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %} 
+
+

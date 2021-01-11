@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% load static %}
+{% load cart_tools %}
+
+{% block extra_title %}| Cart{% endblock %}
+
+{% block page_header %}
+<div class="container header-container">
+  <div class="row mt-5 mb-5">
+    <div class="col"></div>
+  </div>
+</div>
+{% endblock %} 
+
+{% block content %}
+<main>
+    <div class="container-fluid" id="cart-container">
+        <div class="row cover-row">
+            <div id="cart-top-section" class="d-none d-lg-block col-lg-4 col-xl-3 pt-5 bg-blush side-menu-col">
+                {% include 'includes/side-menu.html' %}
+            </div>
+            <div class="col-12 col-lg-8 col-xl-9 text-center mt-4 head-row pt-5 mb-5">
+                <div class="row">
+                    <div class="col-12">
+                        <h5 class="headline mb-3">Cart</h5>
+                        <p class="text-right mr-2">
+                            <a href="{% url 'products' %}" class="cart-continues">Keep Shopping</a>  
+                        </p>
+                    </div> 
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        {% if cart_items %}
+                            <div class="d-block d-md-none">
+                                <div class="row d-block d-md-none">
+                                    <div class="col-12">   
+                                        {% include 'cart/cart-total.html' %}
+                                    </div>
+                                </div>
+                                <div class="row d-block d-md-none">
+                                    <div class="col">   
+                                        <a href="{% url 'checkout' %}" class="btn btn-large btn-ltblue white-text">
+                                            <span class="text-uppercase">Proceed to Checkout</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                {% for item in cart_items %}
+                                    <div class="row d-block d-md-none">
+                                        <div class="col-12 col-sm-6 mb-2">
+                                            {% include "cart/product-image.html" %}
+                                         </div>       
+                                        <div class="col-12 col-sm-6 mb-2 text-left">  
+                                            <p class="my-0"><strong>{{ item.product.name }}</strong></p>
+                                            <p class="my-0 small text-muted">Size: {% if item.product.has_sizes %}{{ item.size|upper }}{% else %}N/A{% endif %}</p>
+                                            <p class="my-0 small text-muted">SKU: {{ item.product.SKU }}</p>
+                                            <p class="my-0 small text-muted">Price Per Unit: ${{ item.product.price }}</p>
+                                            <p class="small text-muted">Product Subtotal: ${{ item.product.price | calc_subtotal:item.quantity }}</p>
+                                            <p>
+                                            {% include "cart/remove-product-link.html" %}
+                                            </p>
+                                            <p>
+                                            {% include "cart/quantity-form.html" %}
+                                            </p>
+                                        </div>
+                                    </div>
+                                {% endfor %} 
+                            </div>
+                            <table class="table table-responsive w-100 table-borderless text-dkblue d-none d-md-table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="cart-items-head">Product Info</th>
+                                        <th scope="col" class="cart-items-head"></th>
+                                        <th scope="col" class="cart-items-head">Qty</th>
+                                        <th scope="col" class="cart-items-head">Price</th>
+                                        <th scope="col" class="cart-items-head">Subtotal</th>
+                                        <th scope="col" class="cart-items-head"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in cart_items %}
+                                        <tr>
+                                            <td>
+                                                {% include "cart/product-image.html" %}
+                                            </td>
+                                            <td class="py-3">
+                                                <p class="my-0">
+                                                    {{ item.product.name }}
+                                                </p>
+                                                <p class="my-0 small text-muted">SKU: {{ item.product.SKU }}
+                                                </p>
+                                            </td>
+                                            <td class="py-3">
+                                                {% include "cart/quantity-form.html" %}
+                                            </td>
+                                            <td class="py-3">
+                                                <p class="my-0">${{ item.product.price }}
+                                                </p>
+                                            </td>
+                                            <td class="py-3">
+                                                <p class="my-0">${{ item.product.price | calc_subtotal:item.quantity }}
+                                                </p>
+                                            </td>
+                                            <td>
+                                                {% include "cart/remove-product-link.html" %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                        <tr>
+                                            <td colspan="5" class="pt-5 text-right">
+                                                <h6><strong>Bag Total: $ {{ total|floatformat:2 }}</strong></h6>
+                                                <h6>Shipping: $ {{ shipping|floatformat:2 }}</h6>
+                                                <h5 class="mt-4"><strong>Grand Total: $ {{ grand_total|floatformat:2 }}</strong></h5>
+                                                {% if free_shipping_delta > 0 %}
+                                                    <p class="mb-1 text-danger">
+                                                    You could get free delivery by spending just <strong>$ {{ free_shipping_delta }}</strong> more!</p>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5" class="text-right">  
+                                                <a href="{% url 'checkout' %}" class="btn btn-large btn-ltblue white-text">
+                                                    <span class="text-uppercase">Proceed to Checkout</span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <div class=" mt-5" id="cart-empty">
+                                <p class="mb-5 text-medblue text-center">Your shopping cart is empty!
+                                </p>
+                            </div>
+                        {% endif %}    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock%}
+
+{% block postloadjs %}
+{{ block.super }}
+{% include 'products/includes/product_detail_script.html' %}
+ <script src="{% static 'cart/js/cart.js' %}"></script>
+{% endblock %}
