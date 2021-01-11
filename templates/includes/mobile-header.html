@@ -1,0 +1,102 @@
+<!-- Sidebar navigation -->
+<div id="slide-out" class="side-nav2 side bg-white">
+  <ul class="custom-scrollbar">
+    <!-- Side navigation links -->
+    <li class="list-inline-item">
+      <ul class="collapsible collapsible-accordion">
+        <li><a href="{% url 'products' %}" class="collapsible-header waves-effect" >Shop All</a>
+        </li>
+        <li><a class="collapsible-header waves-effect arrow-r">
+            PPE<i class="fas fa-angle-down rotate-icon ml-5"></i></a>
+          <div class="collapsible-body">
+            <ul>
+              <li><a href="{% url 'products' %}?category=Gowns" class="waves-effect">Gowns</a>
+              </li>
+              <li><a href="{% url 'products' %}?category=Masks" class="waves-effect">Masks</a>
+              </li>
+              <li><a href="{% url 'products' %}?category=Social Distancing Signage" class="waves-effect">Social Distancing Signage</a>
+              </li>
+              <li><a href="{% url 'products' %}?category=Thermometer" class="waves-effect">Thermometers</a>
+              </li>
+              <li><a href="{% url 'products' %}?category=Gowns,Masks,Social Distancing Signage,Thermometer" class="waves-effect">All PPE</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li><a class="collapsible-header waves-effect arrow-r">Hand Sanitizer <i class="fas fa-angle-down rotate-icon ml-5"></i></a>
+          <div class="collapsible-body">
+            <ul>
+              <li><a href="{% url 'products' %}?category=Gel" class="waves-effect">Gel</a>
+              </li>
+              <li><a href="{% url 'products' %}?category=Dispenser" class="waves-effect">Dispensers</a>
+              </li>
+              <li><a href="{% url 'products' %}?category=Gel,Dispenser" class="waves-effect">All Hand Sanitizer</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li><a class="collapsible-header waves-effect arrow-r">Personal<i
+              class="fas fa-angle-down rotate-icon ml-5"></i></a>
+          <div class="collapsible-body">
+            <ul>
+              <li><a href="{% url 'products' %}?category=Body Wash and Shampoo" class="waves-effect">Body Wash & Shampoo</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li><a class="collapsible-header waves-effect arrow-r">My Account<i
+              class="fas fa-angle-down rotate-icon"></i></a>
+            <div class="collapsible-body">
+                <ul> 
+                    {% if request.user.is_authenticated %} 
+                        {% if request.user.is_superuser %}
+                            <li><a href="{% url 'add_product' %}" class="waves-effect">Add Product</a>
+                            </li>
+                            <li><a href="{% url 'product_families' %}" class="waves-effect">Product Families</a>
+                            </li>
+                        {% endif %}
+                            <li><a href="{% url 'profile' %}" class="waves-effect">My Profile</a>
+                            </li>
+                            <li><a href="{% url 'account_logout' %}" class="waves-effect">Log Out</a>
+                            </li>
+                    {% else %}
+                        <li><a href="{% url 'account_signup' %}" class="dropdown-item">Register</a></li>
+                        <li><a href="{% url 'account_login' %}" class="dropdown-item"
+                        >Log In</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </li>
+        <li>
+            <a class="collapsible-header waves-effect" href="{% url 'about' %}">About Us</a>
+        </li>
+        <li><a href="mailto:customerservice@janericllc.com?subject=Enquiry from Website"  class="collapsible-header waves-effect">Contact Us</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+<!-- Mobile Header continues after menu button --->
+    <li class="list-inline-item nav-logo">
+        <a href="{% url 'home' %}" class="nav-link main-logo-link">
+            <img src="{{ MEDIA_URL }}janeric-banner-logo.png" alt="JANERIC" 
+            />
+        </a>
+    </li>
+    <li class="list-inline-item">
+        <a
+        class="{% if grand_total %}font-weight-bold{% endif %} nav-link text-ltblue"
+        href="{% url 'view_cart' %}">
+            <div class="text-center">
+                <div><i class="fas fa-shopping-cart"></i></div>
+                <p class="my-0">
+                    {% if grand_total %} 
+                        ${{ grand_total|floatformat:2 }} 
+                    {% else %} 
+                        $0.00 
+                    {% endif %}
+                </p>
+            </div>
+        </a>
+    </li>
+    

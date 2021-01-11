@@ -1,0 +1,52 @@
+  <ul class="side-menu pt-4">
+    <!-- Side navigation links -->
+    <li class="list-inline-item">
+      <ul class="collapsible collapsible-accordion">
+        <li class="mb-3"><a href="{% url 'products' %}">Shop All</a>
+        </li>
+        <li class="mb-3"><a class="collapsible-header waves-effect arrow-r">
+            PPE<i class="fas fa-angle-down rotate-icon ml-3"></i></a>
+          <div class="collapsible-body">
+            <ul>
+              <li><a href="{% url 'products' %}?category=Gowns" class="waves-effect">Gowns</a>
+              </li>
+              <li><a href="{% url 'products' %}?category=Masks" class="waves-effect">Masks</a>
+              </li>
+              <li><a href="{% url 'products' %}?category=Social Distancing Signage" class="waves-effect">Social Distancing Signage</a>
+              </li>
+              <li><a href="{% url 'products' %}?category=Thermometer" class="waves-effect">Thermometers</a>
+              </li>
+              <li><a href="{% url 'products' %}?category=Gowns,Masks,Social Distancing Signage,Thermometer" class="waves-effect">All PPE</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li class="mb-3"><a class="collapsible-header waves-effect arrow-r">Hand Sanitizer<i
+              class="fas fa-angle-down rotate-icon ml-3"></i></a>
+          <div class="collapsible-body">
+            <ul>
+              <li><a href="{% url 'products' %}?category=Gel" class="waves-effect">Gel</a>
+              </li>
+              <li><a href="{% url 'products' %}?category=Dispenser" class="waves-effect">Dispensers</a>
+              </li>
+              <li><a href="{% url 'products' %}?category=Gel,Dispenser" class="waves-effect">All Hand Sanitizer</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li class="mb-3"><a class="collapsible-header waves-effect arrow-r">Personal<i
+              class="fas fa-angle-down rotate-icon ml-3"></i></a>
+          <div class="collapsible-body">
+            <ul>
+              <li><a href="{% url 'products' %}?category=Body Wash and Shampoo" class="waves-effect">Body Wash and Shampoo</a>
+              </li>     
+            </ul>
+          </div>
+        </li>
+        <li class="mb-3"><a href="{% url 'about' %}" class="collapsible-header waves-effect" >About Us</a>
+        </li>
+        <li class="mb-3"><a href="mailto:customerservice@janericllc.com?subject=Enquiry from Website" class="collapsible-header waves-effect" >Contact Us</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
