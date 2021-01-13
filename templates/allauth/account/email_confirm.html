@@ -5,9 +5,16 @@
 
 {% block head_title %}{% trans "Confirm E-mail Address" %}{% endblock %}
 
+{% block inner_content %}
 
-{% block content %}
-<h1>{% trans "Confirm E-mail Address" %}</h1>
+<div class="row  mt-5">
+    <div class="col-12">
+        <h5 class="headline ml-4 mb-3">Confirm E-mail Address</h5>
+        <p class="text-right mr-2">
+            <a href="{% url 'home' %}" class="cart-continues">Home</a>  
+        </p>
+    </div>
+</div>
 
 {% if confirmation %}
 

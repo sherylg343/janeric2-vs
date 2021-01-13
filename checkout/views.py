@@ -21,7 +21,6 @@ def cache_checkout_data(request):
     print("cache")
     try:
         pid = request.POST.get('client_secret').split('_secret')[0]
-        print(pid)
         stripe.api_key = settings.STRIPE_SECRET_KEY
         stripe.PaymentIntent.modify(pid, metadata={
             'cart': json.dumps(request.session.get('cart', {})),
@@ -38,6 +37,7 @@ def cache_checkout_data(request):
 def checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
+    
 
     if request.method == 'POST':
         cart = request.session.get('cart', {})
@@ -61,6 +61,15 @@ def checkout(request):
             'bill_zipcode': request.POST['bill_zipcode'],
         }
 
+        marketing = request.POST['marketing']
+
+        # save marketing field to UserProfile
+        if request.user.is_authenticated:
+            profile = UserProfile.objects.get(user=request.user)
+            profile.marketing = marketing
+            profile.save()
+
+        # the user maintains in their profile
         order_form = OrderForm(form_data)
         if order_form.is_valid():
             order = order_form.save(commit=False)
@@ -111,8 +120,8 @@ def checkout(request):
     # Attempt to prefill the form with any info
     # the user maintains in their profile
     if request.user.is_authenticated:
+        profile = UserProfile.objects.get(user=request.user)
         try:
-            profile = UserProfile.objects.get(user=request.user)
             order_form = OrderForm(initial={
                 'ship_full_name': profile.defaultship_full_name,
                 'email': profile.user.email,
@@ -122,6 +131,7 @@ def checkout(request):
                 'ship_state': profile.defaultship_state,
                 'ship_zipcode': profile.defaultship_zipcode,
                 'ship_phone_number': profile.defaultship_phone_number,
+                'marketing': profile.marketing,
             })
         except UserProfile.DoesNotExist:
             order_form = OrderForm()

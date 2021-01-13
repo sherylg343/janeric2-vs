@@ -34,6 +34,7 @@ def profile(request):
         'defaultship_zipcode': defaultship_zipcode,
         'orders': orders,
         'on_profile_page': True,
+        'marketing': profile.marketing,
     }
 
     return render(request, template, context)

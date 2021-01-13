@@ -19,6 +19,7 @@ class UserProfile(models.Model):
     defaultship_zipcode = models.CharField(max_length=20, null=True, blank=True)
     defaultship_phone_number = models.CharField(
         max_length=20, null= True, blank=True)
+    marketing = models.BooleanField(null=True, blank=True, default=False)
 
     def __str__(self):
         return self.user.username

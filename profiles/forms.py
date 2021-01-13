@@ -7,6 +7,8 @@ class UserProfileForm(forms.ModelForm):
     defaultship_zipcode = USZipCodeField()
     """ Widget code from Nafees Anwar on stackoverflow 4/30/19 """
     defaultship_state = forms.CharField(widget=USStateSelect)
+    marketing = forms.BooleanField(widget=forms.CheckboxInput(
+        attrs={'class': 'form-check-input'}))
 
     class Meta:
         model = UserProfile
@@ -27,6 +29,7 @@ class UserProfileForm(forms.ModelForm):
             'defaultship_city': 'City',
             'defaultship_state': 'State',
             'defaultship_zipcode': 'Zip Code',
+            'marketing': "",
         }
 
         self.fields['defaultship_full_name'].widget.attrs['autofocus'] = True

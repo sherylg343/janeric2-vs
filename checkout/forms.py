@@ -1,6 +1,6 @@
 from django import forms
 from localflavor.us.forms import USStateSelect, USZipCodeField
-from .models import Order
+from .models import Order, UserProfile
 
 
 class OrderForm(forms.ModelForm):
@@ -9,6 +9,8 @@ class OrderForm(forms.ModelForm):
     """ Widget code from Nafees Anwar on stackoverflow 4/30/19 """
     ship_state = forms.CharField(widget=USStateSelect)
     bill_state = forms.CharField(widget=USStateSelect)
+    marketing = forms.BooleanField(widget=forms.CheckboxInput(
+        attrs={'class': 'form-check-input'}))
 
     class Meta:
         model = Order
@@ -19,6 +21,8 @@ class OrderForm(forms.ModelForm):
             'ship_zipcode', 'bill_full_name', 'bill_phone_number',
             'bill_street_address1', 'bill_street_address2',
             'bill_city', 'bill_state', 'bill_zipcode',)
+        model = UserProfile
+        fields = ('marketing',)
 
     def __init__(self, *args, **kwargs):
         """
@@ -43,6 +47,7 @@ class OrderForm(forms.ModelForm):
             'bill_city': 'City',
             'bill_state': 'State',
             'bill_zipcode': 'Zip Code',
+            'marketing': "",
         }
 
         self.fields['email'].widget.attrs['autofocus'] = True

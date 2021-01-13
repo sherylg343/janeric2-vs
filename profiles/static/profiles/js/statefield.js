@@ -3,7 +3,6 @@ const stateSelected = $('#div_id_defaultship_state').val();
 
 const profileShipFullName = $('#id_defaultship_full_name');
 const profileShipCompName = $('#id_defaultship_comp_name');
-const profileShipFullName = $('#id_ship_full_name');
 const profileShipStreet1 = $('#id_defaultship_street_address1');
 const profileShipStreet2 = $('#id_defaultship_street_address2');
 const profileShipCity =  $('#id_defaultship_city');

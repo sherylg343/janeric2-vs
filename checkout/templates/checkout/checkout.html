@@ -112,7 +112,11 @@
                                                 <div class="md-form col-12 ml-auto">
                                                 <fieldset class="rounded px-3 mb-5">
                                                     {{ order_form.email | as_crispy_field }}
-                                                    {% if not user.is_authenticated %}
+                                                    {% if user.is_authenticated %}
+                                                        {% if not marketing %}
+                                                            {{ order_form.marketing | as_crispy_field }}
+                                                         <label class="small" for="id_marketing">Interested in receiving promotional offers?</label>   
+                                                    {% else %}
                                                     <legend class="fieldset-label small text-left px-2 w-auto">
                                                         Already have an account or want to create one? 
                                                         <a class="text-info" href="{% url 'account_login' %}">Log in</a> or
