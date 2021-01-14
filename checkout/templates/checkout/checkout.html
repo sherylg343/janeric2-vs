@@ -114,13 +114,13 @@
                                                     {{ order_form.email | as_crispy_field }}
                                                     {% if user.is_authenticated %}
                                                         {% if not marketing %}
-                                                            {{ order_form.marketing | as_crispy_field }}
-                                                         <label class="small" for="id_marketing">Interested in receiving promotional offers?</label>   
+                                                            {% include 'checkout/custom_checkbox.html' %}
+                                                        {% endif %} 
                                                     {% else %}
-                                                    <legend class="fieldset-label small text-left px-2 w-auto">
+                                                    <legend class="fieldset-label small text-left px-2">
                                                         Already have an account or want to create one? 
-                                                        <a class="text-info" href="{% url 'account_login' %}">Log in</a> or
-                                                        <a class="text-info" href="{% url 'account_signup' %}">Register</a>
+                                                        <a class="text-info p-0" href="{% url 'account_login' %}">Log in</a> or
+                                                        <a class="text-info p-0" href="{% url 'account_signup' %}">Register</a>
                                                     {% endif %}
                                                     </legend>
                                                  </fieldset>
@@ -137,7 +137,7 @@
                                             <div class="row">
                                                 <div class="md-form col-12 ml-auto">
                                                 <fieldset class="rounded px-3 mb-5">
-                                                    {{ order_form.ship_full_name | as_crispy_field }}
+                                                    {{ order_form.ship_full_name |  as_crispy_field }}
                                                     {{ order_form.ship_comp_name | as_crispy_field }}
                                                     {{ order_form.ship_street_address1 | as_crispy_field }}
                                                     {{ order_form.ship_street_address2 | as_crispy_field }}

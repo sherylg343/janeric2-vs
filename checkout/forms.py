@@ -9,10 +9,14 @@ class OrderForm(forms.ModelForm):
     """ Widget code from Nafees Anwar on stackoverflow 4/30/19 """
     ship_state = forms.CharField(widget=USStateSelect)
     bill_state = forms.CharField(widget=USStateSelect)
-    marketing = forms.BooleanField(widget=forms.CheckboxInput(
-        attrs={'class': 'form-check-input'}))
+    marketing = forms.BooleanField(
+        widget=forms.CheckboxInput, label="Send me special offers", required=False)
+
 
     class Meta:
+        model = UserProfile
+        field = ('marketing',)
+
         model = Order
         fields = (
             'ship_full_name', 'email', 'ship_comp_name',
@@ -21,8 +25,6 @@ class OrderForm(forms.ModelForm):
             'ship_zipcode', 'bill_full_name', 'bill_phone_number',
             'bill_street_address1', 'bill_street_address2',
             'bill_city', 'bill_state', 'bill_zipcode',)
-        model = UserProfile
-        fields = ('marketing',)
 
     def __init__(self, *args, **kwargs):
         """

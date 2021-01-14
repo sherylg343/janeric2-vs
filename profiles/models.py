@@ -19,7 +19,7 @@ class UserProfile(models.Model):
     defaultship_zipcode = models.CharField(max_length=20, null=True, blank=True)
     defaultship_phone_number = models.CharField(
         max_length=20, null= True, blank=True)
-    marketing = models.BooleanField(null=True, blank=True, default=False)
+    marketing = models.BooleanField(null=True, blank=True)
 
     def __str__(self):
         return self.user.username
@@ -34,4 +34,3 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
         UserProfile.objects.create(user=instance)
     # Existing users: just save the profile
     instance.userprofile.save()
-
