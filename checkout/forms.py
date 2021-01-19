@@ -9,9 +9,7 @@ class OrderForm(forms.ModelForm):
     """ Widget code from Nafees Anwar on stackoverflow 4/30/19 """
     ship_state = forms.CharField(widget=USStateSelect)
     bill_state = forms.CharField(widget=USStateSelect)
-    marketing = forms.BooleanField(
-        widget=forms.CheckboxInput, label="Send me special offers", required=False)
-
+    marketing = forms.BooleanField(widget=forms.CheckboxInput, required=False)
 
     class Meta:
         model = UserProfile
@@ -61,3 +59,4 @@ class OrderForm(forms.ModelForm):
             self.fields[field].widget.attrs['placeholder'] = placeholder
             self.fields[field].widget.attrs['class'] = 'stripe-style-input'
             self.fields[field].label = False
+            self.fields['marketing'].widget.attrs['class'] = 'form-check-input'

@@ -18,7 +18,6 @@ import json
 
 @require_POST
 def cache_checkout_data(request):
-    print("cache")
     try:
         pid = request.POST.get('client_secret').split('_secret')[0]
         stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -26,6 +25,7 @@ def cache_checkout_data(request):
             'cart': json.dumps(request.session.get('cart', {})),
             'save_info': request.POST.get('save_info'),
             'username': request.user,
+            'marketing': request.Post.get('marketing'),
         })
         return HttpResponse(status=200)
     except Exception as e:
@@ -37,7 +37,6 @@ def cache_checkout_data(request):
 def checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
-    
 
     if request.method == 'POST':
         cart = request.session.get('cart', {})
@@ -62,6 +61,7 @@ def checkout(request):
         }
 
         marketing = request.POST['marketing']
+        print(marketing)
 
         # save marketing field to UserProfile
         if request.user.is_authenticated:
