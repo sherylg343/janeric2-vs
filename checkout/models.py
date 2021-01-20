@@ -33,7 +33,7 @@ class Order(models.Model):
     ship_zipcode = models.CharField(
         max_length=10, null=True, blank=True)
     ship_phone_number = models.CharField(
-        max_length=20, null= True, blank=True)
+        max_length=20, null=True, blank=True)
     bill_full_name = models.CharField(
         max_length=50, null=True, blank=True)
     bill_street_address1 = models.CharField(
@@ -47,7 +47,7 @@ class Order(models.Model):
     bill_zipcode = models.CharField(
         max_length=10, null=True, blank=True)
     bill_phone_number = models.CharField(
-        max_length=20, null= True, blank=True)
+        max_length=20, null=True, blank=True)
     order_date = models.DateTimeField(
         auto_now_add=True)
     shipping_cost = models.DecimalField(

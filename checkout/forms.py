@@ -1,6 +1,7 @@
 from django import forms
 from localflavor.us.forms import USStateSelect, USZipCodeField
-from .models import Order, UserProfile
+from .models import Order
+from profiles.models import UserProfile
 
 
 class OrderForm(forms.ModelForm):

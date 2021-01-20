@@ -9,7 +9,6 @@ from .models import Order, OrderLineItem
 
 from products.models import Product
 from profiles.models import UserProfile
-from profiles.forms import UserProfileForm
 from cart.contexts import cart_contents
 
 import stripe
@@ -60,16 +59,6 @@ def checkout(request):
             'bill_zipcode': request.POST['bill_zipcode'],
         }
 
-        marketing = request.POST['marketing']
-        print(marketing)
-
-        # save marketing field to UserProfile
-        if request.user.is_authenticated:
-            profile = UserProfile.objects.get(user=request.user)
-            profile.marketing = marketing
-            profile.save()
-
-        # the user maintains in their profile
         order_form = OrderForm(form_data)
         if order_form.is_valid():
             order = order_form.save(commit=False)
@@ -96,6 +85,7 @@ def checkout(request):
                     return redirect(reverse('view_bag'))
 
             request.session['save_info'] = 'save-info' in request.POST
+            request.session['marketing'] = 'marketing' in request.POST
             return redirect(reverse(
                 'checkout_success', args=[order.order_number]))
 
@@ -120,8 +110,8 @@ def checkout(request):
     # Attempt to prefill the form with any info
     # the user maintains in their profile
     if request.user.is_authenticated:
-        profile = UserProfile.objects.get(user=request.user)
         try:
+            profile = UserProfile.objects.get(user=request.user)
             order_form = OrderForm(initial={
                 'ship_full_name': profile.defaultship_full_name,
                 'email': profile.user.email,
@@ -166,10 +156,15 @@ def checkout_success(request, order_number):
     Handle successful checkouts
     """
     save_info = request.session.get('save_info')
+    marketing = request.session.get('marketing')
     order = get_object_or_404(Order, order_number=order_number)
 
     if request.user.is_authenticated:
         profile = UserProfile.objects.get(user=request.user)
+        # Save marketing value if True
+        if marketing:
+            profile.marketing = marketing
+            profile.save()
         # Attach the user's profile to the order
         order.user_profile = profile
         order.save()
