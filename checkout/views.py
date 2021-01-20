@@ -24,7 +24,7 @@ def cache_checkout_data(request):
             'cart': json.dumps(request.session.get('cart', {})),
             'save_info': request.POST.get('save_info'),
             'username': request.user,
-            'marketing': request.Post.get('marketing'),
+            'marketing': request.POST.get('marketing'),
         })
         return HttpResponse(status=200)
     except Exception as e:
@@ -121,7 +121,7 @@ def checkout(request):
                 'ship_state': profile.defaultship_state,
                 'ship_zipcode': profile.defaultship_zipcode,
                 'ship_phone_number': profile.defaultship_phone_number,
-                'marketing': profile.marketing,
+                #'marketing': profile.marketing,
             })
         except UserProfile.DoesNotExist:
             order_form = OrderForm()
@@ -157,14 +157,21 @@ def checkout_success(request, order_number):
     """
     save_info = request.session.get('save_info')
     marketing = request.session.get('marketing')
+    #if marketing == "true":
+    #    return True
+    #elif marketing == "false":
+    #    return None
+    #else:
+    #    return
+
     order = get_object_or_404(Order, order_number=order_number)
 
     if request.user.is_authenticated:
         profile = UserProfile.objects.get(user=request.user)
         # Save marketing value if True
-        if marketing:
-            profile.marketing = marketing
-            profile.save()
+        #if marketing:
+        #    profile.marketing = marketing
+        #    profile.save()
         # Attach the user's profile to the order
         order.user_profile = profile
         order.save()
