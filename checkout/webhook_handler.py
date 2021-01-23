@@ -47,11 +47,10 @@ class StripeWH_Handler:
         Handle the payment_intent.succeeded webhook from Stripe
         """
         intent = event.data.object
-        print(intent)
         pid = intent.id
         cart = intent.metadata.cart
         save_info = intent.metadata.save_info
-        marketing = intent.metadata.marketing
+        marketing = bool(intent.metadata.marketing)
 
         billing_details = intent.charges.data[0].billing_details
         shipping_details = intent.shipping
@@ -68,6 +67,10 @@ class StripeWH_Handler:
         username = intent.metadata.username
         if username != 'AnonymousUser':
             profile = UserProfile.objects.get(user__username=username)
+            # Save marketing value if True
+            if marketing:
+                profile.marketing = marketing
+                profile.save()
             if save_info:
                 profile.defaultship_full_name = shipping_details.name
                 profile.defaultship_street_address1 = shipping_details.address.line1
@@ -76,7 +79,6 @@ class StripeWH_Handler:
                 profile.defaultship_state = shipping_details.address.state
                 profile.defaultship_zipcode = shipping_details.address.postal_code
                 profile.defaultship_phone_number = shipping_details.phone
-                profile.marketing = marketing
                 profile.save()
 
         order_exists = False

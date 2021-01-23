@@ -121,7 +121,6 @@ def checkout(request):
                 'ship_state': profile.defaultship_state,
                 'ship_zipcode': profile.defaultship_zipcode,
                 'ship_phone_number': profile.defaultship_phone_number,
-                #'marketing': profile.marketing,
             })
         except UserProfile.DoesNotExist:
             order_form = OrderForm()
@@ -156,25 +155,21 @@ def checkout_success(request, order_number):
     Handle successful checkouts
     """
     save_info = request.session.get('save_info')
-    marketing = request.session.get('marketing')
-    #if marketing == "true":
-    #    return True
-    #elif marketing == "false":
-    #    return None
-    #else:
-    #    return
+    marketing_string = request.session.get('marketing')
+    marketing = bool(marketing_string)
 
     order = get_object_or_404(Order, order_number=order_number)
 
     if request.user.is_authenticated:
         profile = UserProfile.objects.get(user=request.user)
-        # Save marketing value if True
-        #if marketing:
-        #    profile.marketing = marketing
-        #    profile.save()
         # Attach the user's profile to the order
         order.user_profile = profile
         order.save()
+
+        # Save marketing value if True
+        if marketing:
+            profile.marketing = marketing
+            profile.save()
 
         # Save the user's info
         if save_info:

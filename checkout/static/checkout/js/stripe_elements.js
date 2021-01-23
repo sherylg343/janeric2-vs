@@ -51,7 +51,6 @@ form.addEventListener('submit', function(ev) {
 
    var saveInfo = Boolean($('#id-save-info').prop('checked'));
    var marketingBox = Boolean($('#id_marketing').prop('checked'));
-   console.log(marketingBox);
     // From using {% csrf_token %} in the form
     var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
     var postData = {
@@ -60,7 +59,6 @@ form.addEventListener('submit', function(ev) {
         'save_info': saveInfo,
         'marketing': marketingBox,
     };
-    console.log(postData);
     var url = '/checkout/cache_checkout_data/';
   
     $.post(url, postData).done(function () {

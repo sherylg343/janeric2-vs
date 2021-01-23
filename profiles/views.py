@@ -26,6 +26,7 @@ def profile(request):
     else:
         form = UserProfileForm(instance=profile)
     orders = profile.orders.all()
+    email = profile.user.email
 
     template = 'profiles/profile.html'
     context = {
@@ -35,6 +36,7 @@ def profile(request):
         'orders': orders,
         'on_profile_page': True,
         'marketing': profile.marketing,
+        'email': email,
     }
 
     return render(request, template, context)
