@@ -15,8 +15,8 @@ $(document).ready(function() {
     });
 
     $('#id_bill_state').css('color', '#c3ccd3');
-    /* .on('change') didn't work for bill_state */
-    $('#id_bill_state').change(function() {
+    
+    $('#id_bill_state').on('change', function() {
         $('#id_bill_state').css('color', '#47646f'); 
     });
 });

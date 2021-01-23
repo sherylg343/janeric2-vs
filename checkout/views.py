@@ -112,6 +112,8 @@ def checkout(request):
     if request.user.is_authenticated:
         try:
             profile = UserProfile.objects.get(user=request.user)
+            marketing_value = profile.marketing
+            full_name = profile.defaultship_full_name
             order_form = OrderForm(initial={
                 'ship_full_name': profile.defaultship_full_name,
                 'email': profile.user.email,
@@ -145,6 +147,8 @@ def checkout(request):
         'bill_state': bill_state,
         'ship_zipcode': ship_zipcode,
         'bill_zipcode': bill_zipcode,
+        'marketing': marketing_value,
+        'full_name': full_name,
     }
 
     return render(request, template, context)

@@ -137,6 +137,7 @@ $('input[name=same-as-ship]:checkbox').change(function() {
         billStreet2.val(shipStreet2.val());
         billCity.val(shipCity.val());
         billState.val(shipState.val());
+        $(billState).css('color', '#47646f'); 
         billZipCode.val(shipZipCode.val());
         billPhone.val(shipPhone.val());
     } else {
