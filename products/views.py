@@ -13,12 +13,17 @@ def all_products(request):
     products = Product.objects.all()
     query = None
     categories = None
-
+    division = None
     if request.GET:
         if 'category' in request.GET:
             categories = request.GET['category'].split(',')
             products = products.filter(category__name__in=categories)
             categories = Category.objects.filter(name__in=categories)
+            for c in categories:
+                if c.get_division != division:
+                    division = c.division
+                else:
+                    return
 
         if 'q' in request.GET:
             query = request.GET['q']
@@ -34,6 +39,7 @@ def all_products(request):
         'products': products,
         'search_term': query,
         'current_categories': categories,
+        'division': division,
     }
     return render(request, 'products/products.html', context)
 
