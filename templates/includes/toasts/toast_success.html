@@ -12,7 +12,7 @@
             <div class="col">
                 {{ message }}
                 <hr class="mt-1 mb-3">
-            </div>
+            </div>`
         </div>
         {% if grand_total and not on_profile_page %}
             <p class="bg-white py-1">Your Shopping Cart ({{ product_count }})</p>
@@ -29,7 +29,7 @@
                         <div class="col-9">
                             <p class="my-0"><strong>{{ item.product.product_family.name }}</strong></p>
                             {% if item.product.size %}
-                                <p class="my-0 small">Size: {{ item.product.size }}</p>
+                                <p class="my-0 small">Size: {{ item.product.get_size_display }}</p>
                             {% endif %}
                             {% if item.product.pack %}
                                 <p class="my-0 small">Case of {{ item.product.pack }}</p>
@@ -50,8 +50,10 @@
                             Spend <strong>${{ free_shipping_delta }}</strong> more to get free next day delivery!
                         </p>
                     {% endif %}
+                    {% if not on_cart_page %}
                     <a href="{% url 'view_cart' %}" class="btn btn-large btn-ltblue white-text">
                         <span class="text-uppercase">View Cart</span>
+                    {% endif %}
                     </a>
                 </div>
             </div>

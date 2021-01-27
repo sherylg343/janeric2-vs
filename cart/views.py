@@ -9,7 +9,12 @@ from products.models import Product
 def view_cart(request):
     """ A view that renders the cart contents page """
 
-    return render(request, 'cart/cart.html')
+    template = 'cart/cart.html'
+    context = {
+        'on_cart_page': True,
+    }
+
+    return render(request, template, context)
 
 
 def add_to_cart(request, product_id):
@@ -28,7 +33,6 @@ def add_to_cart(request, product_id):
         messages.success(request, f'Added {product.name} to your cart')
 
     request.session['cart'] = cart
-    print(request.session['cart'])
     return redirect(redirect_url)
 
 
