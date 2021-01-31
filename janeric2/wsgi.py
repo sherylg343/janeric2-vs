@@ -1,5 +1,5 @@
 """
-WSGI config for janeric project.
+WSGI config for janeric2 project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

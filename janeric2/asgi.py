@@ -1,5 +1,5 @@
 """
-ASGI config for janeric project.
+ASGI config for janeric2 project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
