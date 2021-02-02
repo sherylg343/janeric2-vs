@@ -46,8 +46,10 @@
                                 {{ form.defaultship_zipcode | as_crispy_field }}
                                 {{ form.defaultship_phone_number | as_crispy_field }}
                                 {% if marketing %}
-                                    {{ form.marketing | as_crispy_field }}
-                                    <label class="small" for="id_marketing">Interested in receiving promotional offers?</label>
+                                    <div class="form-check text-left">
+                                        {{ form.marketing }}
+                                        <label for="id_marketing" class="form-check-label">Send me special offers</label>  
+                                    </div>
                                 {% endif %}
                                 <button class="btn btn-ltblue white-text text-uppercase float-center">Update Information</button>
                             </fieldset>
