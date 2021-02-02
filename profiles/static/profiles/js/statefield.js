@@ -11,7 +11,16 @@ const profileShipZipCode = $('#id_defaultship_zipcode');
 const profileShipPhone = $('#id_defaultship_phone_number');
 
 $(document).ready(function() {
-    if ($(profileShipFullName).val('')) {
+    if ($(profileShipFullName).val() != '' ) {
+        $(profileShipFullName).css('color', '#47646f');
+        $(profileShipCompName).css('color', '#47646f');
+        $(profileShipStreet1).css('color', '#47646f');
+        $(profileShipStreet2).css('color', '#47646f');
+        $(profileShipCity).css('color', '#47646f');
+        $(profileShipState).css('color', '#47646f');
+        $(profileShipZipCode).css('color', '#47646f');
+        $(profileShipPhone).css('color', '#47646f');        
+    } else {
         $(profileShipFullName).css('color', '#c3ccd3');
         $(profileShipCompName).css('color', '#c3ccd3');
         $(profileShipStreet1).css('color', '#c3ccd3');
@@ -20,18 +29,9 @@ $(document).ready(function() {
         $(profileShipState).css('color', '#c3ccd3');
         $(profileShipZipCode).css('color', '#c3ccd3');
         $(profileShipPhone).css('color', '#c3ccd3');
-    } else {
-        $(profileShipFullName).css('color', '#47646f');
-        $(profileShipCompName).css('color', '#47646f');
-        $(profileShipStreet1).css('color', '#47646f');
-        $(profileShipStreet2).css('color', '#47646f');
-        $(profileShipCity).css('color', '#47646f');
-        $(profileShipState).css('color', '#47646f');
-        $(profileShipZipCode).css('color', '#47646f');
-        $(profileShipPhone).css('color', '#47646f');
     }
 
     $(profileShipState).change(function() {
         $(this).css('color', '#47646f');
     });
-});
+}); 
