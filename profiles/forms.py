@@ -7,8 +7,7 @@ class UserProfileForm(forms.ModelForm):
     defaultship_zipcode = USZipCodeField()
     """ Widget code from Nafees Anwar on stackoverflow 4/30/19 """
     defaultship_state = forms.CharField(widget=USStateSelect)
-    marketing = forms.BooleanField(widget=forms.CheckboxInput(
-        attrs={'class': 'form-check-input'}))
+    marketing = forms.BooleanField(widget=forms.CheckboxInput, required=False)
 
     class Meta:
         model = UserProfile
@@ -41,3 +40,4 @@ class UserProfileForm(forms.ModelForm):
             self.fields[field].widget.attrs['placeholder'] = placeholder
             self.fields[field].widget.attrs['class'] = 'input-border profile-form-input'
             self.fields[field].label = False
+            self.fields['marketing'].widget.attrs['class'] = 'form-check-input'
