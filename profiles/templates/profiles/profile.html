@@ -17,7 +17,7 @@
 
 {% block content %}
 <main>
-    <div class="container-fluid">
+    <div class="container-fluid cover-row">
         <div class="row">
             <div class="d-none d-lg-block col-lg-4 col-xl-3 pt-5 bg-blush side-menu-col">
                 {% include 'includes/side-menu.html' %}
@@ -48,7 +48,7 @@
                                 {% if marketing %}
                                     <div class="form-check text-left">
                                         {{ form.marketing }}
-                                        <label for="id_marketing" class="form-check-label">Send me special offers</label>  
+                                        <label for="id_marketing" class="form-check-label mb-3">Send me special offers</label>  
                                     </div>
                                 {% endif %}
                                 <button class="btn btn-ltblue white-text text-uppercase float-center">Update Information</button>
