@@ -48,5 +48,12 @@ $('#prod-detail-select').change( function() {
     });
 })
 
-
+//Scroll to top when click Delete link for modal
+$(".my-modal").click(function() {
+    window.scrollTo(0,0);
+    const productId = $(this).attr("data-id");
+    const productIdInteger = parseInt(productId);
+    const url = `/products/delete/${productIdInteger}/`;
+    $("#delete-link").attr("href", url);
+})
 </script>

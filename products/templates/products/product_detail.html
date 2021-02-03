@@ -12,7 +12,7 @@
 
 {% block content %}
 <main>
-    <div class="container-fluid cover-row">
+    <div class="container-fluid">
         <div class="row">
             <div class="d-none d-lg-block col-lg-4 col-xl-3 pt-5 bg-blush side-menu-col">
                 {% include 'includes/side-menu.html' %}
@@ -72,7 +72,7 @@
                             {% if request.user.is_superuser %}
                                 <small class="col-12 mt-3 ml-md-n5 ml-lg-n3 ml-xl-n5 text-center">
                                     <a href="{% url 'edit_product' product.id %}">Edit</a> | 
-                                    <a href="#myModal" class="trigger-btn" data-toggle="modal">Delete</a>
+                                    <a href="#myModal" class="trigger-btn my-modal" data-toggle="modal" data-id="{{ product.id }}">Delete</a>
                                 </small>
                                 {% include 'products/delete-confirmation-modal.html' %}
                             {% endif %}
