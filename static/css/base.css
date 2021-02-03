@@ -241,7 +241,7 @@ a.category-badge > span.badge:hover {
     min-height: 100vh;
     top: 6rem;
     position: fixed;
-    z-index: 10000;
+    z-index: 1020;
 }
 
 .side-menu a {
@@ -488,7 +488,7 @@ color: var(--clr-navy);
 /* ---------- Containers -------------*/
 footer {
     position: relative;
-    z-index: 20000;
+    z-index: 1030;
 }
 
 .footer-main {
@@ -747,6 +747,15 @@ margin-top: -.3rem;
     }
     .headline {
         padding-top: 0;
+    }
+    .modal-backdrop {
+        display: none;
+        z-index: 1040 !important;
+    }
+
+    .modal-content {
+        margin: 2px auto;
+        z-index: 1100 !important;
     }
 }
 
