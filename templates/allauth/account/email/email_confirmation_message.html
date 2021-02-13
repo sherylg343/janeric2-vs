@@ -1,0 +1,57 @@
+{% load i18n %}{% autoescape off %}
+{% block content %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <!--[if !mso]><!-- -->
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <!--<![endif]-->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&Valera+Round&display=swap">
+        <title>Janeric Email Confirmation</title>
+    </head>
+    <body>
+        <header class="container-fluid">
+            <div class="col-12 col-lg-4 offset-lg-4 my-auto py-1 py-lg-0 text-center">        
+                <img src="https://janeric2.s3.us-east-2.amazonaws.com/media/janeric-banner-logo.png" alt="JANERIC" 
+                />
+                </div>
+        </header>
+        <main>
+            <div class="container-fluid">
+                {% blocktrans with site_name=current_site.name %}
+                <h6 class="text-left">
+                    Welcome to {{ site_name }}!
+                </h6>
+                {% endblocktrans %}
+                <div class="row">
+                    <div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+                        {% block innercontent %}{% autoescape off %}{% user_display user as user_display %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}
+                            <p class="pt-3 ml-2 mr-2">You're receiving this e-mail because user <strong>{{ user_display }}</strong> has given your e-mail address to register an account on {{ site_domain }}. Please use the button below to confirm we have the correct email address. This link will be valid for 2 days, after which you will need to sign in again.
+                        </p>
+                        <a src="{{ activate_url }}" class="btn btn-lg btn-ltblue white-text">Confirm Your Email</a>
+                    </div>
+                    <div class="col-12 d-flex justify-content-center">
+                        <p>
+                            Button not working? Try pasting this link into your browser.
+                        </p>
+                        <p>
+                            <a src="{{ activate_url }}">{{ activate_url }}
+                            </a>
+                        </p>
+                        {% endblocktrans %}{% endautoescape %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <p>
+                <small>Sent by Janeric LLC PO Box 2567, Petaluma, CA  94953</small>
+            </p>
+        </footer>
+    </body>
+</html>
+{% endautoescape %}{% endblock %}
+
+
