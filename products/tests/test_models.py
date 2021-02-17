@@ -1,39 +1,48 @@
 from django.test import TestCase
 from products.models import Category, Product_Family, Product
-from django.utils import timezone
 
 
 class CategoryTest(TestCase):
+    def setUp(self):
+        self.category = Category.objects.create(
+            name="test category name", division="test division")
 
-    def create_category(self, name="category test name", division="test division"):
-        return Category.objects.create(name="category test name", division="test division", created_at=timezone.now())
-
-    def test_category_creation(self):
-        c = self.create_category()
+    def test_assert_is_instance(self):
+        c = Category.objects.get(pk=1)
         self.assertTrue(isinstance(c, Category))
-        self.assertEqual(c.__unicode__(), c.name)
-        self.assertEqual(c.__unicode__(), c.division)
+
+    def test_category_methods(self):
+        c = Category.objects.get(pk=1)
+        self.assertEqual(c.__str__(), c.name)
+        self.assertEqual(c.get_name(), c.name)
+        self.assertEqual(c.get_division(), c.division)
 
 
 class Product_FamilyTest(TestCase):
+    def setUp(self):
+        self.product_family = Product_Family.objects.create(
+            name="test pf name", brand_name="test brand name")
 
-    def create_product_family(self, name="pf test name", brand_name="test brand name"):
-        return Product_Family.objects.create(name="pf test name", division="test brand_name", created_at=timezone.now())
-
-    def test_product_family_creation(self):
-        f = self.create_product_family()
+    def test_assert_is_instance(self):
+        f = Product_Family.objects.get(pk=1)
         self.assertTrue(isinstance(f, Product_Family))
-        self.assertEqual(f.__unicode__(), f.name)
-        self.assertEqual(f.__unicode__(), f.brand_name)
+
+    def test_product_family_methods(self):
+        f = Product_Family.objects.get(pk=1)
+        self.assertEqual(f.__str__(), f.name)
+        self.assertEqual(f.get_name(), f.name)
+        self.assertEqual(f.get_brand_name(), f.brand_name)
 
 
 class ProductTest(TestCase):
+    def setUp(self):
+        self.product = Product.objects.create(
+            name="test product name")
 
-    def create_product(self, name="product test name"):
-        return Product.objects.create(
-            name="product test name", created_at=timezone.now())
-
-    def test_product_creation(self):
-        p = self.create_product()
+    def test_assert_is_instance(self):
+        p = Product.objects.get(pk=1)
         self.assertTrue(isinstance(p, Product))
-        self.assertEqual(p.__unicode__(), p.name)
+
+    def test_product_method(self):
+        p = Product.objects.get(pk=1)
+        self.assertEqual(p.__str__(), p.name)

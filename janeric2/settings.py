@@ -130,16 +130,10 @@ WSGI_APPLICATION = 'janeric2.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
 if 'DATABASE_URL' in os.environ:
     DATABASES = {
         'default': {
             'NAME': dj_database_url.parse(os.environ.get('DATABASE_URL')),
-            'TEST': {
-                'NAME': 'mytestdatabase',
-                'USER': os.environ.get('SUPERUSER_NAME'),
-                'PASSWORD': os.environ.get('SUPERUSER_PASS'),
-            }
         }
     }
 else:

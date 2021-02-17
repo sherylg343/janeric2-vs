@@ -16,7 +16,7 @@ class AllProductsViewTestCase(ViewTestMixin, TestCase):
             return self.data_payload
         return {'foo': 'bar', }
 
-    def get_name(self):
+    def test_get_name(self):
         resp = self.get_view_name()
         self.assertEqual(resp, 'all_products')
 
@@ -27,4 +27,3 @@ class AllProductsViewTestCase(ViewTestMixin, TestCase):
         self.data_payload = {"name": product.name}
 
         self.is_callable(message="Is callable with product name")
-        
