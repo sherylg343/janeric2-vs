@@ -1,29 +1,41 @@
-from django.test import TestCase, RequestFactory
+from django.test import TestCase, Client
 from django.urls import reverse
 
 from django_libs.tests.mixins import ViewTestMixin
-from mixer.backend.django import mixer
 
 from products.views import all_products
-from products.models import Product
+from .factories import (
+    CategoryFactory,
+    Product_FamilyFactory,
+    ProductFactory,
+)
 
 
 class AllProductsViewTestCase(ViewTestMixin, TestCase):
     """ Tests for all_products view """
+    def setUp(self):
+        self.category = CategoryFactory()
+        self.product_family = Product_FamilyFactory()
+        self.response = self.client.get(self.get_url())
 
-    def get_data_payload(self):
-        if hasattr(self, 'data_payload'):
-            return self.data_payload
-        return {'foo': 'bar', }
-
-    def test_get_name(self):
-        resp = self.get_view_name()
-        self.assertEqual(resp, 'all_products')
+    def get_view_name(self):
+        return 'products'
 
     def test_get(self):
-        product = mixer.blend(Product, name='test gel')
-        assert product.name == "test gel"
+        self.is_callable()
 
-        self.data_payload = {"name": product.name}
+    def test_view_uses_correct_template(self):
+        self.assertTemplateUsed(self.response, 'products/products.html')
 
-        self.is_callable(message="Is callable with product name")
+    def test_view_products(self):
+        product1 = ProductFactory(
+            category=self.category, product_family=self.product_family)
+        product2 = ProductFactory(
+            category=self.category, product_family=self.product_family)
+
+        response = self.client.get(self.get_url())
+
+        self.assertContains(response, product1.name)
+        self.assertContains(response, product1.product_family)
+        self.assertContains(response, product2.name)
+        self.assertContains(response, product2.product_family)
