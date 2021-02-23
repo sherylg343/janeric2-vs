@@ -10,7 +10,7 @@ class CategoryFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = 'products.Category'
 
-    name = factory.Faker('word')
+    name = factory.Sequence(lambda n: 'Category{0}' .format(n))
     division = factory.Faker('word')
 
 
@@ -18,7 +18,7 @@ class Product_FamilyFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = 'products.Product_Family'
 
-    name = factory.Faker('word')
+    name = factory.Sequence(lambda n: 'Product_Family{0}' .format(n))
     brand_name = factory.Faker('word')
 
 

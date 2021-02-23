@@ -1,0 +1,20 @@
+[
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$216000$Bz1ZQZMmhuSj$snIg7xpdXvpwEkmFtZuQQ36pDUZDbym22DI+07Ra3bU=",
+        "last_login": "2021-01-23T20:00:19.658Z",
+        "is_superuser": true,
+        "username": "admin111",
+        "first_name": "",
+        "last_name": "",
+        "email": "sheryl.s.goldberg@gmail.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2021-01-13T18:30:50.557Z",
+        "groups": [],
+        "user_permissions": []
+    }
+}
+]
