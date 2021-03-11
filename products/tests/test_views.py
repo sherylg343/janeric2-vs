@@ -1,9 +1,8 @@
 from django.test import TestCase, Client, RequestFactory
-from django.urls import reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 
 from django_libs.tests.mixins import ViewTestMixin
 
-from products.views import all_products
 from .factories import (
     CategoryFactory,
     Product_FamilyFactory,
@@ -11,6 +10,7 @@ from .factories import (
 )
 from products.models import Category, Product_Family, Product
 from django.contrib.auth.models import User
+from products.forms import ProductForm, ProductFamilyForm
 
 from django.contrib.messages import get_messages
 
@@ -167,6 +167,60 @@ class AddProductViewTestCase(ViewTestMixin, TestCase):
         self.assertRedirects(
             response, '/', status_code=302, target_status_code=200, fetch_redirect_response=True)
 
+    def test_add_product_post_and_form_valid(self):
+        user = User.objects.create_superuser(username='admin')
+        self.client.force_login(user=user)
+        count1 = Product.objects.count()
+        # Post and Form is Valid
+        data1 = {
+            'name': 'Test Product 111',
+            'category': '3',
+            'product_family': '5',
+            'size': '8oz.'
+        }
+        form = ProductForm(data=data1)
+        self.assertTrue(form.is_valid())
+        response = self.client.post(reverse('add_product'), data=data1)
+        # Site redirects after posting data
+        product_get = get_object_or_404(Product, name='Test Product 111')
+        product_get_id = product_get.id
+        self.assertRedirects(
+            response, '/products/{product_id}/'.format(product_id=product_get_id), status_code=302, target_status_code=200, fetch_redirect_response=True)
+        # Success message appears
+        messages = list(get_messages(response.wsgi_request))
+        self.assertEqual(len(messages), 1)
+        for m in messages:
+            self.assertEqual(str(m), "Successfully added product!")
+        # Confirm post added product to database
+        count2 = Product.objects.count()
+        calc2 = count1 + 1
+        self.assertEqual(count2, calc2)
+
+    def test_add_product_post_and_form_not_valid(self):
+        user = User.objects.create_superuser(username='admin')
+        self.client.force_login(user=user)
+        count1 = Product.objects.count()
+        # Post and Form Not Valid With Message
+        data2 = {
+            'name': "",
+            'category': '3',
+            'product_family': '5',
+        }
+        # Form is not valid and try to post
+        form = ProductForm(data=data2)
+        self.assertFalse(form.is_valid())
+        response = self.client.post(reverse('add_product'), data=data2)
+        # Error message appears
+        messages = list(get_messages(response.wsgi_request))
+        self.assertEqual(len(messages), 1)
+        for m in messages:
+            self.assertEqual(
+            str(m), "Failed to add product. Please ensure the form is valid.")
+        # Confirm post added product to database
+        count2 = Product.objects.count()
+        calc2 = count1 + 1
+        self.assertNotEqual(count2, calc2)
+
     def test_database_add(self):
         user = User.objects.create_superuser(username='admin')
         self.client.force_login(user=user)
@@ -210,6 +264,54 @@ class EditProductViewTestCase(ViewTestMixin, TestCase):
             self.get_url(view_kwargs={'product_id': pk}))
         self.assertRedirects(
             response, '/', status_code=302, target_status_code=200, fetch_redirect_response=True)
+
+    def test_edit_product_post_and_form_valid(self):
+        user = User.objects.create_superuser(username='admin')
+        self.client.force_login(user=user)
+        # Post and Form is Valid
+        product = Product.objects.get_or_create(id=3)
+        data5 = {
+            'name': 'Test Change Product Name',
+        }
+        form = ProductForm(data=data5, instance=product)
+        self.assertTrue(form.is_valid())
+        response = self.client.post(reverse('edit_product'), data=data5)
+        # Site redirects after posting data
+        product_get = get_object_or_404(Product, name='Test Change Product Name')
+        product_get_id = product_get.id
+        self.assertRedirects(
+            response, '/products/{product_id}/'.format(product_id=product_get_id), status_code=302, target_status_code=200, fetch_redirect_response=True)
+        # Success message appears
+        messages = list(get_messages(response.wsgi_request))
+        self.assertEqual(len(messages), 1)
+        for m in messages:
+            self.assertEqual(str(m), "Successfully updated product!")
+
+    def test_edit_product_post_and_form_not_valid(self):
+        user = User.objects.create_superuser(username='admin')
+        self.client.force_login(user=user)
+        # Post and Form Not Valid With Message
+        product = Product.objects.get_or_create(pk=3)
+        print(product)
+        update_url = reverse('edit_product', kwargs={'product_id': '3'})
+        # Get the form
+        r = self.client.get(update_url)
+        # retrieve form data as dict
+        form = r.context['form']
+        data = form.initial
+        # manipulate some data
+        data['name'] = ''
+        # Post to form
+        r = self.client.post(update_url, data)
+        # Retrieve again and check for change
+        r = self.client.get(update_url)
+        self.assertNotEqual(r.context['form'].initial['name'], '')
+        # Error message appears
+        messages = list(get_messages(r.wsgi_request))
+        self.assertEqual(len(messages), 1)
+        for m in messages:
+            self.assertEqual(
+            str(m), "Failed to update product. Please ensure the form is valid.")
 
     def test_database_update(self):
         user = User.objects.create_superuser(username='admin')
@@ -351,6 +453,54 @@ class AddProductFamilyViewTestCase(ViewTestMixin, TestCase):
         self.assertRedirects(
             response, '/', status_code=302, target_status_code=200, fetch_redirect_response=True)
 
+    def test_add_product_family_post_and_form_valid(self):
+        user = User.objects.create_superuser(username='admin')
+        self.client.force_login(user=user)
+        count1 = Product_Family.objects.count()
+        # Post and Form is Valid
+        data3 = {
+            'name': 'Test Product Family 75',
+            'brand_name': 'Test Brand '
+        }
+        form = ProductFamilyForm(data=data3)
+        self.assertTrue(form.is_valid())
+        response = self.client.post(reverse('add_product_family'), data=data3)
+        # Site redirects after posting data
+        self.assertRedirects(
+            response, '/products/product_families/', status_code=302, target_status_code=200, fetch_redirect_response=True)
+        # Success message appears
+        messages = list(get_messages(response.wsgi_request))
+        self.assertEqual(len(messages), 1)
+        for m in messages:
+            self.assertEqual(str(m), "Successfully added product family!")
+        # Confirm post added product family to database
+        count2 = Product_Family.objects.count()
+        calc2 = count1 + 1
+        self.assertEqual(count2, calc2)
+
+    def test_add_product_family_post_and_form_not_valid(self):
+        user = User.objects.create_superuser(username='admin')
+        self.client.force_login(user=user)
+        count1 = Product_Family.objects.count()
+        # Post and Form Not Valid With Message
+        data4 = {
+            'name': "",
+        }
+        # Form is not valid and try to post
+        form = ProductFamilyForm(data=data4)
+        self.assertFalse(form.is_valid())
+        response = self.client.post(reverse('add_product_family'), data=data4)
+        # Error message appears
+        messages = list(get_messages(response.wsgi_request))
+        self.assertEqual(len(messages), 1)
+        for m in messages:
+            self.assertEqual(
+            str(m), "Failed to add product family. Please ensure the form is valid.")
+        # Confirm post added product to database
+        count2 = Product_Family.objects.count()
+        calc2 = count1 + 1
+        self.assertNotEqual(count2, calc2)
+
     def test_database_add_product_family(self):
         user = User.objects.create_superuser(username='admin')
         self.client.force_login(user=user)
@@ -400,3 +550,25 @@ class EditProductFamilyViewTestCase(ViewTestMixin, TestCase):
         self.product_family4.save()
         self.assertEqual(
             self.product_family4.name, 'Product Family Name Changed')
+
+
+class ProductDetailViewTestCase(ViewTestMixin, TestCase):
+    """ Tests for all_products view """
+    def get_view_name(self):
+        return 'product_detail'
+
+    def test_get(self):
+        pk = 2
+        self.is_callable(kwargs={'product_id': pk})
+
+    def test_view_products(self):
+        category = CategoryFactory()
+        product_family = Product_FamilyFactory()
+        self.product99 = ProductFactory(
+            pk=99, category=category, product_family=product_family)
+
+        response = self.client.get(
+            self.get_url(view_kwargs={'product_id': 99}))
+
+        self.assertContains(response, self.product99.name)
+        self.assertContains(response, self.product99.product_family)
