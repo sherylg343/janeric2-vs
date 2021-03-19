@@ -1,5 +1,5 @@
 from django.test import TestCase, Client, RequestFactory
-from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.shortcuts import render, redirect, reverse
 
 from django_libs.tests.mixins import ViewTestMixin
 
@@ -172,8 +172,10 @@ class AddProductViewTestCase(ViewTestMixin, TestCase):
         self.client.force_login(user=user)
         count1 = Product.objects.count()
         # Post and Form is Valid
+        pk = 111
         data1 = {
             'name': 'Test Product 111',
+            'id': '111',
             'category': '3',
             'product_family': '5',
             'size': '8oz.'
@@ -182,8 +184,8 @@ class AddProductViewTestCase(ViewTestMixin, TestCase):
         self.assertTrue(form.is_valid())
         response = self.client.post(reverse('add_product'), data=data1)
         # Site redirects after posting data
-        product_get = get_object_or_404(Product, name='Test Product 111')
-        product_get_id = product_get.id
+        product_get = Product.objects.get_or_create(name='Test Product 111')
+        product_get_id = pk
         self.assertRedirects(
             response, '/products/{product_id}/'.format(product_id=product_get_id), status_code=302, target_status_code=200, fetch_redirect_response=True)
         # Success message appears
@@ -268,21 +270,47 @@ class EditProductViewTestCase(ViewTestMixin, TestCase):
     def test_edit_product_post_and_form_valid(self):
         user = User.objects.create_superuser(username='admin')
         self.client.force_login(user=user)
-        # Post and Form is Valid
-        product = Product.objects.get_or_create(id=3)
-        data5 = {
+        pk = 3
+        product = Product.objects.get_or_create(id=pk)
+        update_url = reverse('edit_product', kwargs={'product_id': pk})
+        # Get the form
+        r = self.client.get(update_url)
+        # retrieve form data as dict
+        form = r.context['form']
+        data = form.initial
+        name = data['name']
+        # Message appears when loading form
+        messages = list(get_messages(r.wsgi_request))
+        self.assertEqual(len(messages), 1)
+        for m in messages:
+            self.assertEqual(
+                str(m), 'You are editing {name}'.format(name=name))
+        # manipulate some dats
+        data4 = {
+            'id': pk,
             'name': 'Test Change Product Name',
+            'category': '3',
+            'product_family': '2',
+            'SKU': 'XYZ',
+            'image': 'gel.png',
+            'size': '8oz.',
+            'pack': '4',
+            'price': '3.99',
+            'description': "this is edit test",
         }
-        form = ProductForm(data=data5, instance=product)
-        self.assertTrue(form.is_valid())
-        response = self.client.post(reverse('edit_product'), data=data5)
+        # Post to form
+        r_p = self.client.post(update_url, data4)
+        # Form is valid
+        post_form = ProductForm(data=data4)
+        self.assertTrue(post_form.is_valid())
+        # Test ProductForm saves
+        product_updated = Product.objects.get_or_create(name='Test Product 111')
+        self.assertEqual(product_updated.name, 'Test Change Product Name')
         # Site redirects after posting data
-        product_get = get_object_or_404(Product, name='Test Change Product Name')
-        product_get_id = product_get.id
         self.assertRedirects(
-            response, '/products/{product_id}/'.format(product_id=product_get_id), status_code=302, target_status_code=200, fetch_redirect_response=True)
+            r_p, '/products/{product_id}/'.format(product_id=pk), status_code=302, target_status_code=200, fetch_redirect_response=True)
         # Success message appears
-        messages = list(get_messages(response.wsgi_request))
+        messages = list(get_messages(r_p.wsgi_request))
         self.assertEqual(len(messages), 1)
         for m in messages:
             self.assertEqual(str(m), "Successfully updated product!")
@@ -291,27 +319,46 @@ class EditProductViewTestCase(ViewTestMixin, TestCase):
         user = User.objects.create_superuser(username='admin')
         self.client.force_login(user=user)
         # Post and Form Not Valid With Message
-        product = Product.objects.get_or_create(pk=3)
-        print(product)
-        update_url = reverse('edit_product', kwargs={'product_id': '3'})
+        pk = 4
+        product = Product.objects.get_or_create(id=pk)
+        update_url = reverse('edit_product', kwargs={'product_id': pk})
         # Get the form
         r = self.client.get(update_url)
         # retrieve form data as dict
         form = r.context['form']
         data = form.initial
-        # manipulate some data
-        data['name'] = ''
-        # Post to form
-        r = self.client.post(update_url, data)
-        # Retrieve again and check for change
-        r = self.client.get(update_url)
-        self.assertNotEqual(r.context['form'].initial['name'], '')
-        # Error message appears
+        name = data['name']
+        # Message appears when loading form
         messages = list(get_messages(r.wsgi_request))
         self.assertEqual(len(messages), 1)
         for m in messages:
             self.assertEqual(
-            str(m), "Failed to update product. Please ensure the form is valid.")
+                str(m), 'You are editing {name}'.format(name=name))
+        # manipulate some data
+        data2 = {
+            'name': '',
+            'category': '3',
+            'product_family': '2',
+            'id': pk,
+            'SKU': 'XYZ',
+            'image': 'gel.png',
+            'size': '8oz.',
+            'pack': '4',
+            'price': '3.99',
+            'description': "this is edit test",
+        }
+        # Post to form
+        r_p = self.client.post(update_url, data2)
+        # Form not valid
+        post_form = ProductForm(data=data2)
+        self.assertFalse(post_form.is_valid())
+        # Error message appears
+        messages = list(get_messages(r_p.wsgi_request))
+        self.assertEqual(len(messages), 1)
+        for m in messages:
+            self.assertEqual(
+                str(m), 'Failed to update product. '
+                'Please ensure the form is valid.')
 
     def test_database_update(self):
         user = User.objects.create_superuser(username='admin')
