@@ -14,7 +14,6 @@ from products.forms import ProductForm, ProductFamilyForm
 
 from django.contrib.messages import get_messages
 
-import json
 
 client = Client()
 

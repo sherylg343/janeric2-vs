@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=emulateIE7" />
-    <title>Coverage for products/views.py: 94%</title>
+    <title>Coverage for products/views.py: 99%</title>
     <link rel="icon" sizes="32x32" href="favicon_32.png">
     <link rel="stylesheet" href="style.css" type="text/css">
     <script type="text/javascript" src="jquery.min.js"></script>
@@ -18,13 +18,13 @@
 <div id="header">
     <div class="content">
         <h1>Coverage for <b>products/views.py</b> :
-            <span class="pc_cov">94%</span>
+            <span class="pc_cov">99%</span>
         </h1>
         <img id="keyboard_icon" src="keybd_closed.png" alt="Show keyboard shortcuts" />
         <h2 class="stats">
             122 statements &nbsp;
-            <button type="button" class="run shortkey_r button_toggle_run" title="Toggle lines run">115 run</button>
-            <button type="button" class="mis show_mis shortkey_m button_toggle_mis" title="Toggle lines missing">7 missing</button>
+            <button type="button" class="run shortkey_r button_toggle_run" title="Toggle lines run">121 run</button>
+            <button type="button" class="mis show_mis shortkey_m button_toggle_mis" title="Toggle lines missing">1 missing</button>
             <button type="button" class="exc show_exc shortkey_x button_toggle_exc" title="Toggle lines excluded">0 excluded</button>
         </h2>
     </div>
@@ -198,13 +198,13 @@
     <p id="t144" class="pln"><span class="n"><a href="#t144">144</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t145" class="run"><span class="n"><a href="#t145">145</a></span><span class="t">    <span class="nam">product_family</span> <span class="op">=</span> <span class="nam">get_object_or_404</span><span class="op">(</span><span class="nam">Product_Family</span><span class="op">,</span> <span class="nam">pk</span><span class="op">=</span><span class="nam">product_family_id</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t146" class="run"><span class="n"><a href="#t146">146</a></span><span class="t">    <span class="key">if</span> <span class="nam">request</span><span class="op">.</span><span class="nam">method</span> <span class="op">==</span> <span class="str">'POST'</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t147" class="mis show_mis"><span class="n"><a href="#t147">147</a></span><span class="t">        <span class="nam">form</span> <span class="op">=</span> <span class="nam">ProductFamilyForm</span><span class="op">(</span><span class="nam">request</span><span class="op">.</span><span class="nam">POST</span><span class="op">,</span> <span class="nam">instance</span><span class="op">=</span><span class="nam">product_family</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t148" class="mis show_mis"><span class="n"><a href="#t148">148</a></span><span class="t">        <span class="key">if</span> <span class="nam">form</span><span class="op">.</span><span class="nam">is_valid</span><span class="op">(</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t149" class="mis show_mis"><span class="n"><a href="#t149">149</a></span><span class="t">            <span class="nam">form</span><span class="op">.</span><span class="nam">save</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t150" class="mis show_mis"><span class="n"><a href="#t150">150</a></span><span class="t">            <span class="nam">messages</span><span class="op">.</span><span class="nam">success</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="str">'Successfully updated product family!'</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t151" class="mis show_mis"><span class="n"><a href="#t151">151</a></span><span class="t">            <span class="key">return</span> <span class="nam">redirect</span><span class="op">(</span><span class="nam">reverse</span><span class="op">(</span><span class="str">'product_families'</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t147" class="run"><span class="n"><a href="#t147">147</a></span><span class="t">        <span class="nam">form</span> <span class="op">=</span> <span class="nam">ProductFamilyForm</span><span class="op">(</span><span class="nam">request</span><span class="op">.</span><span class="nam">POST</span><span class="op">,</span> <span class="nam">instance</span><span class="op">=</span><span class="nam">product_family</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t148" class="run"><span class="n"><a href="#t148">148</a></span><span class="t">        <span class="key">if</span> <span class="nam">form</span><span class="op">.</span><span class="nam">is_valid</span><span class="op">(</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t149" class="run"><span class="n"><a href="#t149">149</a></span><span class="t">            <span class="nam">form</span><span class="op">.</span><span class="nam">save</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t150" class="run"><span class="n"><a href="#t150">150</a></span><span class="t">            <span class="nam">messages</span><span class="op">.</span><span class="nam">success</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="str">'Successfully updated product family!'</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t151" class="run"><span class="n"><a href="#t151">151</a></span><span class="t">            <span class="key">return</span> <span class="nam">redirect</span><span class="op">(</span><span class="nam">reverse</span><span class="op">(</span><span class="str">'product_families'</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t152" class="pln"><span class="n"><a href="#t152">152</a></span><span class="t">        <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t153" class="mis show_mis"><span class="n"><a href="#t153">153</a></span><span class="t">            <span class="nam">messages</span><span class="op">.</span><span class="nam">error</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t153" class="run"><span class="n"><a href="#t153">153</a></span><span class="t">            <span class="nam">messages</span><span class="op">.</span><span class="nam">error</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p id="t154" class="pln"><span class="n"><a href="#t154">154</a></span><span class="t">                           <span class="op">(</span><span class="str">'Failed to update product family. '</span>&nbsp;</span><span class="r"></span></p>
     <p id="t155" class="pln"><span class="n"><a href="#t155">155</a></span><span class="t">                            <span class="str">'Please ensure the form is valid.'</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t156" class="pln"><span class="n"><a href="#t156">156</a></span><span class="t">    <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
@@ -267,7 +267,7 @@
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v5.4</a>,
-            created at 2021-03-20 22:46 +0000
+            created at 2021-03-21 02:34 +0000
         </p>
     </div>
 </div>
