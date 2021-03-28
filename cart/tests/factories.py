@@ -1,9 +1,8 @@
 # From hacksoft.io/improve-your-tests-django-fakes-and-factories/
 import factory
 from faker import Faker
+import random
 from factory import lazy_attribute
-
-fake = Faker()
 
 
 class CategoryFactory(factory.django.DjangoModelFactory):
@@ -29,3 +28,4 @@ class ProductFactory(factory.django.DjangoModelFactory):
     category = factory.SubFactory(CategoryFactory)
     product_family = factory.SubFactory(Product_FamilyFactory)
     name = factory.Sequence(lambda n: 'Test Product {0}' .format(n))
+

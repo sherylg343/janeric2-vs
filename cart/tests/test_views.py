@@ -1,6 +1,7 @@
 from django.test import TestCase, Client, RequestFactory
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.conf import settings as django_settings
+from django.contrib.sessions.middleware import SessionMiddleware
 
 from django_libs.tests.mixins import ViewTestMixin
 
@@ -43,53 +44,164 @@ class AddToCartViewTestCase(ViewTestMixin, TestCase):
         cls.product_family = Product_FamilyFactory()
         cls.product1 = ProductFactory()
         cls.product2 = ProductFactory()
+
         super(AddToCartViewTestCase, cls).setUpClass()
 
     def get_view_name(self):
         return 'add_to_cart'
 
-    def test_add_cart_view(self):
-        cart_items = []
-        total = 0
-        quantity = 2
-        product = self.product1
-        product_id = self.product1.id
-        product.price = 10.00
-        product_count = quantity
-        total = quantity * product.price
-        print('--------qty:', quantity)
-        print('---------price', product.price)
-        shipping = total * .10
-        grand_total = shipping + total
-
-        cart_items = {
-            'product_id': product_id,
-            'quantity': quantity,
-            'product_count': product_count,
-        }
+    def test_get(self):
+        product1_id = self.product1.id
+        product1 = self.product1
+        product_name = product1.name
+        product1.price = '10.00'
+        product1.save()
+        quantity1 = 5
+        redirect_url = '/products/{product_id}/'.format(product_id=product1_id)
+        quantity1 = 5
+        quantity2 = 3
+        product_count1 = quantity1
+        product_count2 = quantity1 + quantity2
         session = self.client.session
-        session['cart_items'] = cart_items
-        session['total'] = total
-        session['product_count'] = product_count
-        session['shipping'] = shipping
-        session['grand_total'] = grand_total
-        session['quantity'] = quantity
+        session['cart'] = {}
         session.save()
 
-        # Update session's cookie
-        session_cookie_name = django_settings.SESSION_COOKIE_NAME
-        self.client.cookies[session_cookie_name] = session.session_key
-        quantity1 = session['quantity']
-        print("------session qty:", quantity1)
+        data1 = {
+            "id": product1_id,
+            "name": product_name,
+            'quantity': quantity1,
+            'product': product1,
+            'redirect_url': redirect_url,
+        }
 
-        response = self.client.get(
-            self.get_url(view_kwargs={'product_id': product_id}))
-        self.is_callable(kwargs={'product_id': product_id})
-        self.assertTrue(response.context['quantity'], quantity)
-        self.assertTrue(response.context['product'], product)
-        self.assertTrue(response.context['product_count'], product_count)
-        self.assertTrue(response.context['shipping'], shipping)
-        self.assertTrue(response.context['grand_total'], grand_total)
+        # test content of first post
+        add_url1 = reverse('add_to_cart', kwargs={'product_id': product1_id})
+        response1_add = self.client.post(add_url1, data=data1, follow=True)
+        self.assertEqual(response1_add.status_code, 200)
+        self.assertContains(response1_add, product_count1)
 
-# error: quantity = int(request.POST.get('quantity'))
-# TypeError: int() argument must be a string, a bytes-like # object or a number, not 'NoneType'
+        # Message appears adding new item to cart
+        messages = list(get_messages(response1_add.wsgi_request))
+        self.assertEqual(len(messages), 1)
+        for m in messages:
+            self.assertEqual(
+                str(m), f'Added {product_name} to your cart')
+        # removed product oject from data file for test client session save
+        data1b = {
+            product1_id: {
+                "name": product_name,
+                'quantity': quantity1,
+                'redirect_url': redirect_url,
+            }
+        }
+        session['cart'] = data1b
+        session.save()
+
+        # Test adding a quantity to an existing quantity
+        data2 = {
+            'product_id': product1_id,
+            'name': product_name,
+            'quantity': quantity2,
+            'product': product1,
+            'redirect_url': redirect_url,
+        }
+
+        # test post response status 200
+        add_url2 = reverse('add_to_cart', kwargs={'product_id': product1_id})
+        response2_add = self.client.post(add_url2, data=data2, follow=True)
+        self.assertEqual(response2_add.status_code, 200)
+
+        # test product data added to context and post
+        self.assertContains(response2_add, product_count2)
+
+        # test redirects to proper page
+        self.assertRedirects(
+            response2_add, '/products/1/', status_code=302, target_status_code=200, fetch_redirect_response=True)
+
+        # message that change quantity for product
+        messages = list(get_messages(response2_add.wsgi_request))
+        self.assertEqual(len(messages), 1)
+        #for m in messages:
+        #    self.assertEqual(
+        #        str(m), f'Updated {product_name} quantity to {product_count2}')
+
+
+class AdjustCartViewTestCase(ViewTestMixin, TestCase):
+    """ Test for Add to Cart View """
+    @classmethod
+    def setUpClass(cls):
+        cls.category = CategoryFactory()
+        cls.product_family = Product_FamilyFactory()
+        cls.product1 = ProductFactory()
+        cls.product2 = ProductFactory()
+
+        super(AdjustCartViewTestCase, cls).setUpClass()
+
+    def get_view_name(self):
+        return 'adjust_cart'
+
+    def test_get(self):
+        product1_id = self.product1.id
+        product1 = self.product1
+        product_name = product1.name
+        product1.price = '10.00'
+        product1.save()
+        quantity1 = 5
+        redirect_url = '/products/{product_id}/'.format(product_id=product1_id)
+        quantity1 = 5
+        quantity3 = 1
+        quantity4 = 0
+        product_count3 = quantity3
+        product_count4 = quantity4
+        session = self.client.session
+        session['cart'] = {}
+        cart = session['cart']
+        session.save()
+
+        # removed product oject from data file for test client session save
+        data1b = {
+            product1_id: {
+                "name": product_name,
+                'quantity': quantity1,
+                'redirect_url': redirect_url,
+            }
+        }
+        session['cart'] = data1b
+        session.save()
+
+        data3 = {
+            'product_id': product1_id,
+            'quantity': quantity3,
+        }
+
+        # test content of first post
+        add_url1 = reverse('adjust_cart', kwargs={'product_id': product1_id})
+        response1_add = self.client.post(add_url1, data=data3, follow=True)
+        self.assertEqual(response1_add.status_code, 200)
+        self.assertContains(response1_add, product_count3)
+
+        # Message appears item quantity in cart
+        messages = list(get_messages(response1_add.wsgi_request))
+        self.assertEqual(len(messages), 1)
+        for m in messages:
+            self.assertEqual(
+                str(m), f'Updated {product_name} quantity to {quantity3}')
+
+        # Change product quantity to 0
+        data4 = {
+            'product_id': product1_id,
+            'quantity': quantity4,
+        }
+
+        # test content of first post
+        add_url4 = reverse('adjust_cart', kwargs={'product_id': product1_id})
+        response1_add = self.client.post(add_url4, data=data4, follow=True)
+        self.assertEqual(response1_add.status_code, 200)
+        self.assertContains(response1_add, product_count4)
+
+        # Message appears item quantity in cart
+        messages = list(get_messages(response1_add.wsgi_request))
+        self.assertEqual(len(messages), 1)
+        for m in messages:
+            self.assertEqual(
+                str(m), f'Removed {product_name} from your bag')
