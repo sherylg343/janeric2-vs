@@ -121,9 +121,9 @@ class AddToCartViewTestCase(ViewTestMixin, TestCase):
         # message that change quantity for product
         messages = list(get_messages(response2_add.wsgi_request))
         self.assertEqual(len(messages), 1)
-        #for m in messages:
-        #    self.assertEqual(
-        #        str(m), f'Updated {product_name} quantity to {product_count2}')
+        for m in messages:
+            self.assertEqual(
+                str(m), f'Added {product_name} to your cart', 'Updated {product_name} quantity to {product_count2}')
 
 
 class AdjustCartViewTestCase(ViewTestMixin, TestCase):
@@ -142,6 +142,7 @@ class AdjustCartViewTestCase(ViewTestMixin, TestCase):
 
     def test_get(self):
         product1_id = self.product1.id
+        print('_____________ID:', product1_id)
         product1 = self.product1
         product_name = product1.name
         product1.price = '10.00'
@@ -155,10 +156,10 @@ class AdjustCartViewTestCase(ViewTestMixin, TestCase):
         product_count4 = quantity4
         session = self.client.session
         session['cart'] = {}
-        cart = session['cart']
         session.save()
 
-        # removed product oject from data file for test client session save
+        # removed the product object from data file for test
+        # client session save
         data1b = {
             product1_id: {
                 "name": product_name,
@@ -166,42 +167,70 @@ class AdjustCartViewTestCase(ViewTestMixin, TestCase):
                 'redirect_url': redirect_url,
             }
         }
-        session['cart'] = data1b
+        cart = data1b
         session.save()
 
         data3 = {
             'product_id': product1_id,
+            'product': product1,
             'quantity': quantity3,
+            'redirect_url': redirect_url,
         }
+        data3b = {
+            product1_id: {
+                'quantity': quantity3,
+                'redirect_url': redirect_url,
+            }
+        }
+        session['cart'] = data3b
+        cart = session['cart']
+        session.save()
+        print('____________data3 ID:', data3['product_id'])
+        print('_______________cart', cart)
 
         # test content of first post
-        add_url1 = reverse('adjust_cart', kwargs={'product_id': product1_id})
-        response1_add = self.client.post(add_url1, data=data3, follow=True)
-        self.assertEqual(response1_add.status_code, 200)
-        self.assertContains(response1_add, product_count3)
+        adj_url1 = reverse('adjust_cart', kwargs={'product_id': product1_id})
+        print('------------adj_url1', adj_url1)
+        response1_adj = self.client.post(adj_url1, data=data3, follow=True)
+        print("-----------Adjust Post:", 'Complete')
+        self.assertEqual(response1_adj.status_code, 200)
+        self.assertContains(response1_adj, product_count3)
+        print("_------------ selfassert for data3:", "passed")
 
         # Message appears item quantity in cart
-        messages = list(get_messages(response1_add.wsgi_request))
+        messages = list(get_messages(response1_adj.wsgi_request))
         self.assertEqual(len(messages), 1)
         for m in messages:
             self.assertEqual(
                 str(m), f'Updated {product_name} quantity to {quantity3}')
+        print("---------data3 message:", "passed")
 
         # Change product quantity to 0
         data4 = {
             'product_id': product1_id,
             'quantity': quantity4,
         }
-
+        data4b = {
+            product1_id: {
+                'quantity': quantity4,
+            }
+        }
+        cart_list = session['cart']
+        cart_list.append(data4)
+        session['cart'] = cart_list
+        session.save()
+        print("--------cart-before", cart)
         # test content of first post
-        add_url4 = reverse('adjust_cart', kwargs={'product_id': product1_id})
-        response1_add = self.client.post(add_url4, data=data4, follow=True)
-        self.assertEqual(response1_add.status_code, 200)
-        self.assertContains(response1_add, product_count4)
+        adj_url4 = reverse('adjust_cart', kwargs={'product_id': product1_id})
+        print("-------------adj_url4:", adj_url4)
+        response1_adj = self.client.post(adj_url4, data=data4, follow=True)
+        print("--------cart-after", cart)
+        self.assertEqual(response1_adj.status_code, 200)
+        self.assertContains(response1_adj, product_count4)
 
         # Message appears item quantity in cart
-        messages = list(get_messages(response1_add.wsgi_request))
-        self.assertEqual(len(messages), 1)
+        messages = list(get_messages(response1_adj.wsgi_request))
+        self.assertEqual(len(messages), 2)
         for m in messages:
             self.assertEqual(
-                str(m), f'Removed {product_name} from your bag')
+                str(m), f'Removed {product_name} from your bag', 'Updated {product_name} quantity to {quantity3}')

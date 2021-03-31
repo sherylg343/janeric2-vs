@@ -10,7 +10,7 @@ Janeric LLC Website
 
 <div style="text-align: center">
 
-[View website deployed through Heroku](https://janeric.herokuapp.com/)
+[View website deployed through Heroku](https://janeric2.herokuapp.com/)
 </div>
 
 ## Table of Contents <a name="table-of-contents"></a> 

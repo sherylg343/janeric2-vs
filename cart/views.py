@@ -45,7 +45,8 @@ def adjust_cart(request, product_id):
 
     if quantity > 0:
         cart[product_id] = quantity
-        messages.success(request, f'Updated {product.name} quantity to {cart[product_id]}')
+        messages.success(
+            request, f'Updated {product.name} quantity to {cart[product_id]}')
     else:
         cart.pop(product_id)
         messages.success(request, f'Removed {product.name} from your bag')
