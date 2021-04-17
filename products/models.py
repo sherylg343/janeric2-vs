@@ -61,6 +61,8 @@ class Product(models.Model):
         ('12x18', '12 in. x 18 in.'),
         ('12.125x16.875', '12.125 in. x 16.875 in.'),
         ('12x18', '12 in. x 18 in.'),
+        ('48x12x5', '48 in. x 12 in. x 5 in.'),
+        ('48x16x5', '48 in. x 16 in. x 5 in.'),
     )
 
     category = models.ForeignKey(
