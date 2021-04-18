@@ -16,7 +16,7 @@
     --clr-white: #ffffff;
     --clr-logoblue: rgb(0, 114, 187); /* revised to match logo color per client */
     --clr-palettegray: #c3ccd3;
-    --clr-paletteblush: #f6f8fa;
+    --clr-paletteblush: rgb(252,240,243, .60);
     --clr-paletteltblue: #8ea6b2;
     --clr-palettemedblue: #47646f;
     --clr-palettedkblue: #1e383c;
