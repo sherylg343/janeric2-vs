@@ -146,6 +146,7 @@ a.category-badge > span.badge:hover {
 
 .card img {
     width: auto !important;
+    max-width: 90%;
     height: 200px !important;
     object-fit: cover;
 }
