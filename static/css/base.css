@@ -38,6 +38,10 @@ h3 {
     font-weight: 400; 
 }
 
+.container-fluid {
+    overflow: hidden;
+}
+
 /* ----- Text & Borders ----*/
 header {
     font-family: var(--ff-caslon);
