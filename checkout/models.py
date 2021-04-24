@@ -52,6 +52,8 @@ class Order(models.Model):
         auto_now_add=True)
     shipping_cost = models.DecimalField(
         max_digits=6, decimal_places=2, null=False, default=0)
+    ca_sales_tax = models.DecimalField(
+        max_digits=6, decimal_places=4, null=True, blank=True)
     order_total = models.DecimalField(
         max_digits=10, decimal_places=2, null=False, default=0)
     grand_total = models.DecimalField(
@@ -70,11 +72,9 @@ class Order(models.Model):
         Update grand total each time a line item is added,
         accounting for delivery costs.
         """
-        self.order_total = self.lineitems.aggregate(Sum('lineitem_total'))['lineitem_total__sum'] or 0
-        if self.order_total < settings.FREE_SHIPPING_THRESHOLD:
-            self.shipping_cost = self.order_total * settings.STANDARD_SHIPPING_PERCENTAGE / 100
-        else:
-            self.shipping_cost = 0
+        self.order_total = self.lineitems.aggregate(
+            Sum('lineitem_total'))['lineitem_total__sum'] or 0
+        self.shipping_cost = self.order_total * settings.STANDARD_SHIPPING_PERCENTAGE / 100
         self.grand_total = self.order_total + self.shipping_cost
         self.save()
 

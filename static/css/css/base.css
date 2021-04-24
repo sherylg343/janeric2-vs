@@ -136,8 +136,9 @@ a.category-badge > span.badge:hover {
     border: 2px solid var(--clr-logoblue) !important;
 }
 
-.card img {
+.card-img.img-fluid img {
     width: auto !important;
+    max-width: 90%;
     height: 200px !important;
     object-fit: cover;
 }
