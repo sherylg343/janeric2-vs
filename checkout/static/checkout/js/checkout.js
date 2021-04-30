@@ -12,6 +12,7 @@ $(document).ready(function() {
 
     $('#id_ship_state').on('change', function() {
         $('#id_ship_state').css('color', '#47646f');
+        if ($('#id_ship_state'),val() === "California"
     });
 
     $('#id_bill_state').css('color', '#c3ccd3');
