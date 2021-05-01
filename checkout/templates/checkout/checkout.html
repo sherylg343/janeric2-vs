@@ -70,12 +70,15 @@
                             <div class="col-7 offset-2">
                                 <p class="my-0">Order Total:</p>
                                 <p class="my-0">Shipping:</p>
-                                <p class="my-0">Grand Total:</p>
+                                <p class="my-0 d-none" id="taxes-label">Sales Tax:</p>
+                                <p class="my-0 " id="gtotal-label">Grand Total:</p>
                             </div>
                             <div class="col-3">
                                 <p class="my-0">${{ total | floatformat:2 }}</p>
                                 <p class="my-0 text-right">${{ shipping | floatformat:2 }}</p>
-                                <p class="my-0"><strong>${{ grand_total | floatformat:2 }}</strong></p>
+                                <p class="my-0 text-right d-none" id="taxes-amt" value="{{ ca_tax | floatformat:2 }}">${{ ca_tax | floatformat:2 }}</p>
+                                <p class="my-0" id="gtotal-amt"><strong>${{ grand_total | floatformat:2 }}</strong></p>
+                                <p class="my-0" id="gtotal-amt-ca" value="{{ grand_total_ca | floatformat:2 }}"><strong>${{ grand_total_ca | floatformat:2 }}</strong></p>
                             </div>
                         </div>
                     </div>

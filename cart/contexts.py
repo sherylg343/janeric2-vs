@@ -23,14 +23,19 @@ def cart_contents(request):
 
     shipping = total * Decimal(settings.STANDARD_SHIPPING_PERCENTAGE/100)
 
+    ca_tax = total * Decimal(settings.CA_SALES_TAX/100)
+
     grand_total = shipping + total
+    grand_total_ca = shipping + ca_tax + total
 
     context = {
         'cart_items': cart_items,
         'total': total,
         'product_count': product_count,
         'shipping': shipping,
+        'ca_tax': ca_tax,
         'grand_total': grand_total,
+        'grand_total_ca': grand_total_ca,
     }
 
     return context
