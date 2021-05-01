@@ -119,14 +119,14 @@
                     </ul>
                 </div>
             </div>
-            <div class="row bg-white ml-2 mr-2">
+            <div class="row bg-white w-100 ml-0 mr-0 ml-lg-2 mr-lg-2">
                 <nav class="navbar d-lg-none navbar-light w-100 border-bottom-mobile">
                     <!-- SideNav slide-out button -->
                     <a href="#" data-activates="slide-out" class="btn p-3 button-collapse"><span class="stylish-color-dark-text"><i class="fas fa-bars"></i></span></a>
                     {% include 'includes/mobile-header.html' %}
                 </nav>
             </div>
-            <div class="row d-lg-none bg-blush" id="search-row">
+            <div class="row w-100 ml-0 mr-0 d-lg-none bg-blush" id="search-row">
                 <div class="col-10 offset-1 my-auto py-1">
                     <form method="GET" action="{% url 'products' %}">
                         <div class="input-group w-100 md-form form-sm form-2 pl-0">
@@ -180,14 +180,14 @@
         <footer id="footer" class="page-footer font-small">
             <!-- Footer Text -->
             <div class="container-fluid text-center footer-main">
-                <div class="row">
+                <div class="row w-100">
                     <div class="col-md-4 pt-4 pt-md-0">
                         <h7 class="headline-footer text-uppercase"><strong>Enquiries</strong></h7>
                         <ul class="list-unstyled mb-0 mx-auto justify-content-start">
-                            <li class="mb-2">
+                            <li class="mb-1 mb-lg-2">
                                 <a href="mailto:customerservice@janericllc.com?subject=Enquiry from Website">customerservice@janericllc.com</a>
                             </li>
-                            <li class="mb-2">
+                            <li class="mb-1 mb-lg-2">
                                 <p>888.444.5555</p>
                             </li>
                             <li>
@@ -196,11 +196,11 @@
                             </li>
                         </ul>
                     </div>
-                    <hr class="clearfix w-100 d-md-none pb-3">
+                    <hr class="clearfix w-100 d-md-none mt-0">
                     <div class="col-md-4 offset-md-2"> 
                         <h7 class="headline-footer text-uppercase"><strong>Information</strong></h7>
-                        <ul class="list-unstyled mb-0 mt-3">
-                            <li class="mb-3">
+                        <ul class="list-unstyled mb-0 mt-1 mt-lg-3">
+                            <li class="mb-1 mb-lg-3">
                             <a href="{% url 'shipping' %}"><strong>Shipping</strong></a> 
                             </li>
                             <li>
@@ -211,8 +211,12 @@
                 </div>
             </div>
             <!-- Copyright -->
-            <div class="footer-copyright text-center py-3">© 2020 Copyright:
+            <div class="footer-copyright text-center py-3 d-none d-md-block">© 2020 Copyright:
                 <a href="https://janeric.com/" class="text-left"> janericllc.com.</a> All Rights Reserved.        
+            </div>
+            <div class="footer-copyright text-center py-3 d-md-none d-block ">© 2020 Copyright:
+                <a href="https://janeric.com/" class="text-left"> janericllc.com.</a> 
+                <p>All Rights Reserved.</p>      
             </div>
         </footer>
         {% block postloadjs %}
