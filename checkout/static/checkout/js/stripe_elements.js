@@ -46,6 +46,7 @@ form.addEventListener('submit', function(ev) {
     ev.preventDefault();
     card.update({ 'disabled': true});
     $('#submit-button').attr('disabled', true);
+    const caTax = localStorage.getItem("ca");
     $('#payment-form').fadeToggle(100);
     $('#loading-overlay').fadeToggle(100);
 
@@ -62,6 +63,62 @@ form.addEventListener('submit', function(ev) {
     var url = '/checkout/cache_checkout_data/';
   
     $.post(url, postData).done(function () {
+        // if CA tax required pause for update intent to occur
+        if((caTax) => {
+            console.log("-----caTax", caTax);
+            setTimeout (function() {
+                stripe.confirmCardPayment(clientSecret, {
+                    payment_method: {
+                        card: card,
+                        billing_details: {
+                            name: $.trim(form.bill_full_name.value),
+                            phone: $.trim(form.bill_phone_number.value),
+                            email: $.trim(form.email.value),
+                            address:{
+                                line1: $.trim(form.bill_street_address1.value),
+                                line2: $.trim(form.bill_street_address2.value),
+                                city: $.trim(form.bill_city.value),
+                                state: $.trim(form.bill_state.value),
+                                postal_code: $.trim(form.bill_zipcode.value),
+                            }
+                        }    
+                    },
+                    shipping: {
+                        name: $.trim(form.ship_full_name.value),
+                        phone: $.trim(form.ship_phone_number.value),
+                        address: {
+                            line1: $.trim(form.ship_street_address1.value),
+                            line2: $.trim(form.ship_street_address2.value),
+                            city: $.trim(form.ship_city.value),
+                            state: $.trim(form.ship_state.value),
+                            postal_code: $.trim(form.ship_zipcode.value),
+                        }
+                    },
+                }).then(function(result) {
+                    if (result.error) {
+                        var errorDiv = document.getElementById('card-errors');
+                        var html = `
+                            <span class="icon" role="alert">
+                            <i class="fas fa-times"></i>
+                            </span>
+                            <span>${result.error.message}</span>`;
+                        $(errorDiv).html(html);
+                        $('#payment-form').fadeToggle(100);
+                        $('#loading-overlay').fadeToggle(100);
+                        card.update({ 'disabled': false});
+                        $('#submit-button').attr('disabled', false);
+                    } else {
+                        if (result.paymentIntent.status === 'succeeded') {
+                            form.submit();
+                        }
+                    }
+                });
+            }).fail(function () {
+                // just reload the page, the error will be in django messages
+                location.reload();
+            })   
+            }, 3000);
+        });
         stripe.confirmCardPayment(clientSecret, {
             payment_method: {
                 card: card,
