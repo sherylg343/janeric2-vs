@@ -131,4 +131,8 @@ ul.stepper .md-form-label {
     left: 0rem;
 }
 
+.check-cover-row {
+    min-height: calc(100vh - 358px);
+}
+
 

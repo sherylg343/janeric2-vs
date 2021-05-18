@@ -2,7 +2,6 @@ const caTaxLabel = $('#taxes-label');
 const caTaxAmt = $('#taxes-amt');
 const grandTotal = $("#gtotal-amt");
 const caGrandTotal = $("#gtotal-amt-ca");
-const shipState2 = ('#id_ship_state');
 
 $(document).ready(function() {
     //MD Bootstrap payment stepper
@@ -11,14 +10,16 @@ $(document).ready(function() {
     /* Add gray to SelectState when page loads and change when selected */
     /* if statement handles preload */
     if ($('#id_ship_city').val() != '' ) {
-        $(shipState2).css('color', '#47646f');
+        $('#id_ship_state').css('color', '#47646f');
     } else {
-        $(shipState2).css('color', '#c3ccd3');
+        $('#id_ship_state').css('color', '#c3ccd3');
     }
 
-    $(shipState2).on('change', function() {
-        $(shipState2).css('color', '#47646f');
-        if ($(shipState2).val() === "California") {
+    $('#id_ship_state').on('change', function() {
+        console.log("ID and click worked");
+        $('#id_ship_state').css('color', '#47646f');
+        if ($('#id_ship_state').val() === "California") {
+            console.log("Cali");
             $(caTaxLabel).removeClass("d-none");
             $(caTaxAmt).removeClass("d-none"); 
             $(caGrandTotal).removeClass("d-none");

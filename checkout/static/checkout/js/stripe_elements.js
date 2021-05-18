@@ -115,8 +115,7 @@ form.addEventListener('submit', function(ev) {
                 });
             }).fail(function () {
                 // just reload the page, the error will be in django messages
-                location.reload();
-            })   
+                location.reload(); 
             }, 3000);
         });
         stripe.confirmCardPayment(clientSecret, {
@@ -168,7 +167,7 @@ form.addEventListener('submit', function(ev) {
     }).fail(function () {
         // just reload the page, the error will be in django messages
         location.reload();
-    })   
+    })  
 });
 
 const shipFullName = $('#id_ship_full_name');

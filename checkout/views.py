@@ -42,15 +42,18 @@ def checkout(request):
     if request.method == 'POST':
         cart = request.session.get('cart', {})
         ca = request.session.get('ca', {})
-        ca_grand_total = current_cart['ca_grand_total']
+        print("checkout ca value:", ca)
+        grand_total_ca = current_cart['grand_total_ca']
+        stripe_total_ca = round(grand_total_ca * 100)
+        print("grand_total_ca:", grand_total_ca)
         # if ca true, modify payment intent for revised order total
         if ca:
             stripe.PaymentIntent.modify(
                 stripe_secret_key,
-                amount=ca_grand_total,
+                amount=stripe_total_ca,
                 currency=settings.STRIPE_CURRENCY,
             )
-
+            print("Payment Intent Modify done")
         form_data = {
             'ship_full_name': request.POST['ship_full_name'],
             'email': request.POST['email'],
@@ -142,6 +145,8 @@ def checkout(request):
             order_form = OrderForm()
     else:
         order_form = OrderForm()
+        marketing_value = "false"
+        full_name = ""
 
     ship_state = USStateSelect()
     bill_state = USStateSelect()

@@ -125,6 +125,14 @@ body {
 }
 
 /* ----- Images, Buttons, Links ----*/
+/* from Marcin Luczak at MD Bootstrap */
+.img-size {
+    background-position: center;
+    background-repeat: no-repeat; 
+    background-size: cover;
+    height: 100%;
+}
+
 a:hover, a:focus,
 nav-link:focus, nav-link:hover {
     color: var(--clr-logoblue) !important;

@@ -15,22 +15,38 @@
 
 
 {% block content %}
-<!-- Full Page Intro - mobile image -->
-<div class="view hidden-lg-up" style="background-image: url('https://janeric2.s3.us-east-2.amazonaws.com/media/cover-mobile.jpg'); background-repeat: no-repeat; background-size: cover; object-fit: none; object-position: 50%;">
-<!-- Full Page Intro - large screen+ image -->
-<div class="view hidden-md-down" style="background-image: url('https://janeric2.s3.us-east-2.amazonaws.com/media/janeric-cover1.jpg'); background-repeat: no-repeat; background-size: cover;">
+<!-- Code by Marcin Luczak at MD Bootstrap 
+Full Page Intro - mobile image-->
+<div class="view d-lg-none" id="mobile-img" style="background-image: url('https://janeric2.s3.us-east-2.amazonaws.com/media/cover-mobile.jpg'); background-repeat: no-repeat; background-position: center;">
     <!-- Image Mask & flexbox options-->
-    <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+  <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
 
-      <!-- Content -->
-      <div class="text-center white-text mx-5 wow fadeIn">
-        <h3 class="mb-4">
-          <strong>Clean and effective solutions to help keep those you care about safe</strong>
-        </h3>
+    <!-- Content -->
+    <div class="text-center white-text mx-5 wow fadeIn">
+      <h3 class="mb-4">
+        <strong>Clean and effective solutions to help keep those you care about safe</strong>
+      </h3>
 
-        <a target="_blank" href="{% url 'products' %}" class="btn btn-outline-white btn-lg">Shop Now
-        </a>
-      </div>
+      <a target="_blank" href="{% url 'products' %}" class="btn btn-outline-white btn-lg">Shop Now
+      </a>
     </div>
+  </div>
+</div>
+  
+<!-- Full Page Intro - large screen+ image -->
+<div class="view d-none d-lg-block" style="background-image: url('https://janeric2.s3.us-east-2.amazonaws.com/media/janeric-cover1.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center;">
+  <!-- Image Mask & flexbox options-->
+  <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+    <!-- Content -->
+    <div class="text-center white-text mx-5 wow fadeIn">
+      <h3 class="mb-4">
+        <strong>Clean and effective solutions to help keep those you care about safe</strong>
+      </h3>
+
+      <a target="_blank" href="{% url 'products' %}" class="btn btn-outline-white btn-lg">Shop Now
+      </a>
+    </div>
+  </div>
 </div>
 {% endblock %}
