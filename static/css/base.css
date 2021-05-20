@@ -558,10 +558,6 @@ footer {
 }
 
 /* ------------- Allauth form formatting -------- */
-.allauth-form-inner-content {
-    margin-left:
-}
-
 .allauth-form-inner-content p {
     margin-top: 1.5rem; /* mt-4 */
     color: var(--clr-palettemedblue);  /* text-secondary */
@@ -618,6 +614,9 @@ footer {
     font-weight: bold;
 }
 
+.head-row {
+    min-height: calc(100vh - 325px);
+}
 
 @media not all and (min-resolution:.001dpcm) {
 @supports (-webkit-appearance: none) and (stroke-color:transparent) {

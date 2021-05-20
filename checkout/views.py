@@ -151,7 +151,7 @@ def checkout(request):
     ship_state = USStateSelect()
     bill_state = USStateSelect()
     ship_zipcode = USZipCodeField()
-    bill_zipcode = USZipCodeField()
+    bill_zipcode = USZipCodeField(s
 
     if not stripe_public_key:
         messages.warning(request, 'Stripe public key is missing. \
