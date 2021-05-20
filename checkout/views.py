@@ -41,7 +41,7 @@ def checkout(request):
 
     if request.method == 'POST':
         cart = request.session.get('cart', {})
-        ca = request.session.get('ca', {})
+        ca = request.COOKIES.get('ca')
         print("checkout ca value:", ca)
         grand_total_ca = current_cart['grand_total_ca']
         stripe_total_ca = round(grand_total_ca * 100)
@@ -115,6 +115,9 @@ def checkout(request):
         messages.error(request, "There's nothing in your bag at the moment")
         return redirect(reverse('products'))
 
+    # Reset ca to default false when first load checkout page
+    ca = request.COOKIES.get('ca')
+    ca = "false"
     current_cart = cart_contents(request)
     total = current_cart['grand_total']
     stripe_total = round(total * 100)
