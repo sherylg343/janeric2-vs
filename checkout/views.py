@@ -20,6 +20,27 @@ def cache_checkout_data(request):
     try:
         pid = request.POST.get('client_secret').split('_secret')[0]
         stripe.api_key = settings.STRIPE_SECRET_KEY
+        ca = request.COOKIES.get('ca')
+        print("---ca:", ca)
+        current_cart = cart_contents(request)
+        ca_tax = current_cart['ca_tax']
+        grand_total_ca = current_cart['grand_total_ca']
+        stripe_total_ca = round(grand_total_ca * 100)
+        # if ship to ca true, modify payment intent for revised order total
+        if ca == "true":
+            stripe.PaymentIntent.modify(
+                pid,
+                amount=stripe_total_ca,
+                currency=settings.STRIPE_CURRENCY,
+                metadata={
+                    'cart': json.dumps(request.session.get('cart', {})),
+                    'save_info': request.POST.get('save_info'),
+                    'username': request.user,
+                    'marketing': request.POST.get('marketing'),
+                    'ca_tax': ca_tax,
+                }
+            )
+        # if ship anywhere but ca modify intent to include metadata
         stripe.PaymentIntent.modify(pid, metadata={
             'cart': json.dumps(request.session.get('cart', {})),
             'save_info': request.POST.get('save_info'),
@@ -38,22 +59,9 @@ def checkout(request):
     stripe_secret_key = settings.STRIPE_SECRET_KEY
     # Obtain contents of cart.context.py
     current_cart = cart_contents(request)
-
+    ca = request.COOKIES.get('ca')
     if request.method == 'POST':
         cart = request.session.get('cart', {})
-        ca = request.COOKIES.get('ca')
-        print("checkout ca value:", ca)
-        grand_total_ca = current_cart['grand_total_ca']
-        stripe_total_ca = round(grand_total_ca * 100)
-        print("grand_total_ca:", grand_total_ca)
-        # if ca true, modify payment intent for revised order total
-        if ca:
-            stripe.PaymentIntent.modify(
-                stripe_secret_key,
-                amount=stripe_total_ca,
-                currency=settings.STRIPE_CURRENCY,
-            )
-            print("Payment Intent Modify done")
         form_data = {
             'ship_full_name': request.POST['ship_full_name'],
             'email': request.POST['email'],
@@ -79,8 +87,9 @@ def checkout(request):
             pid = request.POST.get('client_secret').split('_secret')[0]
             order.stripe_pid = pid
             order.original_cart = json.dumps(cart)
-            if ca:
+            if ca == "true":
                 order.ca_sales_tax = current_cart['ca_tax']
+                print("order.ca_sales_tax:", order.ca_sales_tax)
                 order.grand_total = current_cart['grand_total_ca']
             order.save()
             for product_id, item_data in cart.items():
@@ -117,7 +126,9 @@ def checkout(request):
 
     # Reset ca to default false when first load checkout page
     ca = request.COOKIES.get('ca')
-    ca = "false"
+    response = HttpResponse()
+    response.set_cookie('ca', 'false')
+    print("ca_set", request.COOKIES.get('ca'))
     current_cart = cart_contents(request)
     total = current_cart['grand_total']
     stripe_total = round(total * 100)

@@ -46,15 +46,19 @@ class StripeWH_Handler:
         """
         Handle the payment_intent.succeeded webhook from Stripe
         """
+        ca = "false"
         intent = event.data.object
         pid = intent.id
         cart = intent.metadata.cart
         save_info = intent.metadata.save_info
         marketing = bool(intent.metadata.marketing)
-
+        ca_tax = intent.metada.ca_tax
+        if ca_tax:
+            ca == "true"
+            ca_sales_tax = ca_tax
+        grand_total = round(intent.charges.data[0].amount / 100, 2)
         billing_details = intent.charges.data[0].billing_details
         shipping_details = intent.shipping
-        grand_total = round(intent.charges.data[0].amount / 100, 2)
 
         # Clean data in the shipping details
         for field, value in shipping_details.address.items():
@@ -85,6 +89,28 @@ class StripeWH_Handler:
         attempt = 1
         while attempt <= 5:
             try:
+                if ca == "true":
+                    order = Order.objects.get(
+                        ship_full_name__iexact=shipping_details.name,
+                        email__iexact=billing_details.email,
+                        ship_phone_number__iexact=shipping_details.phone,
+                        ship_street_address1__iexact=shipping_details.address.line1,
+                        ship_street_address2__iexact=shipping_details.address.line2,
+                        ship_city__iexact=shipping_details.address.city,  
+                        ship_state__iexact=shipping_details.address.state,
+                        ship_zipcode__iexact=shipping_details.address.postal_code,
+                        bill_full_name__iexact=billing_details.name,
+                        bill_phone_number__iexact=billing_details.phone,
+                        bill_street_address1__iexact=billing_details.address.line1,
+                        bill_street_address2__iexact=billing_details.address.line2,
+                        bill_city__iexact=billing_details.address.city,  
+                        bill_state__iexact=billing_details.address.state,
+                        bill_zipcode__iexact=billing_details.address.postal_code,
+                        ca_sales_tax = ca_sales_tax ,
+                        grand_total=grand_total,
+                        original_cart=cart,
+                        stripe_pid=pid,
+                    )
                 order = Order.objects.get(
                     ship_full_name__iexact=shipping_details.name,
                     email__iexact=billing_details.email,
@@ -117,6 +143,28 @@ class StripeWH_Handler:
         else:
             order = None
             try:
+                if ca == "true":
+                    order = Order.objects.get(
+                        ship_full_name__iexact=shipping_details.name,
+                        email__iexact=billing_details.email,
+                        ship_phone_number__iexact=shipping_details.phone,
+                        ship_street_address1__iexact=shipping_details.address.line1,
+                        ship_street_address2__iexact=shipping_details.address.line2,
+                        ship_city__iexact=shipping_details.address.city,  
+                        ship_state__iexact=shipping_details.address.state,
+                        ship_zipcode__iexact=shipping_details.address.postal_code,
+                        bill_full_name__iexact=billing_details.name,
+                        bill_phone_number__iexact=billing_details.phone,
+                        bill_street_address1__iexact=billing_details.address.line1,
+                        bill_street_address2__iexact=billing_details.address.line2,
+                        bill_city__iexact=billing_details.address.city,  
+                        bill_state__iexact=billing_details.address.state,
+                        bill_zipcode__iexact=billing_details.address.postal_code,
+                        ca_sales_tax = ca_sales_tax ,
+                        grand_total=grand_total,
+                        original_cart=cart,
+                        stripe_pid=pid,
+                    )
                 order = Order.objects.create(
                     ship_full_name=shipping_details.name,
                     user_profile=profile,
