@@ -21,9 +21,10 @@ def cart_contents(request):
             'product': product,
         })
 
-    shipping = total * Decimal(settings.STANDARD_SHIPPING_PERCENTAGE/100)
+    shipping = round(
+        total * Decimal(settings.STANDARD_SHIPPING_PERCENTAGE/100), 2)
 
-    ca_tax = total * Decimal(settings.CA_SALES_TAX/100)
+    ca_tax = round(total * Decimal(settings.CA_SALES_TAX/100), 2)
 
     grand_total = shipping + total
     grand_total_ca = shipping + ca_tax + total

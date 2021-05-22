@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load phone_number %}
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
@@ -54,7 +55,8 @@
                             <p class="mb-0 text-left">{{ order.ship_street_address2 }}</p>
                         {% endif %}
                         <p class="mb-0 text-left">{{ order.ship_city }}, {{ order.ship_state }}  {{ order.ship_zipcode }}</p>
-                        <p class="mb-0 text-left">{{ order.ship_phone_number }}</p>
+                        <p class="mb-0 text-left">{{ order.ship_phone_number|phone_number }}
+                        </p>
                     </div>
                     <div class="col-12 col-md-5 pb-2">
                         <p class="text-uppercase text-left">Billing Address</p>
@@ -66,7 +68,7 @@
                             <p class="mb-0 text-left">{{ order.bill_street_address2 }}</p>
                         {% endif %}
                         <p class="mb-0 text-left">{{ order.bill_city }}, {{ order.bill_state }}  {{ order.bill_zipcode }}</p>
-                        <p class="mb-0 text-left">{{ order.bill_phone_number }}</p>
+                        <p class="mb-0 text-left">{{ order.bill_phone_number|phone_number }}</p>
                     </div>
                 </div>
                 <div class="row">
@@ -100,14 +102,22 @@
                                                 <td class="text-left mb-0">Shipping:
                                                 </td>
                                                 <td class="text-right">
-                                                    $ {{ order.shipping_cost }}
+                                                    $ {{ order.shipping_cost |floatformat:2 }}
                                                 </td>
                                             </tr>
+                                            {% if order.ca_sales_tax %}
+                                                <tr>
+                                                    <td class="text-left mb-0">Sales Tax:</td>
+                                                    <td class="text-right">
+                                                        $  {{ order.ca_sales_tax |floatformat:2 }}
+                                                    </td>
+                                                </tr>
+                                                {% endif %}
                                             <tr>
                                                 <td class="text-left mb-0">Order Total:
                                                 </td>
                                                 <td class="text-right">
-                                                    $ {{ order.grand_total }}
+                                                    $ {{ order.grand_total | floatformat:2 }}
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -123,6 +133,20 @@
                         {% for item in order.lineitems.all %}
                             <div class="row">
                                 <div class="col-12 col-md-9 text-left">
+                                    {% if item.product.image %}
+                                        <div class="p-3 cart-img">
+                                            <img class="img-fluid" src="{{ MEDIA_URL }}{{ item.product.image }}" alt="{{ product.name }}"
+                                            />  
+                                        </div>
+                                    {% else %}
+                                        <div class="p-3 cart-img">
+                                            <img
+                                                class="img-fluid"
+                                                src="{{ MEDIA_URL }}noimage.png"
+                                                alt="{{ product.name }}"
+                                            />
+                                        </div>
+                                    {% endif %}
                                     <p class="my-0">{{ item.product.product_family.name }}</p>
                                     <p class="mb-0">SKU: {{ item.product.SKU }}</p>
                                     <p class="my-0">Size: {% if item.product.size %}{{ item.product.size }}{% else %}N/A{% endif %}</p>
@@ -147,5 +171,4 @@
         </div>
     </div>                      
 {% endblock%}
-
 

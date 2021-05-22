@@ -75,7 +75,7 @@ class Order(models.Model):
         self.order_total = self.lineitems.aggregate(
             Sum('lineitem_total'))['lineitem_total__sum'] or 0
         self.shipping_cost = self.order_total * settings.STANDARD_SHIPPING_PERCENTAGE / 100
-        self.grand_total = self.order_total + self.shipping_cost
+        self.grand_total = self.order_total + self.shipping_cost + self.ca_sales_tax
         self.save()
 
     def save(self, *args, **kwargs):

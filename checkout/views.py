@@ -89,7 +89,6 @@ def checkout(request):
             order.original_cart = json.dumps(cart)
             if ca == "true":
                 order.ca_sales_tax = current_cart['ca_tax']
-                print("order.ca_sales_tax:", order.ca_sales_tax)
                 order.grand_total = current_cart['grand_total_ca']
             order.save()
             for product_id, item_data in cart.items():
