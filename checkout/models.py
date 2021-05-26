@@ -53,7 +53,7 @@ class Order(models.Model):
     shipping_cost = models.DecimalField(
         max_digits=6, decimal_places=2, null=False, default=0)
     ca_sales_tax = models.DecimalField(
-        max_digits=6, decimal_places=4, null=True, blank=True)
+        max_digits=6, decimal_places=2, null=True, blank=True)
     order_total = models.DecimalField(
         max_digits=10, decimal_places=2, null=False, default=0)
     grand_total = models.DecimalField(
