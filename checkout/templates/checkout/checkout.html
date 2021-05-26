@@ -9,7 +9,7 @@
 
 {% block extra_js %}
     <script type="text/javascript" src="{% static 'js/addons-pro/steppers.min.js' %}"></script>
-    <script src="{% static 'checkout/js/checkout.js' %}"></script> 
+    <script defer src="{% static 'checkout/js/checkout.js' %}"></script> 
 {% endblock %}
 
 {% block extra_title %}| Checkout{% endblock %}
@@ -77,8 +77,8 @@
                                 <p class="my-0">${{ total | floatformat:2 }}</p>
                                 <p class="my-0 text-right">${{ shipping | floatformat:2 }}</p>
                                 <p class="my-0 text-right d-none" id="taxes-amt" value="{{ ca_tax | floatformat:2 }}">${{ ca_tax | floatformat:2 }}</p>
-                                <p class="my-0" id="gtotal-amt"><strong>${{ grand_total | floatformat:2 }}</strong></p>
-                                <p class="my-0 d-none" id="gtotal-amt-ca" value="{{ grand_total_ca | floatformat:2 }}"><strong>${{ grand_total_ca | floatformat:2 }}</strong></p>
+                                <p class="my-0 text-right" id="gtotal-amt"><strong>${{ grand_total | floatformat:2 }}</strong></p>
+                                <p class="my-0 d-none text-right" id="gtotal-amt-ca" value="{{ grand_total_ca | floatformat:2 }}"><strong>${{ grand_total_ca | floatformat:2 }}</strong></p>
                             </div>
                         </div>
                     </div>
