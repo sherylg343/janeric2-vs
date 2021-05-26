@@ -1,3 +1,5 @@
+from django.test import TestCase, Client
+
 from django_libs.tests.mixins import ViewTestMixin
 
 
@@ -5,7 +7,7 @@ client = Client()
 
 
 class AboutViewTestCase(ViewTestMixin, TestCase):
-    """ Tests for about view """
+    """ Tests for home view """
     def get_view_name(self):
         return 'about'
 
