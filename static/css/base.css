@@ -181,6 +181,7 @@ a.category-badge > span.badge:hover {
 .update-link,
 .remove-item {
     cursor: pointer;
+    font-size: medium;
 }
 
 .btn-dkblue,
