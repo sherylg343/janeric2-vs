@@ -1,5 +1,4 @@
-from django.test import TestCase, Client, RequestFactory
-from django.shortcuts import render, redirect, reverse
+from django.test import TestCase, Client
 
 from django_libs.tests.mixins import ViewTestMixin
 
@@ -8,7 +7,7 @@ client = Client()
 
 
 class HomesViewTestCase(ViewTestMixin, TestCase):
-    """ Tests for all_products view """
+    """ Tests for home view """
     def get_view_name(self):
         return 'home'
 
