@@ -9,17 +9,12 @@ $(document).ready(function() {
     //Detect client time zone
     const timeZoneName = Intl.DateTimeFormat().resolvedOptions().timeZone;
     document.cookie = 'timezone=' + encodeURIComponent(timeZoneName) + '; path=/';
-    // Sticky sidebar from MD Bootstrap
-    $(function () {
-        $(".sticky").sticky({
-            topSpacing: 128,
-            stopper: "#footer"
-        });
-    });
     // If side menu displaying run function during scrolling
-    $(window).on('scroll', function() {
-        releaseFixedSidebar();
-    });
+    if($(".side-menu-col").is(':visible')) {
+        $(window).on('scroll', function() {
+            releaseFixedSidebar();
+        });
+    }
     /* Based upon "Make a Sidebar Always Visible Regardless of Scroll",
     by Łukasz Nojek, 4-20-20, https://lukasznojek.com/blog/2020/04/make-a-sidebar-always-visible-regardless-of-scroll/ */
     function releaseFixedSidebar() {
@@ -29,16 +24,12 @@ $(document).ready(function() {
         const sideMenu = $(".side-menu")
         const sideMenuTop = sideMenu.position().top;
         const sideMenuHeight = sideMenu.outerHeight(false);
-        const sideMenuBottom = sideMenuTop + sideMenuHeight;
         const headerHeight = $("header").outerHeight(false);
         const scrollPosition = window.scrollY;
         const sideMenuCalc = scrollPosition + (headerHeight + sideMenuHeight);
         const myWindow = $(window).height();
-        // if no side menu do nothing
-        if(sideMenuTop === 0) {
-            return
         // if side menu bottom higher than top of footer
-        }else if(sideMenuCalc < topOfFooter) {
+        if(sideMenuCalc < topOfFooter) {
             $(sideMenuColumn).css({"position": "fixed"});
             $(".head-row").css({"transform": "translateX(30vw)"});
         // if footer reaching bottom of side menu
