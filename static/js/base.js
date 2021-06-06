@@ -17,10 +17,11 @@ $(document).ready(function() {
         });
     });
 });
-$(window).on('scroll', function() {
-    releaseFixedSidebar();
-});
-
+if($(".side-menu-col").css({"display": "block"})) {
+    $(window).on('scroll', function() {
+        releaseFixedSidebar();
+    });
+}
 /* Based upon "Make a Sidebar Always Visible Regardless of Scroll",
 by Łukasz Nojek, 4-20-20, https://lukasznojek.com/blog/2020/04/make-a-sidebar-always-visible-regardless-of-scroll/ */
 function releaseFixedSidebar() {
