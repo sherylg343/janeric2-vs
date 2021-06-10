@@ -240,6 +240,11 @@ a.category-badge > span.badge:hover {
 }
 
 /*------- Navigation ------*/
+/* keeps fixed top header from being too wide */
+#header {
+    max-width: 100vw;
+}
+
 #top-nav {
     margin-left: 0;
     margin-right: 0;
