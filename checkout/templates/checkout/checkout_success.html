@@ -100,21 +100,21 @@
                                                 <td class="text-left mb-0">Subtotal:
                                                 </td>
                                                 <td class="text-right">
-                                                    $ {{ order.order_total }}
+                                                    ${{ order.order_total }}
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="text-left mb-0">Shipping:
                                                 </td>
                                                 <td class="text-right">
-                                                    $ {{ order.shipping_cost |floatformat:2 }}
+                                                    ${{ order.shipping_cost |floatformat:2 }}
                                                 </td>
                                             </tr>
                                             {% if order.ca_sales_tax %}
                                                 <tr>
                                                     <td class="text-left mb-0">Sales Tax:</td>
                                                     <td class="text-right">
-                                                        $  {{ order.ca_sales_tax |floatformat:2 }}
+                                                        ${{ order.ca_sales_tax |floatformat:2 }}
                                                     </td>
                                                 </tr>
                                                 {% endif %}
@@ -122,7 +122,7 @@
                                                 <td class="text-left mb-0">Order Total:
                                                 </td>
                                                 <td class="text-right">
-                                                    $ {{ order.grand_total | floatformat:2 }}
+                                                    ${{ order.grand_total | floatformat:2 }}
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -157,7 +157,7 @@
                                     <p class="my-0">Size: {% if item.product.size %}{{ item.product.size }}{% else %}N/A{% endif %}</p>
                                     <p class="my-0">Pack: {{ item.product.pack }}</p>
                                     <p class="my-0">Quantity: {{ item.quantity }}</p>
-                                        <p class="my-0 mb-4">Unit Price:  $ {{ item.product.price }}</p>
+                                        <p class="my-0 mb-4">Unit Price:  ${{ item.product.price }}</p>
                                 </div>
                             </div>
                         {% endfor %}

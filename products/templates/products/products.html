@@ -67,7 +67,7 @@
                                                 <p class="mb-0">Case of {{ product.pack }}</p>
                                                 {% endif %}
                                                 <input type="hidden" value="{{ product.price }}">
-                                                <p  class="mb-0">Price: $ {{ product.price }}</p>
+                                                <p  class="mb-0">Price: ${{ product.price }}</p>
                                                 <input type="hidden" id="product-id" name="product_id" value="{{ product.id }}">
                                                 <input type="hidden" id="quantity" name="quantity" value="1">
                                                 <input type="hidden" id="products-redirect-url" name="redirect_url" value="{{ request.path }}">
