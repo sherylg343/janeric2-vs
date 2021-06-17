@@ -13,7 +13,7 @@ def cart_contents(request):
 
     for product_id, quantity in cart.items():
         product = get_object_or_404(Product, pk=product_id)
-        total += quantity * product.price
+        total += round(quantity * product.price, 2)
         product_count += quantity
         cart_items.append({
             'product_id': product_id,
@@ -26,8 +26,8 @@ def cart_contents(request):
 
     ca_tax = round(total * Decimal(settings.CA_SALES_TAX/100), 2)
 
-    grand_total = shipping + total
-    grand_total_ca = shipping + ca_tax + total
+    grand_total = round(shipping + total, 2)
+    grand_total_ca = round(shipping + ca_tax + total, 2)
 
     context = {
         'cart_items': cart_items,
