@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 {% load cart_tools %}
 
 {% block extra_title %}| Cart{% endblock %}
@@ -53,8 +54,8 @@
                                             <p class="my-0"><strong>{{ item.product.name }}</strong></p>
                                             <p class="my-0 small text-muted">Size: {% if item.product.has_sizes %}{{ item.size|upper }}{% else %}N/A{% endif %}</p>
                                             <p class="my-0 small text-muted">SKU: {{ item.product.SKU }}</p>
-                                            <p class="my-0 small text-muted">Price Per Unit: ${{ item.product.price }}</p>
-                                            <p class="small text-muted">Product Subtotal: ${{ item.product.price | calc_subtotal:item.quantity }}</p>
+                                            <p class="my-0 small text-muted">Price Per Unit: ${{ item.product.price|intcomma }}</p>
+                                            <p class="small text-muted">Product Subtotal: ${{ item.product.price | calc_subtotal:item.quantity|intcomma }}</p>
                                             <p>
                                             {% include "cart/remove-product-link.html" %}
                                             </p>
