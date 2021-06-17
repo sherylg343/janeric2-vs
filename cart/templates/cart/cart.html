@@ -94,11 +94,11 @@
                                                 {% include "cart/quantity-form.html" %}
                                             </td>
                                             <td class="py-3">
-                                                <p class="my-0">${{ item.product.price }}
+                                                <p class="my-0">${{ item.product.price|intcomma }}
                                                 </p>
                                             </td>
                                             <td class="py-3">
-                                                <p class="my-0">${{ item.product.price | calc_subtotal:item.quantity }}
+                                                <p class="my-0">${{ item.product.price | calc_subtotal:item.quantity|intcomma }}
                                                 </p>
                                             </td>
                                             <td>
@@ -108,9 +108,9 @@
                                     {% endfor %}
                                         <tr>
                                             <td colspan="5" class="pt-5 text-right">
-                                                <h6><strong>Bag Total: $ {{ total|floatformat:2 }}</strong></h6>
-                                                <h6>Shipping: $ {{ shipping|floatformat:2 }}</h6>
-                                                <h5 class="mt-4"><strong>Grand Total: $ {{ grand_total|floatformat:2 }}</strong></h5>
+                                                <h6><strong>Bag Total: $ {{ total|intcomma }}</strong></h6>
+                                                <h6>Shipping: $ {{ shipping|intcomma }}</h6>
+                                                <h5 class="mt-4"><strong>Grand Total: $ {{ grand_total|intcomma}}</strong></h5>
                                             </td>
                                         </tr>
                                         <tr>
