@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% load static %} 
+{% extends "base.html" %} {% load static %} {% load humanize %}
 
 {% block extra_title %}| Products{% endblock %}
 
@@ -46,7 +46,7 @@
                                             />
                                         </a>    
                                         {% else %}
-                                        <a href="#">
+                                        <a href="{% url 'product_detail' product.id %}">
                                             <img
                                                 class="card-img-top"
                                                 src="{{ MEDIA_URL }}noimage.png"
@@ -67,13 +67,13 @@
                                                 <p class="mb-0">Case of {{ product.pack }}</p>
                                                 {% endif %}
                                                 <input type="hidden" value="{{ product.price }}">
-                                                <p  class="mb-0">Price: ${{ product.price }}</p>
+                                                <p  class="mb-0">Price: ${{ product.price|intcomma }}</p>
                                                 <input type="hidden" id="product-id" name="product_id" value="{{ product.id }}">
                                                 <input type="hidden" id="quantity" name="quantity" value="1">
                                                 <input type="hidden" id="products-redirect-url" name="redirect_url" value="{{ request.path }}">
                                             </div>
                                             <div class="card-footer text-center">
-                                                <a href="{% url 'product_detail' product.id %}" class="btn btn-md bg-ltblue white-text">View</a>
+                                                <!--<a href="{% url 'product_detail' product.id %}" class="btn btn-md bg-ltblue white-text">View</a>-->
                                                 <button type="submit" class="btn btn-md bg-logoblue white-text">Add to Cart</button>
                                             </div>
                                         </form>

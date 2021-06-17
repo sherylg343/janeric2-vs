@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% load static %} 
+{% extends "base.html" %} {% load static %} {% load humanize %}
 
 {% block extra_title %}| Product{% endblock %}
 
@@ -50,7 +50,7 @@
                                         <option value="{{ product.size }}-{{ product.pack }}-{{ product.price }}" data-id="{{ product.id }}" selected>{% if product.size %}{{ product.get_size_display }} - {% endif %}{% if product.pack %}Case of {{ product.pack }} - {% endif %}${{ product.price }}</option>
                                         {% for item in family_products %}
                                             {% if item.size != product.size or item.pack != product.pack %}
-                                                <option value="{{ item.size }}-{{ item.pack }}-{{ item.price }}" data-id="{{ item.id }}">{% if item.size %}{{ item.get_size_display }} - {% endif %}{% if item.pack %}Case of {{ item.pack }} - {% endif %}${{ item.price }}</option>
+                                                <option value="{{ item.size }}-{{ item.pack }}-{{ item.price }}" data-id="{{ item.id }}">{% if item.size %}{{ item.get_size_display }} - {% endif %}{% if item.pack %}Case of {{ item.pack }} - {% endif %}${{ item.price|intcomma }}</option>
                                             {% endif %}
                                         {% endfor %}
                                     </select>
