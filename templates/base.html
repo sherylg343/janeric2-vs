@@ -1,4 +1,5 @@
 {% load static %}
+{% load humanize %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -106,7 +107,7 @@
                                     <div><i class="fas fa-shopping-cart"></i></div>
                                     <p class="my-0">
                                         {% if grand_total %} 
-                                            ${{ grand_total|floatformat:2 }} 
+                                            ${{ grand_total|intcomma }} 
                                         {% else %} 
                                             $0.00 
                                         {% endif %}
@@ -182,7 +183,7 @@
             <div class="container-fluid text-center footer-main">
                 <div class="row w-100">
                     <div class="col-md-4 pt-4 pt-md-0">
-                        <h7 class="headline-footer text-uppercase"><strong>Enquiries</strong></h7>
+                        <h7 class="headline-footer text-uppercase text-logoblue"><strong>Enquiries</strong></h7>
                         <ul class="list-unstyled mb-0 mx-auto justify-content-start">
                             <li class="mb-1 mb-lg-2">
                                 <a href="mailto:customerservice@janericllc.com?subject=Enquiry from Website">customerservice@janericllc.com</a>
@@ -198,7 +199,7 @@
                     </div>
                     <hr class="clearfix w-100 d-md-none mt-0">
                     <div class="col-md-4 offset-md-2"> 
-                        <h7 class="headline-footer text-uppercase"><strong>Information</strong></h7>
+                        <h7 class="headline-footer text-uppercase text-logoblue"><strong>Information</strong></h7>
                         <ul class="list-unstyled mb-0 mt-1 mt-lg-3">
                             <li class="mb-1 mb-lg-3">
                             <a href="{% url 'shipping' %}"><strong>Shipping</strong></a> 

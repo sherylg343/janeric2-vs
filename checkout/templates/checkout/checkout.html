@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 {% load cart_tools %}
 
 {% block extra_css %}
@@ -66,7 +67,7 @@
                                     <p class="my-0 small text-muted">Qty: {{ item.quantity }}</p>
                                 </div>
                                 <div class="col-3 text-right">
-                                    <p class="my-0 small text-muted">${{ item.product.price | calc_subtotal:item.quantity }}</p>
+                                    <p class="my-0 small text-muted">${{ item.product.price | calc_subtotal:item.quantity|intcomma }}</p>
                                 </div>
                             </div>
                         {% endfor %}
@@ -79,11 +80,11 @@
                                 <p class="my-0 " id="gtotal-label">Grand Total:</p>
                             </div>
                             <div class="col-3">
-                                <p class="my-0">${{ total | floatformat:2 }}</p>
-                                <p class="my-0 text-right">${{ shipping | floatformat:2 }}</p>
-                                <p class="my-0 text-right d-none" id="taxes-amt" value="{{ ca_tax | floatformat:2 }}">${{ ca_tax | floatformat:2 }}</p>
-                                <p class="my-0 text-right" id="gtotal-amt"><strong>${{ grand_total | floatformat:2 }}</strong></p>
-                                <p class="my-0 d-none text-right" id="gtotal-amt-ca" value="{{ grand_total_ca | floatformat:2 }}"><strong>${{ grand_total_ca | floatformat:2 }}</strong></p>
+                                <p class="my-0">${{ total|intcomma }}</p>
+                                <p class="my-0 text-right">${{ shipping|intcomma }}</p>
+                                <p class="my-0 text-right d-none" id="taxes-amt" value="{{ ca_tax }}">${{ ca_tax|intcomma }}</p>
+                                <p class="my-0 text-right" id="gtotal-amt"><strong>${{ grand_total|intcomma }}</strong></p>
+                                <p class="my-0 d-none text-right" id="gtotal-amt-ca" value="{{ grand_total_ca }}"><strong>${{ grand_total_ca|intcomma }}</strong></p>
                             </div>
                         </div>
                     </div>

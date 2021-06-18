@@ -100,6 +100,10 @@ body {
     color: var(--clr-palettedkblue);
 }
 
+.text-logoblue {
+    color: var(--clr-logoblue);
+}
+
 .border-bottom {
     border-bottom: 6px solid var(--clr-palettegray) !important;
 }
