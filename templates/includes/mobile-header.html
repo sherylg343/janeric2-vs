@@ -1,3 +1,4 @@
+{% load humanize %}
 <!-- Sidebar navigation -->
 <div id="slide-out" class="side-nav2 side bg-white">
   <ul class="custom-scrollbar">
@@ -20,7 +21,7 @@
               </li>
               <li><a href="{% url 'products' %}?category=Social Distancing Signage" class="waves-effect">Social Distancing Signage</a>
               </li>
-              <li><a href="{% url 'products' %}?category=Thermometer" class="waves-effect">Thermometers</a>
+              <li><a href="{% url 'products' %}?category=Thermometer" class="waves-effect">Thermometer</a>
               </li>
               <li><a href="{% url 'products' %}?category=Gowns,Masks,Social Distancing Signage,Thermometer" class="waves-effect">All PPE</a>
               </li>
@@ -109,7 +110,7 @@
                 <div><i class="fas fa-shopping-cart"></i></div>
                 <p class="my-0">
                     {% if grand_total %} 
-                        ${{ grand_total|floatformat:2 }} 
+                        ${{ grand_total|intcomma }} 
                     {% else %} 
                         $0.00 
                     {% endif %}
