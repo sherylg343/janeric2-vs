@@ -244,9 +244,10 @@ a.category-badge > span.badge:hover {
     min-height: 100vh;
 }
 
+/* --- font size changed so links fit on one line --*/
 .side-menu a {
     font-family: var(--ff-caslon) !important;
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     color: var(--clr-paletteltblue) !important;
 }
 
