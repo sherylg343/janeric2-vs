@@ -117,10 +117,6 @@ body {
     background: #cac6d2;
 }
 
-.bg-blush3 {
-    background: rgb(253, 240, 242);
-}
-
 /*----- text colors -------*/
 .text-ltblue {
     color: var(--clr-paletteltblue);
@@ -321,7 +317,7 @@ a.category-badge > span.badge:hover {
 }
 /*-- testing blush3 color --*/
 #top-nav-header.navbar-collapse {
-    background: bg-blush3;
+    background: rgb(253, 240, 242);
 }
 
 #top-nav-header, ul.navbar-nav {
