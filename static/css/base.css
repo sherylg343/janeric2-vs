@@ -84,6 +84,40 @@ body {
     background: var(--clr-paletteblush);
 }
 
+/*--- possible sidebar background colors ---*/
+.bg-blush1 {
+    background: rgb(250, 233, 231, 0.7);
+}
+
+.bg-blush2 {
+    background: rgb(250, 233, 231);
+}
+
+.bg-blush3 {
+    background: rgb(253, 240, 242);
+}
+
+.bg-gray1 {
+    background: rgb(234, 232, 237, 0.7);
+}
+
+.bg-gray2 {
+    background: rgb(234, 232, 237);
+}
+
+.bg-ltblue {
+    background: #eff6fa;
+}
+
+.bg-dkblue {
+    background: #2b6684;
+}
+
+.bg-violet {
+    background: #cac6d2;
+}
+
+/*----- text colors -------*/
 .text-ltblue {
     color: var(--clr-paletteltblue);
 }
@@ -143,7 +177,7 @@ nav-link:focus, nav-link:hover {
 }
 
 a, .nav-link {
-    color: var(--clr-paletteltblue) !important;
+    color: var(--clr-palettemedblue) !important;
 }
 
 a:hover, a:active, .nav-link:hover, .nav-link:active  {
@@ -270,7 +304,7 @@ a.category-badge > span.badge:hover {
 .side-menu a {
     font-family: var(--ff-caslon) !important;
     font-size: 1.1rem;
-    color: var(--clr-paletteltblue) !important;
+    color: var(--clr-palettemedblue) !important;
 }
 
 .side-menu ul {
@@ -281,9 +315,9 @@ a.category-badge > span.badge:hover {
     -webkit-box-shadow: none;
     box-shadow: none;
 }
-
+/*-- testing blush3 color --*/
 #top-nav-header.navbar-collapse {
-    background: var(--clr-paletteblush);
+    background: bg-blush3;
 }
 
 #top-nav-header, ul.navbar-nav {
@@ -531,7 +565,7 @@ footer {
 }
 
 .footer-main a {
-    color: var(--clr-paletteltblue) !important;
+    color: var(--clr-palettemedblue) !important;
     font-family: var(--ff-caslon) !important;
 }
 
