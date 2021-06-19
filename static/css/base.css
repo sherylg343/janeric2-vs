@@ -117,6 +117,10 @@ body {
     background: #cac6d2;
 }
 
+.bg-blush3 {
+    background: rgb(253, 240, 242);
+}
+
 /*----- text colors -------*/
 .text-ltblue {
     color: var(--clr-paletteltblue);
@@ -303,7 +307,7 @@ a.category-badge > span.badge:hover {
 
 .side-menu a {
     font-family: var(--ff-caslon) !important;
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     color: var(--clr-palettemedblue) !important;
 }
 
