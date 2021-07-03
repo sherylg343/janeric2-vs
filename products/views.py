@@ -36,7 +36,10 @@ def all_products(request):
             products = products.filter(queries)
 
         else:
-            products.order_by('category.division', 'category.name')
+            products.order_by('category.division', 'category.name', 'product.size')
+            print("category.division", products.category.division)
+            print("category.name", products.category.name)
+            print("size", products.size)
 
     context = {
         'products': products,
