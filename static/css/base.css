@@ -266,7 +266,7 @@ a.category-badge > span.badge:hover {
     min-height: 100vh;
     position: fixed;
     z-index: 1020;
-    border: 6px solid var(--clr-palettegray);
+    border-right: 6px solid var(--clr-palettegray);
 }
 
 .side-menu a {
@@ -511,6 +511,14 @@ color: var(--clr-navy);
 }
 
 /* ---------- Containers -------------*/
+#products-top-section {
+    max-width: 100vw;
+}
+
+#product-top-row {
+    max-width: 100%;
+}
+
 footer {
     position: relative;
     z-index: 1030;
