@@ -1,6 +1,8 @@
 from django.db import models
 from django.db.models.fields import IntegerField
 
+from datetime import date
+
 
 class Category(models.Model):
     class Meta:
@@ -83,9 +85,9 @@ class Product(models.Model):
     )
     description = models.TextField(
         null=True, blank=True)
-    active = models.BooleanField(null=True, blank=True)
-    created = models.DateField(null=True, blank=True)
-    modified = models.DateField(null=True, blank=True)
+    active = models.BooleanField(default=True)
+    created = models.DateField(default=date.today)
+    modified = models.DateField(default=date.today)
 
     def __str__(self):
         return self.name
