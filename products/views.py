@@ -10,7 +10,7 @@ from .forms import ProductForm, ProductFamilyForm
 
 def all_products(request):
     """ A view to show all products, including sorting and search queries """
-    products = Product.objects.all()
+    products = Product.objects.filter(active=True)
     query = None
     categories = None
     division = None
@@ -25,7 +25,7 @@ def all_products(request):
                 else:
                     return
 
-        if 'q' in request.GET:
+        elif 'q' in request.GET:
             query = request.GET['q']
             if not query:
                 messages.error(
@@ -34,6 +34,9 @@ def all_products(request):
 
             queries = Q(name__icontains=query) | Q(description__icontains=query) | Q(product_family__name__icontains=query) 
             products = products.filter(queries)
+
+        else:
+            products.order_by('category.division', 'category.name')
 
     context = {
         'products': products,
