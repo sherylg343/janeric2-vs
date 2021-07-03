@@ -85,9 +85,9 @@ class Product(models.Model):
     )
     description = models.TextField(
         null=True, blank=True)
-    active = models.BooleanField(default=True)
-    created = models.DateField(default=date.today)
-    modified = models.DateField(default=date.today)
+    active = models.BooleanField(null=True)
+    created = models.DateField(null=True)
+    modified = models.DateField(null=True)
 
     def __str__(self):
         return self.name
