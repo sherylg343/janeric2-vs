@@ -61,6 +61,8 @@ class Product(models.Model):
         ('12x18', '12 in. x 18 in.'),
         ('12.125x16.875', '12.125 in. x 16.875 in.'),
         ('12x18', '12 in. x 18 in.'),
+        ('25.2x7.3x6.1', '25.2 in. x 7.3 in. x 6.1 in.'),
+        ('36.8x7.3x6.1', '36.8 in. x 7.3 in. x 6.1 in.'),
         ('48x12x5', '48 in. x 12 in. x 5 in.'),
         ('48x16x5', '48 in. x 16 in. x 5 in.'),
     )
@@ -81,6 +83,9 @@ class Product(models.Model):
     )
     description = models.TextField(
         null=True, blank=True)
+    active = models.BooleanField(null=True, blank=True)
+    created = models.DateField(null=True, blank=True)
+    modified = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return self.name

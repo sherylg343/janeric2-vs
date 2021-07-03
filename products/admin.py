@@ -6,6 +6,7 @@ from .models import Product, Category, Product_Family
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = (
+        'active',
         'SKU',
         'name',
         'product_family',
@@ -15,6 +16,8 @@ class ProductAdmin(admin.ModelAdmin):
         'pack',
         'price',
         'description',
+        'created',
+        'modified',
     )
 
     ordering = ('product_family',)
