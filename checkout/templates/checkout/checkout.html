@@ -72,7 +72,7 @@
                             </div>
                         {% endfor %}
                         <hr class="my-0">
-                        <div class="row text-right">
+                        <div class="row text-right pt-2">
                             <div class="col-7 offset-2">
                                 <p class="my-0">Order Total:</p>
                                 <p class="my-0">Shipping:</p>
@@ -91,19 +91,19 @@
                     <div class="col-12 col-lg-6">
                         <ul class="checkout-subhead list-unstyled text-left mt-3 ml-2 d-inline-flex">
                            <li class="pr-2">
-                               Checkout
+                               <strong>Checkout</strong>
                             </li> 
                            <li class="pr-2"> > </li>
                            <li class="pr-2">
-                               Contact</a>
+                            <strong>Contact</strong>
                             </li>
                            <li class="pr-2"> > </li>
                            <li class="pr-2">
-                               Shipping</a>
+                            <strong>Shipping</strong>
                             </li>    
                            <li class="pr-2"> > </li>
                             <li>
-                                Payment</a>
+                                <strong>Payment</strong>
                             </li>
                         </ul>
                         <form action="{% url 'checkout' %}" method="POST" id="payment-form">
