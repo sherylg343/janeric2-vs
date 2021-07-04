@@ -370,7 +370,7 @@ class EditProductViewTestCase(ViewTestMixin, TestCase):
         self.assertEqual(self.product4.name, 'Product Name Changed')
 
 
-class DeleteProductViewTestCase(ViewTestMixin, TestCase):
+class DeactivateProductViewTestCase(ViewTestMixin, TestCase):
     """ Test when products queried by keyword or category """
     @classmethod
     def setUpClass(cls):
@@ -380,24 +380,25 @@ class DeleteProductViewTestCase(ViewTestMixin, TestCase):
         cls.product2 = ProductFactory()
         cls.product3 = ProductFactory()
         cls.product4 = ProductFactory()
-        super(DeleteProductViewTestCase, cls).setUpClass()
+        super(DeactivateProductViewTestCase, cls).setUpClass()
 
     def get_view_name(self):
-        return 'delete_product'
+        return 'deactivate_product'
 
-    def test_delete_product_view(self):
-        Product.objects.get_or_create(pk=3)
+    def test_deactivate_product_view(self):
+        product = Product.objects.get_or_create(pk=3)
         pk = 3
         # case 1 - Anonymous User
         self.is_not_callable(kwargs={'product_id': pk})
         response = self.client.get(
             self.get_url(view_kwargs={'product_id': pk}))
         self.assertRedirects(
-            response, 'https://janeric2.herokuapp.com/accounts/login/?next=http%3A//testserver/products/delete/3/', status_code=302, target_status_code=200, fetch_redirect_response=True)
+            response, 'https://janeric2.herokuapp.com/accounts/login/?next=http%3A//testserver/products/deactivate/3/', status_code=302, target_status_code=200, fetch_redirect_response=True)
         # case 2 - superuser
         user = User.objects.create_superuser(username='admin')
         self.client.force_login(user=user)
         self.is_callable(kwargs={'product_id': pk})
+        self.assertEqual(product.active, False)
         # case 3 - User but not superuser
         user1 = User.objects.create_user(
             'testing', 'joe@testing.com', 'testingpassword')
@@ -407,13 +408,7 @@ class DeleteProductViewTestCase(ViewTestMixin, TestCase):
         self.assertRedirects(
             response, '/', status_code=302, target_status_code=200, fetch_redirect_response=True)
 
-    def test_database_delete(self):
-        count = Product.objects.count()
-        user = User.objects.create_superuser(username='admin')
-        self.client.force_login(user=user)
-        self.product3.delete()
-        length = count - 1
-        self.assertEqual(len(Product.objects.all()), length)
+
 
 
 class AllProductFamiliesViewTestCase(ViewTestMixin, TestCase):
