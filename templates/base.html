@@ -76,12 +76,12 @@
                                 aria-haspopup="true"
                                 aria-expanded="false"
                             >
-                                <div class="text-center text-ltblue">
+                                <div class="text-center text-medblue">
                                     <div><i class="fas fa-user"></i></div>
                                     <p class="my-0">My Account</p>
                                 </div>
                             </a>
-                            <div class="dropdown-menu border-0 account text-ltblue"
+                            <div class="dropdown-menu border-0 account text-medblue"
                                 aria-labelledby="user-options">
                                 {% if request.user.is_authenticated %} 
                                     {% if request.user.is_superuser %}
@@ -103,7 +103,7 @@
                             <a
                             class="{% if grand_total %}font-weight-bold{% endif %}nav-link"
                             href="{% url 'view_cart' %}">
-                                <div class="text-center">
+                                <div class="text-center text-medblue">
                                     <div><i class="fas fa-shopping-cart"></i></div>
                                     <p class="my-0">
                                         {% if grand_total %} 
