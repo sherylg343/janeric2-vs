@@ -791,12 +791,6 @@ margin-top: -.3rem;
     }
 
     .head-row {
-        position:fixed;
-        font-weight: 400;
-        min-height: 100vh;
-    }
-
-    #col-wrapper {
         transform: translateX(30vw);
         overflow-x: hidden;
     }
