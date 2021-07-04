@@ -72,9 +72,9 @@
                             {% if request.user.is_superuser %}
                                 <small class="col-12 mt-3 ml-md-n5 ml-lg-n3 ml-xl-n5 text-center">
                                     <a href="{% url 'edit_product' product.id %}">Edit</a> | 
-                                    <a href="#myModal" class="trigger-btn my-modal" data-toggle="modal" data-id="{{ product.id }}">Delete</a>
+                                    <a href="#myModal" class="trigger-btn my-modal" data-toggle="modal" data-id="{{ product.id }}">Deactivate</a>
                                 </small>
-                                {% include 'products/delete-confirmation-modal.html' %}
+                                {% include 'products/deactivate-confirmation-modal.html' %}
                             {% endif %}
                             <input type="hidden" id="redirect-url" name="redirect_url" value="{{ request.path }}">
                             <input type="hidden" id="selected-product-id" name="product_id" value="{{ product.id }}">
@@ -99,7 +99,7 @@
 {% block postloadjs %}
 {{ block.super }}
 {% include 'products/includes/product_detail_script.html' %}
-<!--  Popper for delete confirmation modal -->
+<!--  Popper for deactivate confirmation modal -->
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>-->
 {% endblock %}
