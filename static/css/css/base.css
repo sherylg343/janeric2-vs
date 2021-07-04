@@ -20,6 +20,7 @@
     --clr-paletteltblue: #8ea6b2;
     --clr-palettemedblue: #47646f;
     --clr-palettedkblue: #1e383c;
+    --clr-ltgraybkgrd: #eae8ed;
     --ff-barlow: 'Barlow', sans-serif;
     --ff-roboto: 'Roboto', sans-serif;
     --ff-caslon: 'Caslon 3 Roman';
@@ -79,6 +80,10 @@ body {
 
 .bg-blush {
     background: var(--clr-paletteblush);
+}
+
+.bg-ltgray {
+    background: var(--clr-ltgraybkgrd);
 }
 
 .text-ltblue {
@@ -489,7 +494,7 @@ color: var(--clr-navy);
 /* ---------- Containers -------------*/
 .footer-main {
     color: var(--clr-paletteltblue) !important;
-    background: var(--clr-paletteblush) !important;
+    background: var(--clr-ltgraybkgrd) !important;
     padding-left: 0;
     padding-right: 0;
     font-family: var(--ff-caslon) !important;
@@ -669,5 +674,8 @@ margin-top: -.3rem;
     }
     .footer-main {
         padding-left: 15rem;
+    }
+    .head-row {
+        transform: translateX(25vw);
     }
 }
