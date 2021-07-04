@@ -272,7 +272,6 @@ a.category-badge > span.badge:hover {
 .side-menu a {
     font-family: var(--ff-caslon) !important;
     font-size: 0.9rem;
-    color: var(--clr-palettemedblue) !important;
 }
 
 .side-menu ul {
