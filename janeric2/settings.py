@@ -132,16 +132,16 @@ WSGI_APPLICATION = 'janeric2.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 #if 'DATABASE_URL' in os.environ:
-DATABASES = {
-    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
-}
+#DATABASES = {
+#    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
+#}
 #else:
-#    DATABASES = {
-#        'default': {
-#            'ENGINE': 'django.db.backends.sqlite3',
-#            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#        }
-#    }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 
 # Password validation

@@ -11,6 +11,7 @@ from .forms import ProductForm, ProductFamilyForm
 def all_products(request):
     """ A view to show all products, including sorting and search queries """
     products = Product.objects.filter(active=True)
+    print(products)
     query = None
     categories = None
     division = None
@@ -25,7 +26,7 @@ def all_products(request):
                 else:
                     return
 
-        elif 'q' in request.GET:
+        if 'q' in request.GET:
             query = request.GET['q']
             if not query:
                 messages.error(
@@ -34,12 +35,6 @@ def all_products(request):
 
             queries = Q(name__icontains=query) | Q(description__icontains=query) | Q(product_family__name__icontains=query) 
             products = products.filter(queries)
-
-        else:
-            products.order_by('category.division', 'category.name', 'product.size')
-            print("category.division", products.category.division)
-            print("category.name", products.category.name)
-            print("size", products.size)
 
     context = {
         'products': products,
