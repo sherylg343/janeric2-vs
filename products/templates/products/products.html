@@ -22,7 +22,8 @@
                     <a href="#products-top-section" class="btn-floating btn-large btn-mdblue">
                         <i class="fas fa-arrow-up"></i>
                     </a>
-                </div> 
+                </div>
+                <div id="col-wrapper"></div> 
                 <div class="row">
                     <div class="col-12 mt-3">
                         <h5 class="headline pb-4">{% if division %}{{ division }}{% elif search_term %}Search Results for: {{ search_term }}{% else %}Products{% endif %}</h5>
@@ -98,6 +99,7 @@
                             {% endfor %}
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
