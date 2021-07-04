@@ -80,8 +80,8 @@ body {
     background: var(--clr-paletteltblue);
 }
 
-.bg-blush {
-    background: var(--clr-paletteblush);
+.bg-white {
+    background: #ffffff;
 }
 
 /*----- text colors -------*/
