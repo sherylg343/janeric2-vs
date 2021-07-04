@@ -65,7 +65,7 @@ select option[value=""] {
     left: 0;
     width: 100%;
     height: 100%;
-    background: #8ea6b2;
+    background: var(--clr-ltgraybkgrd);
     z-index: 30000;
 }
 
@@ -118,7 +118,7 @@ ul.stepper .step-title:after,
     font-family: var(--ff-barlow);
     letter-spacing: 0.1em;
     font-size: 11px;
-    line-height: 15px;
+    line-height: 11px;
     text-transform: uppercase;
     color: var(--clr-palettedkblue);
 }
