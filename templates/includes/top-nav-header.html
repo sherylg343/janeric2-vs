@@ -2,20 +2,7 @@
     <ul class="navbar-nav border-bottom ml-0 mr-auto">
         <li class="nav-item">
             <a class="nav-link" href="{% url 'products' %}">Shop All</a>
-        </li>   
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="ppe-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PPE
-            </a>
-            <div class="dropdown-menu border-0" aria-labelledby="ppe-link">
-                <a href="{% url 'products' %}?category=Automated Door Solution" class="dropdown-item">Automated Door Solution</a>
-                <a href="{% url 'products' %}?category=Gowns" class="dropdown-item">Gowns</a>
-                <a href="{% url 'products' %}?category=Masks" class="dropdown-item">Masks</a>
-                <a href="{% url 'products' %}?category=Self-Cleaning Surfaces" class="dropdown-item">Self-Cleaning Surfaces</a>
-                <!--<a href="{% url 'products' %}?category=Social Distancing Signage" class="dropdown-item">Social Distancing Signage</a>-->
-                <a href="{% url 'products' %}?category=Thermometer" class="dropdown-item">Thermometer</a>
-                <a href="{% url 'products' %}?category=Gowns,Masks,Social Distancing Signage,Thermometer" class="dropdown-item">All PPE</a>
-            </div>
-        </li>
+        </li> 
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="hand-sanitizer-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Hand Sanitizer
@@ -31,13 +18,26 @@
                     All Hand Sanitizer
                 </a>
             </div>
-        </li>
+        </li> 
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="personal-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Personal</a>
             <div class="dropdown-menu border-0" aria-labelledby="personal-link">
                 <a href="{% url 'products' %}?category=Body Wash and Shampoo" class="dropdown-item">
                     Body Wash and Shampoo
                 </a>
+            </div>
+        </li> 
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="ppe-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PPE
+            </a>
+            <div class="dropdown-menu border-0" aria-labelledby="ppe-link">
+                <a href="{% url 'products' %}?category=Automated Door Solution" class="dropdown-item">Automated Door Solution</a>
+                <a href="{% url 'products' %}?category=Gowns" class="dropdown-item">Gowns</a>
+                <a href="{% url 'products' %}?category=Masks" class="dropdown-item">Masks</a>
+                <a href="{% url 'products' %}?category=Self-Cleaning Surfaces" class="dropdown-item">Self-Cleaning Surfaces</a>
+                <!--<a href="{% url 'products' %}?category=Social Distancing Signage" class="dropdown-item">Social Distancing Signage</a>-->
+                <a href="{% url 'products' %}?category=Thermometer" class="dropdown-item">Thermometer</a>
+                <a href="{% url 'products' %}?category=Gowns,Masks,Social Distancing Signage,Thermometer" class="dropdown-item">All PPE</a>
             </div>
         </li>
         <li class="nav-item dropdown">

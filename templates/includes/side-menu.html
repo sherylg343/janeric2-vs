@@ -4,27 +4,6 @@
       <ul class="collapsible collapsible-accordion">
         <li class="mb-3"><a href="{% url 'products' %}">Shop All</a>
         </li>
-        <li class="mb-3"><a class="collapsible-header waves-effect arrow-r">
-            PPE<i class="fas fa-angle-down rotate-icon ml-3"></i></a>
-          <div class="collapsible-body">
-            <ul>
-              <li><a href="{% url 'products' %}?category=Automated Door Solution" class="waves-effect">Automated Door Solution</a>
-              </li>
-              <li><a href="{% url 'products' %}?category=Gowns" class="waves-effect">Gowns</a>
-              </li>
-              <li><a href="{% url 'products' %}?category=Masks" class="waves-effect">Masks</a>
-              </li>
-              <li><a href="{% url 'products' %}?category=Self-Cleaning Surfaces" class="waves-effect">Self-Cleaning Surfaces</a>
-              </li>
-              <!--<li><a href="{% url 'products' %}?category=Social Distancing Signage" class="waves-effect">Social Distancing Signage</a>
-              </li>-->
-              <li><a href="{% url 'products' %}?category=Thermometer" class="waves-effect">Thermometer</a>
-              </li>
-              <li><a href="{% url 'products' %}?category=Gowns,Masks,Social Distancing Signage,Thermometer" class="waves-effect">All PPE</a>
-              </li>
-            </ul>
-          </div>
-        </li>
         <li class="mb-3"><a class="collapsible-header waves-effect arrow-r">Hand Sanitizer<i
               class="fas fa-angle-down rotate-icon ml-3"></i></a>
           <div class="collapsible-body">
@@ -44,6 +23,27 @@
             <ul>
               <li><a href="{% url 'products' %}?category=Body Wash and Shampoo" class="waves-effect">Body Wash and Shampoo</a>
               </li>     
+            </ul>
+          </div>
+        </li>
+        <li class="mb-3"><a class="collapsible-header waves-effect arrow-r">
+          PPE<i class="fas fa-angle-down rotate-icon ml-3"></i></a>
+        <div class="collapsible-body">
+          <ul>
+            <li><a href="{% url 'products' %}?category=Automated Door Solution" class="waves-effect">Automated Door Solution</a>
+            </li>
+            <li><a href="{% url 'products' %}?category=Gowns" class="waves-effect">Gowns</a>
+            </li>
+            <li><a href="{% url 'products' %}?category=Masks" class="waves-effect">Masks</a>
+            </li>
+            <li><a href="{% url 'products' %}?category=Self-Cleaning Surfaces" class="waves-effect">Self-Cleaning Surfaces</a>
+            </li>
+            <!--<li><a href="{% url 'products' %}?category=Social Distancing Signage" class="waves-effect">Social Distancing Signage</a>
+            </li>-->
+            <li><a href="{% url 'products' %}?category=Thermometer" class="waves-effect">Thermometer</a>
+            </li>
+            <li><a href="{% url 'products' %}?category=Gowns,Masks,Social Distancing Signage,Thermometer" class="waves-effect">All PPE</a>
+            </li>
             </ul>
           </div>
         </li>

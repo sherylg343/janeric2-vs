@@ -7,6 +7,27 @@
       <ul class="collapsible collapsible-accordion">
         <li><a href="{% url 'products' %}" class="collapsible-header waves-effect" >Shop All</a>
         </li>
+        <li><a class="collapsible-header waves-effect arrow-r">Hand Sanitizer <i class="fas fa-angle-down rotate-icon ml-5"></i></a>
+          <div class="collapsible-body">
+            <ul>
+              <li><a href="{% url 'products' %}?category=Gel" class="waves-effect">Gel</a>
+              </li>
+              <li><a href="{% url 'products' %}?category=Dispenser" class="waves-effect">Dispensers</a>
+              </li>
+              <li><a href="{% url 'products' %}?category=Gel,Dispenser" class="waves-effect">All Hand Sanitizer</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li><a class="collapsible-header waves-effect arrow-r">Personal<i
+          class="fas fa-angle-down rotate-icon ml-5"></i></a>
+          <div class="collapsible-body">
+            <ul>
+              <li><a href="{% url 'products' %}?category=Body Wash and Shampoo" class="waves-effect">Body Wash & Shampoo</a>
+              </li>
+            </ul>
+          </div>
+        </li>
         <li><a class="collapsible-header waves-effect arrow-r">
             PPE<i class="fas fa-angle-down rotate-icon ml-5"></i></a>
           <div class="collapsible-body">
@@ -27,28 +48,7 @@
               </li>
             </ul>
           </div>
-        </li>
-        <li><a class="collapsible-header waves-effect arrow-r">Hand Sanitizer <i class="fas fa-angle-down rotate-icon ml-5"></i></a>
-          <div class="collapsible-body">
-            <ul>
-              <li><a href="{% url 'products' %}?category=Gel" class="waves-effect">Gel</a>
-              </li>
-              <li><a href="{% url 'products' %}?category=Dispenser" class="waves-effect">Dispensers</a>
-              </li>
-              <li><a href="{% url 'products' %}?category=Gel,Dispenser" class="waves-effect">All Hand Sanitizer</a>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li><a class="collapsible-header waves-effect arrow-r">Personal<i
-              class="fas fa-angle-down rotate-icon ml-5"></i></a>
-          <div class="collapsible-body">
-            <ul>
-              <li><a href="{% url 'products' %}?category=Body Wash and Shampoo" class="waves-effect">Body Wash & Shampoo</a>
-              </li>
-            </ul>
-          </div>
-        </li>
+        </li>       
         <li><a class="collapsible-header waves-effect arrow-r">UV Lighting<i class="fas fa-angle-down rotate-icon ml-5"></i></a>
           <div class="collapsible-body">
             <ul>
