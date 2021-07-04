@@ -135,4 +135,8 @@ ul.stepper .md-form-label {
     min-height: calc(100vh - 358px);
 }
 
+#order-sum {
+    background: var(--clr-ltgraybkgrd);
+}
+
 
