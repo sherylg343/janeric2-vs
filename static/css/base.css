@@ -800,7 +800,7 @@ margin-top: -.3rem;
     }
 
     .head-row {
-        transform: translateX(30vw);
+        /*transform: translateX(30vw);*/
         overflow-x: hidden;
     }
 
@@ -829,7 +829,7 @@ margin-top: -.3rem;
     .footer-main {
         padding-left: 15rem;
     }
-    .head-row {
+    /*.head-row {
         transform: translateX(25vw);
-    }
+    }*/
 }
