@@ -665,6 +665,8 @@ footer {
 
 .head-row {
     min-height: calc(100vh - 325px);
+    overflow-x: hidden;
+    margin-left: 33%;
 }
 
 @media not all and (min-resolution:.001dpcm) {
@@ -804,11 +806,6 @@ margin-top: -.3rem;
         padding-left: 10rem;
     }
 
-    .head-row {
-        /*transform: translateX(30vw);*/
-        overflow-x: hidden;
-    }
-
     .headline {
         padding-top: 0;
     }
@@ -834,7 +831,7 @@ margin-top: -.3rem;
     .footer-main {
         padding-left: 15rem;
     }
-    /*.head-row {
-        transform: translateX(25vw);
-    }*/
+    .head-row {
+        margin-left: 25%;
+    }
 }
