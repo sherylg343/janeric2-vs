@@ -21,6 +21,7 @@
     --clr-palettemedblue: #47646f;
     --clr-palettedkblue: #1e383c;
     --clr-softgray: #eae8ed;
+    --clr-skyblue: #00BFFF;
     --ff-barlow: 'Barlow', sans-serif;
     --ff-roboto: 'Roboto', sans-serif;
     --ff-caslon: 'Caslon 3 Roman';
@@ -145,21 +146,21 @@ body {
 
 a:hover, a:focus,
 nav-link:focus, nav-link:hover {
-    color: var(--clr-logoblue) !important;
+    color: var(--clr-skyblue) !important;
 }
 
 a, .nav-link {
-    color: var(--clr-palettemedblue) !important;
+    color: var(--clr-logoblue) !important;
 }
 
 a:hover, a:active, .nav-link:hover, .nav-link:active  {
-    color: var(--clr-logoblue) !important;
+    color: var(--clr-skyblue) !important;
 }
 
 a.category-badge > span.badge:hover {
     background: var(--clr-white) !important;
-    color: var(--clr-logoblue) !important;
-    border: 2px solid var(--clr-logoblue) !important;
+    color: var(--clr-skyblue) !important;
+    border: 2px solid var(--clr-skyblue) !important;
 }
 
 .card img {
@@ -281,13 +282,21 @@ a.category-badge > span.badge:hover {
     border-right: 6px solid var(--clr-palettegray);
 }
 
-.side-menu a {
+.side-menu li a {
     font-family: var(--ff-caslon) !important;
-    font-size: 0.9rem;
+    font-size: 1.2rem;
+    line-height: 1.75rem;
+    color: var(--clr-logoblue);
 }
 
 .side-menu ul {
     list-style-type: none;
+    padding-inline-start: 0.5rem;
+
+}
+
+.side-menu li ul li.collapsible-body {
+    width: 18rem;
 }
 
 .btn {
