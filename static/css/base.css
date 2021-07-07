@@ -305,7 +305,7 @@ a.category-badge > span.badge:hover {
 }
 /*-- changed header to white background --*/
 #top-nav-header.navbar-collapse {
-    background: var(--clr-white);
+    background: #fffffc;
 }
 
 #top-nav-header, ul.navbar-nav {
@@ -524,6 +524,10 @@ color: var(--clr-navy);
 
 #search-row.row {
    margin-bottom: -6rem;
+}
+
+.search-input {
+    background: var(--clr-softgray);
 }
 
 #product-selector {
