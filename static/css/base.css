@@ -527,10 +527,6 @@ color: var(--clr-navy);
    margin-bottom: -6rem;
 }
 
-.search-input {
-    background: var(--clr-softgray);
-}
-
 #product-selector {
     margin-left: 2.75rem;
 }
