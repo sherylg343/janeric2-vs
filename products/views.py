@@ -11,7 +11,7 @@ from .forms import ProductForm, ProductFamilyForm
 def all_products(request):
     """ A view to show all active products, including sorting and search queries """
     # sorted in model by category division & name, ordered here by size
-    products = Product.objects.filter(active=True).order_by('size')
+    products = Product.objects.filter(active=True)
     print(products)
     query = None
     categories = None
