@@ -31,12 +31,12 @@ $(document).ready(function() {
         // if side menu bottom higher than top of footer
         if(sideMenuCalc < topOfFooter) {
             $(sideMenuColumn).css({"position": "fixed"});
-            $(".head-row").css({"transform": "translateX(30vw)"});
+            //$(".head-row").css({"transform": "translateX(30vw)"});
         // if footer reaching bottom of side menu
         } else if((myWindow < sideMenuHeight) || (sideMenuCalc >= topOfFooter)) {
             $(sideMenuColumn).css({"position": "relative"});
             // translate slightly so products don't shift with position change above
-            $(".head-row").css({"transform": "translateX(7vw)"});
+            //$(".head-row").css({"transform": "translateX(7vw)"});
         }
     }
 });
