@@ -550,7 +550,7 @@ footer {
 }
 
 .footer-main {
-    color: var(--clr-paletteltblue) !important;
+    color: var(--clr-palettemedblue) !important;
     background: var(--clr-softgray);
     padding-left: 0;
     padding-right: 0;
@@ -562,11 +562,6 @@ footer {
     background: var(--clr-logoblue) !important;
     padding-left: 0;
     padding-right: 0;
-    font-family: var(--ff-caslon) !important;
-}
-
-.footer-main a {
-    color: var(--clr-palettemedblue) !important;
     font-family: var(--ff-caslon) !important;
 }
 
