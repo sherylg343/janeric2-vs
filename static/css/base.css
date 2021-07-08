@@ -531,6 +531,10 @@ color: var(--clr-navy);
     margin-left: 2.75rem;
 }
 
+.prod-select-option {
+    text-align: center;
+}
+
 /* ---------- Containers -------------*/
 #products-top-section {
     max-width: 100vw;

@@ -21,7 +21,7 @@
                 <div class="row">
                     <div class="col-10 offset-1 mt-4">
                         <strong><h3 class="headline mb-2">{{ product.product_family }}</h3></strong>
-                        <h5 class="headline-footer text-gray mb-5"><strong>{{ product.product_family.brand_name }}</strong></h5>
+                        <h5 class="headline-footer text-ltblue mb-5"><strong>{{ product.product_family.brand_name }}</strong></h5>
                         <p class="text-right mr-2">
                             <a href="{% url 'products' %}" class="cart-continues">Keep Shopping</a>  
                         </p>
@@ -47,10 +47,10 @@
                             <div class="row">
                                 <div id="product-selector" class="col-10 offset-1">
                                      <select id="prod-detail-select" class="mdb-select md-form">
-                                        <option value="{{ product.size }}-{{ product.pack }}-{{ product.price }}" data-id="{{ product.id }}" selected>{% if product.size %}{{ product.get_size_display }} - {% endif %}{% if product.pack %}Case of {{ product.pack }} - {% endif %}${{ product.price }}</option>
+                                        <option class="prod-select-option" value="{{ product.size }}-{{ product.pack }}-{{ product.price }}" data-id="{{ product.id }}" selected>{% if product.size %}{{ product.get_size_display }} - {% endif %}{% if product.pack %}Case of {{ product.pack }} - {% endif %}${{ product.price|intcomma }}</option>
                                         {% for item in family_products %}
                                             {% if item.size != product.size or item.pack != product.pack %}
-                                                <option value="{{ item.size }}-{{ item.pack }}-{{ item.price }}" data-id="{{ item.id }}">{% if item.size %}{{ item.get_size_display }} - {% endif %}{% if item.pack %}Case of {{ item.pack }} - {% endif %}${{ item.price|intcomma }}</option>
+                                                <option class="prod-select-option" value="{{ item.size }}-{{ item.pack }}-{{ item.price }}" data-id="{{ item.id }}">{% if item.size %}{{ item.get_size_display }} - {% endif %}{% if item.pack %}Case of {{ item.pack }} - {% endif %}${{ item.price|intcomma }}</option>
                                             {% endif %}
                                         {% endfor %}
                                     </select>
