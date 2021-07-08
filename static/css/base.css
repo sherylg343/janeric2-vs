@@ -296,7 +296,7 @@ a.category-badge > span.badge:hover {
 
 }
 
-.side-menu li ul li.collapsible-body {
+#side-nav-box {
     width: 18rem;
 }
 
