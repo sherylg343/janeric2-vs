@@ -34,6 +34,7 @@ $(document).ready(function() {
         // if side menu bottom higher than top of footer
         if(sideMenuCalc < topOfFooter) {
            $(sideMenuColumn).css({"position": "fixed"});
+           $(sideMenu).css({"display": "block"});
         // if footer reaching bottom of side menu
         } else if((myWindow < sideMenuHeight) || (sideMenuCalc >= topOfFooter)) {
             //$(sideMenuColumn).css({"position": "static"});
