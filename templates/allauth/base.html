@@ -20,8 +20,16 @@
     </div>
     {% endif %}
 
-    <main>
-        <div>
+    
+    <div class="container header-container">
+        <div class="row mt-4 mb-5">
+            <div class="col"></div>
+        </div>
+    </div>
+    
+
+    <!--<main>
+        <div class="container-fluid">
         <strong>Menu:</strong>
         <ul>
             {% if user.is_authenticated %}
@@ -32,10 +40,12 @@
             <li><a href="{% url 'account_signup' %}">Register</a></li>
             {% endif %}
         </ul>
-        </div>
+        </div>-->
+        {% endblock %}
+
         {% block content %}
         {% endblock %}
-        {% endblock %}
+
         {% block extra_body %}
         {% endblock %}
     </main>
