@@ -661,7 +661,6 @@ footer {
 .head-row {
     min-height: calc(100vh - 325px);
     overflow-x: hidden;
-    margin-left: 33%;
 }
 
 @media not all and (min-resolution:.001dpcm) {
@@ -812,6 +811,9 @@ margin-top: -.3rem;
     .modal-content {
         margin: 2px auto;
         z-index: 1100 !important;
+    }
+    .head-row {
+        margin-left: 33%;
     }
 }
 
