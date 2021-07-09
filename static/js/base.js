@@ -25,17 +25,13 @@ $(document).ready(function() {
         const sideMenuHeight = sideMenu.outerHeight(false) + 20;
         const headerHeight = $("header").outerHeight(false);
         const scrollPosition = window.scrollY;
-        console.log("height", headerHeight + sideMenuHeight);
-        console.log("scrollPosition", scrollPosition);
         const sideMenuCalc = scrollPosition + (headerHeight + sideMenuHeight);
-        console.log("sideMenuCalc", sideMenuCalc);
-        console.log("topOfFooter", topOfFooter);
         const myWindow = $(window).height();
-        // if side menu bottom higher than top of footer
+        // if side menu bottom higher than top of footer show side menu
         if(sideMenuCalc < topOfFooter) {
            $(sideMenuColumn).css({"position": "fixed"});
            $(sideMenu).css({"display": "block"});
-        // if footer reaching bottom of side menu
+        // if footer reaching bottom of side menu hide side menu so not cut off
         } else if((myWindow < sideMenuHeight) || (sideMenuCalc >= topOfFooter)) {
             //$(sideMenuColumn).css({"position": "static"});
             $(sideMenu).css({"display": "none"});

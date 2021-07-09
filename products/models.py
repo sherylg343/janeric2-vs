@@ -40,7 +40,7 @@ class Product_Family(models.Model):
 
 class Product(models.Model):
     class Meta:
-        ordering = ['category__division', 'category__name', 'size']
+        ordering = ['category__division', 'category__name', 'name', 'size']
 
     SIZES = (
         ('8oz.', "8 oz."),
