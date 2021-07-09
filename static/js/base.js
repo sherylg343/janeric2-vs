@@ -26,8 +26,11 @@ $(document).ready(function() {
         const sideMenuHeight = sideMenu.outerHeight(false);
         const headerHeight = $("header").outerHeight(false);
         const scrollPosition = window.scrollY;
+        console.log("height", headerHeight + sideMenuHeight);
+        console.log("scrollPosition", scrollPosition);
         const sideMenuCalc = scrollPosition + (headerHeight + sideMenuHeight);
         console.log("sideMenuCalc", sideMenuCalc);
+        console.log("topOfFooter", topOfFooter);
         const myDoc = $(document).height();
         // if side menu bottom higher than top of footer
         if(sideMenuCalc < topOfFooter) {
