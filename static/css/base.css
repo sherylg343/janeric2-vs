@@ -284,7 +284,7 @@ a.category-badge > span.badge:hover {
 
 .side-menu li a {
     font-family: var(--ff-caslon) !important;
-    font-size: 1.2rem;
+    font-size: 1rem;
     line-height: 1.75rem;
     color: var(--clr-logoblue);
 }

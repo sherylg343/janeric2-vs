@@ -27,13 +27,14 @@ $(document).ready(function() {
         const headerHeight = $("header").outerHeight(false);
         const scrollPosition = window.scrollY;
         const sideMenuCalc = scrollPosition + (headerHeight + sideMenuHeight);
-        const myWindow = $(window).height();
+        console.log("sideMenuCalc", sideMenuCalc);
+        const myDoc = $(document).height();
         // if side menu bottom higher than top of footer
         if(sideMenuCalc < topOfFooter) {
             $(sideMenuColumn).css({"position": "fixed"});
             //$(".head-row").css({"transform": "translateX(30vw)"});
         // if footer reaching bottom of side menu
-        } else if((myWindow < sideMenuHeight) || (sideMenuCalc >= topOfFooter)) {
+        } else if((myDoc < sideMenuHeight) || (sideMenuCalc >= topOfFooter)) {
             $(sideMenuColumn).css({"position": "relative"});
             // translate slightly so products don't shift with position change above
             //$(".head-row").css({"transform": "translateX(7vw)"});
