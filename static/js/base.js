@@ -22,8 +22,7 @@ $(document).ready(function() {
         const topOfFooter = footer.offset().top;
         const sideMenuColumn = $(".side-menu-col");
         const sideMenu = $(".side-menu")
-        const sideMenuTop = sideMenu.position().top;
-        const sideMenuHeight = sideMenu.outerHeight(false);
+        const sideMenuHeight = sideMenu.outerHeight(false) + 20;
         const headerHeight = $("header").outerHeight(false);
         const scrollPosition = window.scrollY;
         console.log("height", headerHeight + sideMenuHeight);
@@ -34,13 +33,11 @@ $(document).ready(function() {
         const myWindow = $(window).height();
         // if side menu bottom higher than top of footer
         if(sideMenuCalc < topOfFooter) {
-            $(sideMenuColumn).css({"position": "fixed"});
-            //$(".head-row").css({"transform": "translateX(30vw)"});
+           $(sideMenuColumn).css({"position": "fixed"});
         // if footer reaching bottom of side menu
         } else if((myWindow < sideMenuHeight) || (sideMenuCalc >= topOfFooter)) {
-            $(sideMenuColumn).css({"position": "relative"});
-            // translate slightly so products don't shift with position change above
-            //$(".head-row").css({"transform": "translateX(7vw)"});
+            //$(sideMenuColumn).css({"position": "static"});
+            $(sideMenu).css({"display": "none"});
         }
     }
 });
