@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -7,8 +9,10 @@
     {% endblock %}
   </head>
   <body>
-    {% block body %}
+    {% block header %}
+    {% endblock %}
 
+    {% block posthead %}
     {% if messages %}
     <div>
       <strong>Messages:</strong>
@@ -18,15 +22,9 @@
         {% endfor %}
       </ul>
     </div>
-    {% endif %}
-
+    {% endif %}  
     
-    <div class="container header-container">
-        <div class="row mt-4 mb-5">
-            <div class="col"></div>
-        </div>
-    </div>
-    
+    {% endblock %}
 
     <!--<main>
         <div class="container-fluid">
@@ -41,7 +39,6 @@
             {% endif %}
         </ul>
         </div>-->
-        {% endblock %}
 
         {% block content %}
         {% endblock %}
