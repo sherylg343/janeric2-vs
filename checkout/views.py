@@ -90,6 +90,9 @@ def checkout(request):
             if ca == "true":
                 order.ca_sales_tax = current_cart['ca_tax']
                 order.grand_total = current_cart['grand_total_ca']
+            else:
+                order.ca_sales_tax = 0
+                order.grand_total = current_cart['grand_total']
             order.save()
             for product_id, item_data in cart.items():
                 try:

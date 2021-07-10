@@ -49,6 +49,7 @@ header {
 body {
     font-family: var(--ff-roboto);
     color: var(--clr-palettedkblue);
+    background-color: #f5f5f5;
 }
 
 .headline-footer {
@@ -166,15 +167,18 @@ a.category-badge > span.badge:hover {
 .card img {
     width: auto !important;
     max-width: 90%;
-    height: 200px !important;
+    height: 300px !important;
     object-fit: cover;
 }
 
-.card-img.img-fluid img {
-    width: auto !important;
-    max-width: 90%;
-    height: 200px !important;
-    object-fit: cover;
+.card {
+    box-shadow: none !important;
+    border: none !important;
+}
+
+.card-footer {
+    background-color: var(--clr-white);
+    border-top: none;
 }
 
 .cart-img img {
@@ -532,6 +536,10 @@ color: var(--clr-navy);
 }
 
 .prod-select-option {
+    text-align: center;
+}
+
+.select-wrapper input {
     text-align: center;
 }
 
