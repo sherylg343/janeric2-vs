@@ -25,6 +25,7 @@ class ProductFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = 'products.Product'
 
+    id = factory.Sequence(lambda n: n)
     category = factory.SubFactory(CategoryFactory)
     product_family = factory.SubFactory(Product_FamilyFactory)
     name = factory.Sequence(lambda n: 'Test Product {0}' .format(n))
