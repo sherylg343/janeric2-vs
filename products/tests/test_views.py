@@ -20,6 +20,19 @@ client = Client()
 
 class AllProductsViewTestCase(ViewTestMixin, TestCase):
     """ Tests for all_products view """
+    @classmethod
+    def setUpClass(cls):
+        multi_db = True
+        cls.category1 = CategoryFactory()
+        cls.category2 = CategoryFactory()
+        cls.product_family = Product_FamilyFactory()
+        cls.product1 = ProductFactory()
+        cls.product2 = ProductFactory()
+        cls.product3 = ProductFactory()
+        cls.product4 = ProductFactory()
+        cls.product5 = ProductFactory()
+        super(AllProductsViewTestCase, cls).setUpClass()
+
     def get_view_name(self):
         return 'products'
 
@@ -31,72 +44,62 @@ class AllProductsViewTestCase(ViewTestMixin, TestCase):
         self.assertTemplateUsed(self.response, 'products/products.html')
 
     def test_view_products(self):
-        category = CategoryFactory()
-        product_family = Product_FamilyFactory()
-        self.product1 = ProductFactory(
-            category=category, product_family=product_family)
-        self.product2 = ProductFactory(
-            category=category, product_family=product_family)
+        product1 = self.product1
+        product2 = self.product2
 
         response = self.client.get(self.get_url())
 
-        self.assertContains(response, self.product1.name)
-        self.assertContains(response, self.product1.product_family)
-        self.assertContains(response, self.product2.name)
-        self.assertContains(response, self.product2.product_family)
+        self.assertContains(response, product1)
+        self.assertContains(response, product2)
 
     def test_query_filter(self):
-        category = CategoryFactory()
-        product_family = Product_FamilyFactory()
-        product1 = ProductFactory()
-        product2 = ProductFactory()
-        product3 = ProductFactory()
-        product4 = ProductFactory()
+        category1 = self.category1
+        product_family = self.product_family
+        product1 = self.product1
+        product2 = self.product2
+        product3 = self.product3
+        product5 = self.product5
 
-        category1 = Category.objects.get(pk=1)
-        category1.name = "gel"
+        category1.name = "Gel"
         category1.save()
         product1.category.name = category1.name
+        product1.save()
+        product5.name = "Gel"
+        product5.save()
 
-        products = Product.objects.all()
-        categories = []
-        for p in products:
-            if p.category == "category1.name":
-                return
-            else:
-                categories.append(p.category)
+        products_q = Product.objects.all()
 
-        value_list = ["gel", ""]
+        value_list = ["Gel", ""]
         for v in value_list:
             if v:
+                query = v.strip('"')
                 url = '{url}?{filter}={value}'.format(
-                    url=reverse('products'), filter='q', value=v)
+                    url=reverse('products'), filter='q', value=query)
                 # With string format finally we expect a url like;
-                # '/products/?q=gel'
-                response = self.client.get(url)
-                self.assertContains(response, product1.category)
-                self.assertNotContains(response, categories)
+                # '/products/?q=Gel'
+                response_q = self.client.get(url)
+                self.assertContains(response_q, product1 and product5)
+                self.assertNotContains(response_q, product3)
             else:
                 url = '{url}?{filter}={value}'.format(
                     url=reverse('products'), filter='q', value="")
-                response = self.client.get(url)
-                messages = list(get_messages(response.wsgi_request))
+                response_x = self.client.get(url)
+                messages = list(get_messages(response_x.wsgi_request))
                 self.assertEqual(len(messages), 1)
                 for m in messages:
                     self.assertEqual(
                     str(m), "You didn't enter any search criteria.")
                 self.assertRedirects(
-                    response, '/products/', status_code=302, target_status_code=200, fetch_redirect_response=True)
+                    response_x, '/products/', status_code=302, target_status_code=200, fetch_redirect_response=True)
 
     def test_category_filter(self):
-            category = CategoryFactory()
-            product_family = Product_FamilyFactory()
-            product1 = ProductFactory()
-            product2 = ProductFactory()
-            product3 = ProductFactory()
-            product4 = ProductFactory()
+            category2 = self.category2
+            product1 = self.product1
+            product2 = self.product2
+            product3 = self.product3
+            product4 = self.product4
 
-            category2 = Category.objects.get(pk=1)
+            pk = category2.id
             category2.name = "gowns"
             category2.save()
             product2.category.name = category2.name
@@ -115,7 +118,7 @@ class AllProductsViewTestCase(ViewTestMixin, TestCase):
                     url = '{url}?{filter}={value}'.format(
                         url=reverse('products'), filter='category', value=v)
                     # With string format finally we expect a url like;
-                    # '/products/?q=gel'
+                    # '/products/?category=gowns'
                     response = self.client.get(url)
                     self.assertContains(response, product2.category)
                     self.assertNotContains(response, categories_all)
@@ -130,6 +133,7 @@ class AddProductViewTestCase(ViewTestMixin, TestCase):
     """ Test when products queried by keyword or category """
     @classmethod
     def setUpClass(cls):
+        multi_db = True
         cls.category = CategoryFactory()
         cls.product_family = Product_FamilyFactory()
         cls.product1 = ProductFactory()
@@ -233,6 +237,7 @@ class EditProductViewTestCase(ViewTestMixin, TestCase):
     """ Test when products queried by keyword or category """
     @classmethod
     def setUpClass(cls):
+        multi_db = True
         cls.category = CategoryFactory()
         cls.product_family = Product_FamilyFactory()
         cls.product1 = ProductFactory()
@@ -266,53 +271,59 @@ class EditProductViewTestCase(ViewTestMixin, TestCase):
         self.assertRedirects(
             response, '/', status_code=302, target_status_code=200, fetch_redirect_response=True)
 
-    def test_edit_product_post_and_form_valid(self):
+    def test_edit_product_post(self):
         user = User.objects.create_superuser(username='admin')
         self.client.force_login(user=user)
-        pk = 3
-        product = Product.objects.get(id=pk)
-        update_url = reverse('edit_product', kwargs={'product_id': pk})
+        product3 = self.product3
+        pk = product3.id
+
         # Get the form
-        r = self.client.get(update_url)
-        form = r.context['form']
-        data = form.initial
-        name = data['name']
+        r = self.client.get(
+            self.get_url(view_kwargs={'product_id': pk}))
+        form_product = r.context['form']
+        data_product = form_product.initial
+        name_orig = data_product['name']
         # Message appears when loading form
         messages = list(get_messages(r.wsgi_request))
         self.assertEqual(len(messages), 1)
         for m in messages:
             self.assertEqual(
-                str(m), 'You are editing {name}'.format(name=name))
-        # manipulate some dats
+                str(m), 'You are editing {name}'.format(name=name_orig))
+        # manipulate some data
         data4 = {
-            'id': pk,
             'name': 'Test Change Product Name',
-            'category': '3',
-            'product_family': '2',
-            'SKU': 'XYZ',
-            'image': 'gel.png',
-            'size': '8oz.',
-            'pack': '4',
-            'price': '3.99',
-            'description': "this is edit test",
+            'category': "10",
+            'product_family': "5",
+            'SKU': "HM145",
+            #'image': "image.png",
+            #'size': '16oz.',
+            #'pack': '4',
+            'price': "3",
+            #'description': "the wall is white.",
+            'active': True,
         }
+    
+        # Post edits
+        post_product_form = ProductForm(instance=product3, data=data4)
+        self.assertTrue(post_product_form.is_valid)
         # Post to form
-        response_p = self.client.post(update_url, data=data4)
-        # Form is valid
-        post_form = ProductForm(instance=product, data=data4)
-        self.assertTrue(post_form.is_valid())
-        self.assertEquals(product.name, "Test Change Product Name")
+        update_url_p = reverse('edit_product', kwargs={'product_id': pk})
+        response_post_product = self.client.post(update_url_p, data=data4)
+        # find product_details page for added product
+        url_search_product = self.client.get(
+            '/products/', {'name': 'Test Change Product Name'}, HTTP_ACCEPT='application/json')
+        self.assertTrue(url_search_product, 200)
         # Test ProductForm saves
-        response_updated = self.client.get(update_url)
-        form = response_updated.context['form']
-        data = form.initial
-        updated_name = data['name']
-        self.assertEqual(updated_name, 'Test Change Product Name')
+        response_updated_product = self.client.get(self.get_url(view_kwargs={'product_id': pk}))
+        form2 = response_updated_product.context['form']
+        data2 = form2.initial
+        updated_product_name = data2['name']
+        self.assertEqual(updated_product_name, 'Test Change Product Name')
         # Site redirects after posting data
         self.assertRedirects(
-            response_p, '/products/{product_id}/'.format(product_id=pk), status_code=302, target_status_code=200, fetch_redirect_response=True)
+            response_post_product, '/products/{product_id}/'.format(product_id=pk), status_code=302, target_status_code=200, fetch_redirect_response=True)
         # Success message appears
-        messages = list(get_messages(response_p.wsgi_request))
+        messages = list(get_messages(response_post_product.wsgi_request))
         self.assertEqual(len(messages), 1)
         for m in messages:
             self.assertEqual(str(m), "Successfully updated product!")
@@ -321,8 +332,8 @@ class EditProductViewTestCase(ViewTestMixin, TestCase):
         user = User.objects.create_superuser(username='admin')
         self.client.force_login(user=user)
         # Post and Form Not Valid With Message
-        pk = 4
-        product = Product.objects.get_or_create(id=pk)
+        product = self.product4
+        pk = product.id
         update_url = reverse('edit_product', kwargs={'product_id': pk})
         # Get the form
         r = self.client.get(update_url)
@@ -346,7 +357,7 @@ class EditProductViewTestCase(ViewTestMixin, TestCase):
             'image': 'gel.png',
             'size': '8oz.',
             'pack': '4',
-            'price': '3.99',
+            'price': '25',
             'description': "this is edit test",
         }
         # Post to form
@@ -374,6 +385,7 @@ class DeactivateProductViewTestCase(ViewTestMixin, TestCase):
     """ Test when products queried by keyword or category """
     @classmethod
     def setUpClass(cls):
+        multi_db = True
         cls.category = CategoryFactory()
         cls.product_family = Product_FamilyFactory()
         cls.product1 = ProductFactory()
@@ -386,14 +398,15 @@ class DeactivateProductViewTestCase(ViewTestMixin, TestCase):
         return 'deactivate_product'
 
     def test_deactivate_product_view(self):
-        product = Product.objects.get_or_create(pk=3)
-        pk = 3
+        product = self.product4
+        product.active = False
+        pk = product.id
         # case 1 - Anonymous User
         self.is_not_callable(kwargs={'product_id': pk})
         response = self.client.get(
             self.get_url(view_kwargs={'product_id': pk}))
         self.assertRedirects(
-            response, 'https://janeric2.herokuapp.com/accounts/login/?next=http%3A//testserver/products/deactivate/3/', status_code=302, target_status_code=200, fetch_redirect_response=True)
+            response, f'https://janeric2.herokuapp.com/accounts/login/?next=http%3A//testserver/products/deactivate/{pk}/', status_code=302, target_status_code=200, fetch_redirect_response=True)
         # case 2 - superuser
         user = User.objects.create_superuser(username='admin')
         self.client.force_login(user=user)
@@ -413,12 +426,19 @@ class DeactivateProductViewTestCase(ViewTestMixin, TestCase):
 
 class AllProductFamiliesViewTestCase(ViewTestMixin, TestCase):
     """ Tests for all_products view """
+    @classmethod
+    def setUpClass(cls):
+        multi_db = True
+        cls.product_family1 = Product_FamilyFactory()
+        cls.product_family2 = Product_FamilyFactory()
+        super(AllProductFamiliesViewTestCase, cls).setUpClass()
+
     def get_view_name(self):
         return 'product_families'
 
     def test_get(self):
-        self.product_family1 = Product_FamilyFactory()
-        self.product_family2 = Product_FamilyFactory()
+        product_family1 = self.product_family1
+        product_family2 = self.product_family2
 
         # case 1 - Anonymous User
         self.is_not_callable()
@@ -444,8 +464,8 @@ class AllProductFamiliesViewTestCase(ViewTestMixin, TestCase):
         self.assertTemplateUsed(self.response, 'products/product_families.html')
 
     def test_view_product_families(self):
-        self.product_family1 = Product_FamilyFactory()
-        self.product_family2 = Product_FamilyFactory()
+        product_family1 = self.product_family1
+        product_family2 = self.product_family2
 
         user = User.objects.create_superuser(username='admin')
         self.client.force_login(user=user)
@@ -461,6 +481,7 @@ class AddProductFamilyViewTestCase(ViewTestMixin, TestCase):
     """ Test when products queried by keyword or category """
     @classmethod
     def setUpClass(cls):
+        multi_db = True
         cls.product_family1 = Product_FamilyFactory()
         cls.product_family2 = Product_FamilyFactory()
         cls.product_family3 = Product_FamilyFactory()
@@ -556,6 +577,7 @@ class EditProductFamilyViewTestCase(ViewTestMixin, TestCase):
     """ Test when products queried by keyword or category """
     @classmethod
     def setUpClass(cls):
+        multi_db = True
         cls.product_family1 = Product_FamilyFactory()
         cls.product_family2 = Product_FamilyFactory()
         cls.product_family3 = Product_FamilyFactory()
@@ -590,8 +612,8 @@ class EditProductFamilyViewTestCase(ViewTestMixin, TestCase):
     def test_edit_product_family_post_and_form_valid(self):
         user = User.objects.create_superuser(username='admin')
         self.client.force_login(user=user)
-        pk = 2
-        product_family = Product_Family.objects.get(id=pk)
+        product_family = self.product_family2
+        pk = product_family.id
         update_url = reverse(
             'edit_product_family', kwargs={'product_family_id': pk})
         # manipulate some data
@@ -625,7 +647,8 @@ class EditProductFamilyViewTestCase(ViewTestMixin, TestCase):
         user = User.objects.create_superuser(username='admin')
         self.client.force_login(user=user)
         # Post and Form Not Valid With Message
-        pk = 4
+        product_family = self.product_family4
+        pk = product_family.id
         update_url = reverse(
             'edit_product_family', kwargs={'product_family_id': pk})
         # manipulate some data
