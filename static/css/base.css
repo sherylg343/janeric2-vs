@@ -559,10 +559,11 @@ footer {
 
 .footer-main {
     color: var(--clr-palettemedblue) !important;
-    background: var(--clr-softgray);
+    background: var(--clr-white);
     padding-left: 0;
     padding-right: 0;
     font-family: var(--ff-caslon) !important;
+    border-top: 6px solid var(--clr-palettegray);
 }
 
 .footer-copyright {
