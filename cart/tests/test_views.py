@@ -5,7 +5,7 @@ from django.contrib.sessions.middleware import SessionMiddleware
 
 from django_libs.tests.mixins import ViewTestMixin
 
-from .factories import (
+from products.tests.factories import (
     CategoryFactory,
     Product_FamilyFactory,
     ProductFactory,

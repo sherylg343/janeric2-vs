@@ -34,6 +34,9 @@
                         <p class="text-left ml-4">
                             Email: {{ email }}
                         </p>
+                        <p class="text-left mt-1">
+                            <a class="button secondaryAction" href="{% url 'account_reset_password' %}">Reset My Password</a>
+                        </p>
                         <form class="mt-3 ml-2 mr-2" action="{% url 'profile' %}" method="POST" id="profile-update-form">
                             {% csrf_token %}
                             <fieldset class="rounded px-3 mb-5">
