@@ -21,7 +21,6 @@ class ProductAdmin(admin.ModelAdmin):
     )
 
     ordering = ('product_family',)
-    search_fields = ['product_family', 'name', 'description']
     list_filter = ('active', 'category', 'category__division')
 
 
