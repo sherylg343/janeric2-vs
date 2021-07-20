@@ -8,7 +8,7 @@ from django_libs.tests.mixins import ViewTestMixin
 from products.tests.factories import (
     CategoryFactory,
     Product_FamilyFactory,
-    ProductFactory,
+   ProductFactory,
 )
 from products.models import Category, Product_Family, Product
 from django.contrib.auth.models import User
