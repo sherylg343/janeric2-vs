@@ -20,6 +20,7 @@
                 {% include 'includes/side-menu.html' %}
             </div>
             <div class="col-12 col-lg-8 col-xl-9 text-center mt-4 head-row pt-5 mb-5">
+            {% for shipping in shipping_list %}
                 <div class="row">
                     <div class="col-12">
                         <strong><h3 class="headline mb-3">{{ shipping.title }}</h3></strong>
@@ -30,7 +31,8 @@
                 </div>
                 <div class="row pt-4">
                     <div class="col-10 offset-1 text-left">
-                        <h7 class="subhead">Terms and Conditions</h7>
+                        {{ shipping.body }}
+<!--                       <h7 class="subhead">Terms and Conditions</h7>
                     </div>
                 </div>
                 <div class="row">
@@ -101,9 +103,10 @@
                     <div class="col-10 offset-1 text-left pb-3">
                         <p>
                             We are currently not offering international shipping. Please check back in at a later date for any updates. We apologize for any inconvenience. 
-                        </p>
+                        </p>-->
                     </div>
                 </div>
+                {% endfor %}
             </div>
         </div>
     </div>
