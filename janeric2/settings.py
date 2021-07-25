@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.humanize',
+    'django_summernote',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
