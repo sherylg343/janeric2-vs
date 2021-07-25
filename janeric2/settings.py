@@ -31,6 +31,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['janeric2.herokuapp.com', 'localhost']
 
+SUMMERNOTE_THEME = 'bs4'  # Show summernote with Bootstrap4
+
 
 # Application definition
 
