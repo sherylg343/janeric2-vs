@@ -7,4 +7,4 @@ from django_summernote.admin import SummernoteModelAdmin
 class ShippingAdmin(SummernoteModelAdmin):
 
     list_display = ('title', 'body', 'created_on', 'modified_on')
-    summernote_fields = ('body')
+    summernote_fields = ('body',)
