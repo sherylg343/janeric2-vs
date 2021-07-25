@@ -11,4 +11,4 @@ class ShippingList(generic.ListView):
     """ A view to render shipping.html page """
     model = Shipping
     queryset = Shipping.objects.all()
-    template_name = 'shipping.html'
+    template_name = "shipping/shipping.html"
