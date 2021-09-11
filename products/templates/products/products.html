@@ -58,9 +58,9 @@
                                             {% csrf_token %}
                                             <div class="card-body">
                                                 <h6 class="font-weight-bold card-title pb-2">{{ product.product_family.name }}</h6>
-                                                {% if product.size %}
-                                                    <input type="hidden" value="{{ product.size }}">
-                                                    <p class="mb-0">Size: {{ product.get_size_display }}</p>
+                                                {% if product.product_size %}
+                                                    <input type="hidden" value="{{ product.product_size }}">
+                                                    <p class="mb-0">Size: {{ product.product_size.friendly_name }}</p>
                                                 {% endif %}
                                                 {% if product.pack %}
                                                 <input type="hidden" value="{{ product.pack }}">

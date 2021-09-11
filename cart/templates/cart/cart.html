@@ -52,7 +52,7 @@
                                          </div>       
                                         <div class="col-12 col-sm-6 mb-2 text-left">  
                                             <p class="my-0"><strong>{{ item.product.name }}</strong></p>
-                                            <p class="my-0 small text-muted">Size: {% if item.product.size %}{{ item.size|upper }}{% else %}N/A{% endif %}</p>
+                                            <p class="my-0 small text-muted">Size: {% if item.product.product_size %}{{ item.product_size.friendly_name }}{% else %}N/A{% endif %}</p>
                                             <p class="my-0 small text-muted">SKU: {{ item.product.SKU }}</p>
                                             <p class="my-0 small text-muted">Price Per Unit: ${{ item.product.price|intcomma }}</p>
                                             <p class="small text-muted">Product Subtotal: ${{ item.product.price | calc_subtotal:item.quantity|intcomma }}</p>

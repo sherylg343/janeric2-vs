@@ -181,7 +181,7 @@ class AddProductViewTestCase(ViewTestMixin, TestCase):
             'name': 'Test Product 6b',
             'category': '3',
             'product_family': '5',
-            'size': '8oz.'
+            'product_size': '8oz.'
         }
         form = ProductForm(data=data1)
         self.assertTrue(form.is_valid())
@@ -355,7 +355,7 @@ class EditProductViewTestCase(ViewTestMixin, TestCase):
             'id': pk,
             'SKU': 'XYZ',
             'image': 'gel.png',
-            'size': '8oz.',
+            'product_size': '8oz.',
             'pack': '4',
             'price': '25',
             'description': "this is edit test",

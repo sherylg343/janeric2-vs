@@ -155,7 +155,7 @@
                                     {% endif %}
                                     <p class="my-0">{{ item.product.product_family.name }}</p>
                                     <p class="mb-0">SKU: {{ item.product.SKU }}</p>
-                                    <p class="my-0">Size: {% if item.product.size %}{{ item.product.size }}{% else %}N/A{% endif %}</p>
+                                    <p class="my-0">Size: {% if item.product.product_size %}{{ item.product.product_size.friendly_name }}{% else %}N/A{% endif %}</p>
                                     <p class="my-0">Pack: {{ item.product.pack }}</p>
                                     <p class="my-0">Quantity: {{ item.quantity }}</p>
                                         <p class="my-0 mb-4">Unit Price:  ${{ item.product.price|intcomma }}</p>
