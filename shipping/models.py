@@ -10,6 +10,7 @@ class Shipping(models.Model):
     body = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
+    active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.title

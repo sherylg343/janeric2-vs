@@ -6,5 +6,5 @@ from .models import Terms
 class TermsList(generic.ListView):
     """ A view to render shipping.html page """
     model = Terms
-    queryset = Terms.objects.all()
+    queryset = Terms.objects.filter(active=True)
     template_name = "terms/terms.html"
