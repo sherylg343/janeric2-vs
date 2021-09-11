@@ -824,6 +824,9 @@ margin-top: -.3rem;
     .head-row {
         margin-left: 33%;
     }
+    .edit-head {
+        min-height: 0;
+    }
 }
 
 @media (min-width: 1200px) {
