@@ -1,6 +1,10 @@
 from django.shortcuts import render
+from django.views import generic, View
+from .models import Terms
 
 
-def terms(request):
-    """ A view to render terms.html page """
-    return render(request, 'terms/terms.html')
+class TermsList(generic.ListView):
+    """ A view to render shipping.html page """
+    model = Terms
+    queryset = Terms.objects.all()
+    template_name = "terms/terms.html"
