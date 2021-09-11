@@ -25,6 +25,13 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ('active', 'category', 'category__division')
 
 
+class ProductSizeAdmin(admin.ModelAdmin):
+    list_display = (
+        'name',
+        'friendly_name'
+    )
+
+
 class Product_FamilyAdmin(admin.ModelAdmin):
     list_display = (
         'name',
@@ -42,3 +49,4 @@ class CategoryAdmin(admin.ModelAdmin):
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Product_Family, Product_FamilyAdmin)
+admin.site.register(ProductSize, ProductSizeAdmin)
