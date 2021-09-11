@@ -26,13 +26,22 @@
                 <div class="row">
                     <div class="col-12 mt-3">
                         <strong><h3 class="headline pb-4">{% if division %}{{ division|upper }}{% elif search_term %}Search Results For: {{ search_term|upper }}{% else %}Products{% endif %}</h3></strong>
-                        {% for c in current_categories %}
+                    </div>
+                    {% for c in current_categories %}
+                    <div class="col-12 d-lg-none">
+                        <div class="col-12 pt-2 pb-2">
+                            <a class="category-badge text-decoration-none" href="{% url 'products' %}?category={{ c.name }}">
+                                <span class="p-1 mt-2 badge-span">{{ c.name }}</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="d-none d-lg-block col-12">
                         <a class="category-badge text-decoration-none" href="{% url 'products' %}?category={{ c.name }}">
                             <span class="p-1 mt-2 badge-span">{{ c.name }}</span>
                         </a>
-                        {% endfor %}
-                    </div> 
-                    <div class="product-container mt-5 col-10 offset-1">
+                    </div>
+                    {% endfor %}
+                    <div class="product-container mt-3 col-10 offset-1">
                         <div class="row">
                             {% for product in products %}
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-4">  
