@@ -12,7 +12,6 @@ class ProductAdmin(admin.ModelAdmin):
         'product_family',
         'category',
         'image',
-        'size',
         'product_size',
         'pack',
         'price',
