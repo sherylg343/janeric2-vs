@@ -82,6 +82,9 @@ class Product(models.Model):
     image = models.ImageField(null=True, blank=True)
     size = models.CharField(
         max_length=254, null=True, blank=True, choices=SIZES)
+    product_size = models.ForeignKey(
+        "ProductSize", null=True, blank=True, on_delete=models.SET_NULL
+    )
     pack = models.IntegerField(null=True, blank=True)
     price = models.DecimalField(
         max_digits=7, decimal_places=2, null=True, blank=True
@@ -94,4 +97,18 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class ProductSize(models.Model):
+    class Meta:
+        verbose_name_plural = 'ProductSizes'
+
+    name = models.CharField(max_length=254)
+    friendly_name = models.CharField(max_length=254)
+
+    def __str__(self):
+        return self.name
+
+    def get_friendly_name(self):
+        return self.friendly_name
 

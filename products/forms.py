@@ -9,7 +9,7 @@ class ProductForm(forms.ModelForm):
         model = Product
         fields = (
             'category', 'product_family', 'name', 'SKU', 'image', 'size',
-             'pack', 'price', 'description', 'active',
+             'product_size', 'pack', 'price', 'description', 'active',
         )
 
     image = forms.ImageField(
