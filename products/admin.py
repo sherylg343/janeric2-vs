@@ -13,7 +13,7 @@ class ProductAdmin(admin.ModelAdmin):
         'category',
         'image',
         'size',
-        'product_size'
+        'product_size',
         'pack',
         'price',
         'description',
