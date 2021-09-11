@@ -101,6 +101,7 @@ class Product(models.Model):
 
 class ProductSize(models.Model):
     class Meta:
+        ordering = ['name',]
         verbose_name_plural = 'ProductSizes'
 
     name = models.CharField(max_length=254)

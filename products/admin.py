@@ -31,6 +31,8 @@ class ProductSizeAdmin(admin.ModelAdmin):
         'friendly_name'
     )
 
+    ordering = ('name',)
+
 
 class Product_FamilyAdmin(admin.ModelAdmin):
     list_display = (
