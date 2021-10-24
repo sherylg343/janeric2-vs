@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Order, OrderLineItem
+from .models import Order, OrderLineItem, ProductShippingData
 
 
 # Register your models here.
@@ -23,4 +23,22 @@ class OrderAdmin(admin.ModelAdmin):
     ordering = ('-order_date', )
 
 
+class ProductShippingDataAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'product',
+        'product_pkg_weight_lb',
+        'shipper_company_name',
+        'shipper_phone_number',
+        'shipper_streetline1',
+        'shipper_streeline2',
+        'shipper_city',
+        'shipper_state',
+        'shipper_postal_code',
+    )
+
+    ordering = ('product__name',)
+
+
 admin.site.register(Order, OrderAdmin)
+admin.site.register(ProductShippingData, ProductShippingDataAdmin)

@@ -111,7 +111,7 @@ class OrderLineItem(models.Model):
     def __str__(self):
         return f'SKU {self.product.SKU} on order {self.order.order_number}'
 
-class Shipping(models.Model):
+class ProductShippingData(models.Model):
     class Meta:
         ordering = ['product__active', 'product__category__division', 'product__category__name', 'product__product_family__name', 'product__product_size__name']  
 
