@@ -26,7 +26,8 @@ class OrderAdmin(admin.ModelAdmin):
 class ProductShippingDataAdmin(admin.ModelAdmin):
 
     list_display = (
-        'product',
+        'get_active',
+        'get_product_name',
         'product_pkg_weight_lb',
         'shipper_company_name',
         'shipper_phone_number',
@@ -37,7 +38,21 @@ class ProductShippingDataAdmin(admin.ModelAdmin):
         'shipper_postal_code',
     )
 
-    ordering = ('product__name',)
+    ordering = ('product',)
+
+    # code from stackOverflow to display foreign key field
+    # https://stackoverflow.com/questions/163823/can-list-display-in-a-django-modeladmin-display-attributes-of-foreignkey-field
+    def get_active(self, obj):
+        return obj.product.active
+
+    get_active.short_description =  "Product Active"
+
+
+    def get_product_name(self, obj):
+        return obj.product.name
+
+    get_active.admin_order_field = 'product'
+    get_active.short_description =  "Product Name"
 
 
 admin.site.register(Order, OrderAdmin)
