@@ -110,3 +110,29 @@ class OrderLineItem(models.Model):
 
     def __str__(self):
         return f'SKU {self.product.SKU} on order {self.order.order_number}'
+
+class Shipping(models.Model):
+    class Meta:
+        ordering = ['product__active', 'product__category__division', 'product__category__name', 'product__product_family__name', 'product__product_size__name']  
+
+    product = models.OneToOneField(
+        Product, null=False, blank=False, on_delete=models.CASCADE)
+    product_pkg_weight_lb = models.DecimalField(
+        max_digits=4, decimal_places=1, null=False, blank=False)
+    shipper_company_name = models.CharField(
+        max_length=100, null=False, blank=False)
+    shipper_phone_number = models.CharField(
+        max_length=20, null=False, blank=False)
+    shipper_streetline1 = models.CharField(
+        max_length=80, null=False, blank=False)
+    shipper_streeline2 = models.CharField(
+        max_length=80, null=True, blank=True)
+    shipper_city = models.CharField(
+        max_length=40, null=False, blank=False)
+    shipper_state = models.CharField(
+        max_length=2, null=False, blank=False)
+    shipper_postal_code = models.CharField(
+        max_length=10, null=False, blank=False)
+
+    def __str__(self):
+        return self.product__name
