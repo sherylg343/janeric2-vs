@@ -116,7 +116,6 @@ class ProductShippingData(models.Model):
         ordering = ['product__active', 'product__category__division', 'product__category__name', 'product__product_family__name', 'product__product_size__name']  
         verbose_name_plural = 'Product Shipping Data'
 
-
     product = models.OneToOneField(
         Product, null=False, blank=False, on_delete=models.CASCADE)
     product_pkg_weight_lb = models.DecimalField(
