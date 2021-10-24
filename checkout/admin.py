@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Order, OrderLineItem, ProductShippingData
+from .models import Product, Order, OrderLineItem, ProductShippingData
 
 
 # Register your models here.
@@ -38,20 +38,21 @@ class ProductShippingDataAdmin(admin.ModelAdmin):
         'shipper_postal_code',
     )
 
-    ordering = ('product',)
+    ordering = ('product__active', 'product__name',)
 
     # code from stackOverflow to display foreign key field
     # https://stackoverflow.com/questions/163823/can-list-display-in-a-django-modeladmin-display-attributes-of-foreignkey-field
     def get_active(self, obj):
         return obj.product.active
 
+    get_active.admin_order_field = 'product__active'
     get_active.short_description =  "Product Active"
 
 
     def get_product_name(self, obj):
         return obj.product.name
 
-    get_active.admin_order_field = 'product'
+    get_active.admin_order_field = 'product__name'
     get_active.short_description =  "Product Name"
 
 
