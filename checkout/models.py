@@ -111,15 +111,14 @@ class OrderLineItem(models.Model):
     def __str__(self):
         return f'SKU {self.product.SKU} on order {self.order.order_number}'
 
-class ProductShippingData(models.Model):
-    class Meta:
-        ordering = ['product__active', 'product__category__division', 'product__category__name', 'product__product_family__name', 'product__product_size__name']  
-        verbose_name_plural = 'Product Shipping Data'
 
-    product = models.OneToOneField(
-        Product, null=False, blank=False, on_delete=models.CASCADE)
-    product_pkg_weight_lb = models.DecimalField(
-        max_digits=4, decimal_places=1, null=False, blank=False)
+class ShipFromAddress(models.Model):
+    class Meta:
+        ordering = ['shipper_reference_name', 'shipper_company_name', 'shipper_city']  
+        verbose_name_plural = 'Ship From Addresses'
+
+    shipper_reference_name = models.CharField(
+        max_length=100, null=False, blank=False)
     shipper_company_name = models.CharField(
         max_length=100, null=False, blank=False)
     shipper_phone_number = models.CharField(
@@ -135,5 +134,21 @@ class ProductShippingData(models.Model):
     shipper_postal_code = models.CharField(
         max_length=10, null=False, blank=False)
 
+    def __str__(self):
+        return self.shipper_reference_name    
+
+
+class ProductShippingData(models.Model):
+    class Meta:
+        ordering = ['product__active', 'product__category__division', 'product__category__name', 'product__product_family__name', 'product__product_size__name']  
+        verbose_name_plural = 'Product Shipping Data'
+
+    product = models.OneToOneField(
+        Product, null=False, blank=False, on_delete=models.CASCADE)
+    product_pkg_weight_lb = models.DecimalField(
+        max_digits=4, decimal_places=1, null=False, blank=False)
+    shipper_address = models.ForeignKey(
+         ShipFromAddress, null=False, blank=False, on_delete=models.CASCADE, related_name = 'shipper')
+    
     def __str__(self):
         return self.product__name

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Product, Order, OrderLineItem, ProductShippingData
+from .models import Product, Order, OrderLineItem, ProductShippingData,  ShipFromAddress
 
 
 # Register your models here.
@@ -23,18 +23,27 @@ class OrderAdmin(admin.ModelAdmin):
     ordering = ('-order_date', )
 
 
-class ProductShippingDataAdmin(admin.ModelAdmin):
-
+class ShipFromAddressDataAdmin(admin.ModelAdmin):
     list_display = (
-        'product',
-        'product_pkg_weight_lb',
+        'shipper_reference_name',
         'shipper_company_name',
         'shipper_phone_number',
         'shipper_streetline1',
         'shipper_streeline2',
         'shipper_city',
         'shipper_state',
-        'shipper_postal_code',
+        'shipper_postal_code'
+    )
+
+    ordering = ('shipper_reference_name', )
+
+
+class ProductShippingDataAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'product',
+        'product_pkg_weight_lb',
+        'shipper_address'
     )
 
     ordering = ('product',)
@@ -42,3 +51,4 @@ class ProductShippingDataAdmin(admin.ModelAdmin):
 
 admin.site.register(Order, OrderAdmin)
 admin.site.register(ProductShippingData, ProductShippingDataAdmin)
+admin.site.register(ShipFromAddress, ShipFromAddressDataAdmin)
