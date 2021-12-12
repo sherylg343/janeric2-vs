@@ -18,6 +18,14 @@ from cart.contexts import cart_contents
 
 import stripe
 import json
+import logging
+import sys
+
+
+CONFIG_OBJ = FedexConfig(
+    key=settings.FEDEX_TEST_KEY, password=settings.FEDEX_TEST_PASSWORD,
+    account_number=settings.FEDEX_TEST_ACCT_NUMBER, meter_number=settings.FEDEX_TEST_METER_NUMBER
+)
 
 
 @require_POST
@@ -57,6 +65,104 @@ def cache_checkout_data(request):
         messages.error(request, 'Sorry, your payment cannot be \
             processed right now. Please try again later.')
         return HttpResponse(content=e, status=400)
+
+
+def checkout_shipping(request):
+
+    if request.method == "POST":
+        print("form posted")
+
+        ship_to_state = request.POST['ship_state'],
+        ship_to_zipcode = request.POST['ship_zipcode']
+        print(ship_to_state, ship_to_zipcode)
+
+        # fedex_python API set up
+        #rate = FedexRateServiceRequest(CONFIG_OBJ)
+
+        #rate.RequestedShipment.DropoffType = "REGULAR_PICKUP"
+        #rate.RequestedShipment.ServiceType = 'FEDEX_GROUND'
+        #rate.RequestedShipment.PackagingType = 'YOUR_PACKAGING'
+
+        # get Product Ids and ship data for each in cart
+
+        for product_id in cart.items():
+            # get shippers data for product
+            product_shipping = get_object_or_404(ProductShippingData, pk=product_id)
+            print(product_shipping.shipper_address.shipper_state)
+
+            # Shipper Address
+            #rate.RequestedShipment.Shipper.Address.StateOrProvinceCode = product_shipping.shipper_address.shipper_state
+            #rate.RequestedShipment.Shipper.Address.PostalCode = product_shipping.shipper_address.postal_code
+            #rate.RequestedShipment.Shipper.Address.CountryCode = 'US'
+
+            # Recipient Address
+            #rate.RequestedShipment.Recipient.Address.StateOrProvinceCode = ship_to_state
+            #rate.RequestedShipment.Recipient.Address.PostalCode = ship_to_zipcode
+            #rate.RequestedShipment.Recipient.Address.CountryCode = 'US'
+
+            #rate.RequestedShipment.EdtRequestType = 'NONE'
+            #rate.RequestedShipment.ShippingChargesPayment.PaymentType = 'SENDER'
+
+            # FedEx package info
+            #package1_weight = rate.create_wsdl_object_of_type('Weight')
+            #package1_weight.Value = product_shipping.product_pkg_weight_lb
+            #package1_weight.Units = "LB"
+            #package1 = rate.create_wsdl_object_of_type('RequestedPackageLineItem')
+            #package1.Weight = package1_weight
+            #package1.PhysicalPackaging = 'BOX'
+            #package1.GroupPackageCount = 1
+            #rate.add_package(package1)
+
+            #rate.send_request()
+            #request_response = rate.response
+            #response_dict = sobject_to_dict(shipment.response)
+            #print(response_dict)
+
+            return redirect(reverse('checkout'))
+
+
+    # Attempt to prefill the form with any info
+    # the user maintains in their profile
+    if request.user.is_authenticated:
+        try:
+            profile = UserProfile.objects.get(user=request.user)
+            marketing_value = profile.marketing
+            full_name = profile.defaultship_full_name
+            shipping_form = ShippingForm(initial={
+                'ship_full_name': profile.defaultship_full_name,
+                'email': profile.user.email,
+                'ship_street_address1': profile.defaultship_street_address1,
+                'ship_street_address2': profile.defaultship_street_address2,
+                'ship_city': profile.defaultship_city,
+                'ship_state': profile.defaultship_state,
+                'ship_zipcode': profile.defaultship_zipcode,
+                'ship_phone_number': profile.defaultship_phone_number,
+            })
+        except UserProfile.DoesNotExist:
+            shipping_form = ShippingForm()
+    else:
+        shipping_form = ShippingForm()
+        marketing_value = "false"
+        full_name = ""
+
+    ship_state = USStateSelect()
+    ship_zipcode = USZipCodeField()
+
+    template = 'checkout/checkout_shipping.html'
+    context = {
+        'shipping_form': shipping_form,
+        'ship_state': ship_state,
+        'ship_zipcode': ship_zipcode,
+        'marketing': marketing_value,
+        'full_name': full_name,
+    }
+
+    return render(request, template, context)
+
+
+
+
+
 
 
 def checkout(request):

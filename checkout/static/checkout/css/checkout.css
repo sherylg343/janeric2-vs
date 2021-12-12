@@ -27,6 +27,7 @@
 }
 
 #payment-form .form-control,
+#shipping-form .form-control,
 #card-element {
     color: #1e383c;
     border: 1px solid #1e383c;
