@@ -12,8 +12,9 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 import dj_database_url
-if os.path.exists("env.py"):
-    import env
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -249,3 +250,10 @@ ACCOUNT_MAX_EMAIL_ADDRESSES = 3
 ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
 ACCOUNT_UNIQUE_EMAIL = True
 
+#FedEx Variable Settings
+FEDEX API test settings
+FEDEX_TEST_KEY = os.environ.get("FEDEX_TEST_KEY")
+FEDEX_TEST_PASSWORD = os.environ.get("FEDEX_TEST_PASSWORD")
+FEDEX_TEST_ACCT_NUMBER = os.environ.get("FEDEX_TEST_ACCT_NUMBER")
+FEDEX_TEST_METER_NUMBER = os.environ.get("FEDEX_TEST_METER_NUMBER")
+FEDEX_TEST_URL = os.environ.get("FEDEX_TEST_URL")

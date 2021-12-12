@@ -2,10 +2,15 @@ from django.shortcuts import (
     render, redirect, reverse, get_object_or_404, HttpResponse)
 from django.views.decorators.http import require_POST
 from django.contrib import messages
+from fedex.config import FedexConfig
+from fedex.tools.conversion import sobject_to_dict
+
 from django.conf import settings
 
-from .forms import USZipCodeField, USStateSelect, OrderForm
-from .models import Order, OrderLineItem
+from .forms import USZipCodeField, USStateSelect, OrderForm, ShippingForm
+from .models import (
+    Order, OrderLineItem, ShipFromAddress, ProductShippingData
+)
 
 from products.models import Product
 from profiles.models import UserProfile
